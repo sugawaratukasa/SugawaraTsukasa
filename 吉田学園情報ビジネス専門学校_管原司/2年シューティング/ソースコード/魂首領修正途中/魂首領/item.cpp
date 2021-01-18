@@ -1,0 +1,291 @@
+//******************************************************************************
+// アイテム処理 [item.cpp]
+// Author : 管原 司
+//******************************************************************************
+#include "main.h"
+#include "manager.h"
+#include "renderer.h"
+#include "scene.h"
+#include "scene2d.h"
+#include "player.h"
+#include "sound.h"
+#include "score.h"
+#include "life.h"
+#include "game.h"
+#include "item.h"
+//******************************************************************************
+// 静的メンバ変数
+//******************************************************************************
+LPDIRECT3DTEXTURE9 CItem::m_apTexture[TYPE_MAX] = {};
+//******************************************************************************
+// テクスチャ読み込み
+//******************************************************************************
+HRESULT CItem::Load(void)
+{
+	LPDIRECT3DDEVICE9 pDevice = CSceneManager::GetRenderer()->GetDevice();
+	//テクスチャ読み込み
+	D3DXCreateTextureFromFile(pDevice, "data/Texture/star.png", &m_apTexture[TYPE_STAR]);
+	D3DXCreateTextureFromFile(pDevice, "data/Texture/bom3.png", &m_apTexture[TYPE_BOM]);
+	D3DXCreateTextureFromFile(pDevice, "data/Texture/Powerup.png", &m_apTexture[TYPE_POWERUP]);
+	return S_OK;
+}
+//******************************************************************************
+// テクスチャ破棄
+//******************************************************************************
+void CItem::Unload(void)
+{
+	// テクスチャの破棄
+	for (int nCnt = 0; nCnt < MAX_ITEM_TEX; nCnt++)
+	{
+		if (m_apTexture[nCnt] != NULL)
+		{
+			m_apTexture[nCnt]->Release();
+			m_apTexture[nCnt] = NULL;
+		}
+	}
+}
+//******************************************************************************
+// 生成関数
+//******************************************************************************
+CItem * CItem::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, TYPE type)
+{
+	// pItemクラスのポインタ
+	CItem * pItem;
+
+	// メモリ確保
+	pItem = new CItem;
+
+	// 位置座標設定
+	pItem->SetPosition(pos);
+
+	// サイズ設定
+	pItem->SetSize(size);
+
+	// タイプ設定
+	pItem->m_type = type;
+
+	// 弾の初期設定
+	pItem->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+
+	// テクスチャ受け渡し
+	pItem->BindTexture(m_apTexture[pItem->m_type]);
+
+	// オブジェクトタイプ設定
+	pItem->SetObjType(CScene::OBJTYPE_ITEM);
+
+	// 初期化
+	pItem->Init();
+
+	// pItemポインタを返す
+	return pItem;
+}
+//******************************************************************************
+// コンストラクタ
+//******************************************************************************
+CItem::CItem(int nPriority) : CScene2d(nPriority)
+{
+	m_move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_bMove = false;
+}
+//******************************************************************************
+// デストラクタ
+//******************************************************************************
+CItem::~CItem()
+{
+}
+//******************************************************************************
+// 初期化関数
+//******************************************************************************
+HRESULT CItem::Init(void)
+{
+	// 初期化
+	CScene2d::Init();
+
+	return S_OK;
+}
+///******************************************************************************
+// 終了関数
+//******************************************************************************
+void CItem::Uninit(void)
+{
+	// 終了
+	CScene2d::Uninit();
+}
+//******************************************************************************
+// 更新関数
+//******************************************************************************
+void CItem::Update(void)
+{
+	//更新
+	CScene2d::Update();
+
+	//サウンドの取得
+	CSound * pSound = CSceneManager::GetSound();
+
+	//スコアの取得
+	CScore * pScore = CGame::GetScore();
+
+	CPlayer * pPlayer = CGame::GetPlayer();
+
+	//座標の取得
+	D3DXVECTOR3 pos;
+	pos = GetPosition();
+	// 当たり判定
+	HitPlayer();
+
+	// 移動
+	D3DXVECTOR3 move = D3DXVECTOR3(0.0f,0.0f,0.0f);
+
+	// falseの場合
+	if (m_bMove == false)
+	{
+		move.y = 3.0f;
+	}
+	//画面の右に当たった時
+	if (pos.x + ITEM_SIZE.x / 2 > MAX_GAME_WIDTH)
+	{
+		m_bMove = true;
+		//真ん中より低かったら
+		if (pos.y + ITEM_SIZE.y/ 2 < SCREEN_HEIGHT / 2)
+		{
+			move.x = -3.0f;
+			move.y = 3.0f;
+		}
+		//真ん中より高かったら
+		if (pos.y - ITEM_SIZE.y / 2 > SCREEN_HEIGHT / 2)
+		{
+			m_move.x = -3.0f;
+			m_move.y = 3.0f;
+		}
+	}
+	//画面左に当たった時
+	if (pos.x - ITEM_SIZE.x / 2 < MIN_GAME_WIDTH)
+	{
+		// trueにする
+		m_bMove = true;
+		//真ん中より低かったら
+		if (pos.y + ITEM_SIZE.y / 2 < SCREEN_HEIGHT / 2)
+		{
+			m_move.x = 3.0f;
+			m_move.y = 3.0f;
+		}
+		//真ん中より高かったら
+		if (pos.y - ITEM_SIZE.y / 2 > SCREEN_HEIGHT / 2)
+		{
+			m_move.x = 3.0f;
+			m_move.y = -3.0f;
+		}
+	}
+	//画面下に当たった時
+	if (pos.y - ITEM_SIZE.y / 2 <= 0)
+	{
+		m_bMove = true;
+		if (pos.x + ITEM_SIZE.x / 2 > SCREEN_WIDTH / 2)
+		{
+			m_move.x = 3.0f;
+			m_move.y = 3.0f;
+		}
+		if (pos.x + ITEM_SIZE.x / 2 < SCREEN_WIDTH / 2)
+		{
+			m_move.x = -3.0f;
+			m_move.y = 3.0f;
+		}
+	}
+	//画面上に当たった時
+	if (pos.y + ITEM_SIZE.y / 2 > SCREEN_HEIGHT)
+	{
+		// trueにする
+		m_bMove = true;
+		m_move.y = -3.0f;
+	}
+	
+
+	// 移動
+	pos.x += m_move.x;
+	pos.y += m_move.y;
+
+	// 位置更新
+	SetPosition(pos);
+}
+//******************************************************************************
+// 描画関数
+//******************************************************************************
+void CItem::Draw(void)
+{
+	// 描画
+	CScene2d::Draw();
+}
+//******************************************************************************
+// 当たり判定関数
+//******************************************************************************
+bool CItem::Collision(D3DXVECTOR3 pos1, D3DXVECTOR3 pos2, D3DXVECTOR3 size1, D3DXVECTOR3 size2)
+{
+	bool bHit = false;  //当たったかどうか
+
+	D3DXVECTOR3 box1Max = D3DXVECTOR3(size1.x / 2, size1.y, size1.z / 2) + pos1;          //ぶつかる側の最大値
+	D3DXVECTOR3 box1Min = D3DXVECTOR3(-size1.x / 2, -size1.y, -size1.z / 2) + pos1;       //ぶつかる側の最小値
+	D3DXVECTOR3 box2Max = D3DXVECTOR3(size2.x / 2, size2.y / 2, size2.z / 2) + pos2;      //ぶつかられる側の最大値
+	D3DXVECTOR3 box2Min = D3DXVECTOR3(-size2.x / 2, -size2.y / 2, -size2.z / 2) + pos2;   //ぶつかられる側の最小値
+
+	if (box1Max.y > box2Min.y&&
+		box1Min.y < box2Max.y&&
+		box1Max.x > box2Min.x&&
+		box1Min.x < box2Max.x)
+	{
+		bHit = true;
+	}
+
+	return bHit;    //当たったかどうかを返す
+}
+//******************************************************************************
+// プレイヤーと当たったとき
+//******************************************************************************
+void CItem::HitPlayer(void)
+{
+	// 位置座標取得
+	D3DXVECTOR3 pos = GetPosition();
+
+	// サイズ取得
+	D3DXVECTOR3 size = GetSize();
+
+	// CScene型のポインタ
+	CScene *pScene = NULL;
+
+	do
+	{
+		// オブジェタイプが敵の場合
+		pScene = GetScene(OBJTYPE_PLAYER);
+		if (pScene != NULL)
+		{
+			// オブジェクトタイプ取得
+			OBJTYPE objType = pScene->GetObjType();
+			// オブジェクトタイプがアイテムの場合
+			if (objType == OBJTYPE_PLAYER)
+			{
+				// 座標とサイズ取得
+				D3DXVECTOR3 PlayerPos = ((CPlayer*)pScene)->GetPosition();
+				D3DXVECTOR3 PlayerSize = ((CPlayer*)pScene)->GetSize();
+
+				// 当たり判定
+				if (Collision(pos, size, PlayerPos, PlayerSize) == true)
+				{
+					// タイプがボムの場合
+					if (m_type == TYPE_BOM)
+					{
+						// ボムの所持数の加算
+						((CPlayer*)pScene)->GetBom(1);
+					}
+					// タイプがパワーアップの場合
+					if (m_type == TYPE_POWERUP)
+					{
+						// パワーアップ
+						((CPlayer*)pScene)->GetPowerUp();
+					}
+					// 弾を消す
+					Uninit();
+					return;
+				}
+			}
+		}
+	} while (pScene != NULL);
+}
