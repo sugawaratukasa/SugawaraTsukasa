@@ -20,8 +20,8 @@ public:
 	bool GetKeyboardTrigger(int nKey);
 	bool GetKeyboardRelease(int nKey);
 private:
-	BYTE m_aKeyState[NUM_KEY_MAX];		  //キーボードの入力情報ワーク
-	BYTE m_aKeyStateTrigger[NUM_KEY_MAX]; //キーボードのトリガー情報
-	BYTE m_aKeyStateRelease[NUM_KEY_MAX]; //キーボードのリリース情報
+	BYTE m_aKeyState[NUM_KEY_MAX];		  // キーボードの入力情報ワーク
+	BYTE m_aKeyStateTrigger[NUM_KEY_MAX]; // キーボードのトリガー情報
+	BYTE m_aKeyStateRelease[NUM_KEY_MAX]; // キーボードのリリース情報
 };
 #endif

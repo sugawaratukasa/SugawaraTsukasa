@@ -35,7 +35,7 @@ public:
 private:
 	bool Collision(D3DXVECTOR3 pos1, D3DXVECTOR3 pos2, D3DXVECTOR3 size1, D3DXVECTOR3 size2);
 	void HitPlayer(void);
-	static LPDIRECT3DTEXTURE9 m_apTexture[TYPE_MAX];	// テクスチャ
+	static LPDIRECT3DTEXTURE9 m_apTexture[TYPE_MAX];		// テクスチャ
 	TYPE m_type;											// タイプ
 	D3DXVECTOR3 m_move;										// 移動
 	bool m_bMove;											// move

@@ -21,10 +21,10 @@ LPDIRECT3DTEXTURE9 CNumber::m_pTexture = NULL;
 //******************************************************************************
 CNumber::CNumber()
 {
-	m_pVtxBuff = NULL;
-	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_size = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_nNumber = 0;
+	m_pVtxBuff	= NULL;
+	m_pos		= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_size		= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_nNumber	= 0;
 }
 //******************************************************************************
 // デストラクタ

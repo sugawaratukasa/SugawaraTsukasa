@@ -26,10 +26,10 @@ public:
 	void Update(void);
 	void Draw(void);
 private:
-	CNumber * m_pNumber;	//ナンバーの情報
+	CNumber * m_pNumber;	// ナンバーの情報
 	D3DXVECTOR3 m_pos;		// 位置座標
 	D3DXVECTOR3 m_size;		// サイズ
-	int m_nContinueCount;	//カウント
-	int m_nContinueNum;		//コンティニューナンバー
+	int m_nContinueCount;	// カウント
+	int m_nContinueNum;		// コンティニューナンバー
 };
 #endif

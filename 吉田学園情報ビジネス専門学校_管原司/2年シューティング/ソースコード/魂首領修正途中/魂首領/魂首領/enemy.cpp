@@ -26,10 +26,10 @@ LPDIRECT3DTEXTURE9 CEnemy::m_apTexture[TEX_TYPE_MAX] = {};
 //******************************************************************************
 CEnemy::CEnemy(int nPriority) : CScene2d(nPriority)
 {
-	m_TexType = TEX_TYPE_NONE;
-	m_state = STATE_NONE;
-	m_nLife = 0;
-	m_nDamageCount = 0;
+	m_TexType		= TEX_TYPE_NONE;
+	m_state			= STATE_NONE;
+	m_nLife			= 0;
+	m_nDamageCount	= 0;
 }
 //******************************************************************************
 // デストラクタ

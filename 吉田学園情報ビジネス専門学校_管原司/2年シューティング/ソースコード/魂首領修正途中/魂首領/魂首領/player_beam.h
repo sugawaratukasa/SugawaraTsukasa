@@ -31,7 +31,7 @@ public:
 	static void SetUseBeam(bool bUseBeam);
 private:
 	void HitEnemy(void);
-	D3DXVECTOR3 m_move;
+	D3DXVECTOR3 m_move;			// 移動
 	static bool m_bUseBeam;		//ビームの使用状態
 };
 #endif

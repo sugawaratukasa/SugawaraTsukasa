@@ -29,7 +29,7 @@ bool CPlayer_Beam::m_bUseBeam = true;
 //******************************************************************************
 CPlayer_Beam::CPlayer_Beam(int nPriority) : CBullet(nPriority)
 {
-	m_move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_move		= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_bUseBeam = true;
 }
 //******************************************************************************

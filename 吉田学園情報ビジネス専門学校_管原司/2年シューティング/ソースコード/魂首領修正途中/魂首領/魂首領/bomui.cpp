@@ -21,15 +21,34 @@ LPDIRECT3DTEXTURE9 CBomUI::m_pTexture = NULL;
 CBomUI::CBomUI(int nPriority) : CScene(nPriority)
 {
 	memset(m_apScene2D, 0, sizeof(m_apScene2D));
-	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_size = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_nBom_Posession = 0;
+	m_pos				= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_size				= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_nBom_Posession	= 0;
 }
 //******************************************************************************
 // デストラクタ
 //******************************************************************************
 CBomUI::~CBomUI()
 {
+}
+
+//******************************************************************************
+// テクスチャ読み込み
+//******************************************************************************
+HRESULT CBomUI::Load(void)
+{
+	LPDIRECT3DDEVICE9 pDevice = CSceneManager::GetRenderer()->GetDevice();
+	//テクスチャ読み込み
+	D3DXCreateTextureFromFile(pDevice, "data/Texture/bom3.png", &m_pTexture);
+	return S_OK;
+}
+//******************************************************************************
+// テクスチャ破棄
+//******************************************************************************
+void CBomUI::Unload(void)
+{
+	m_pTexture->Release();
+	m_pTexture = NULL;
 }
 //******************************************************************************
 // 生成関数
@@ -53,24 +72,6 @@ CBomUI * CBomUI::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 
 	// ポインタを返す
 	return pBomUI;
-}
-//******************************************************************************
-// テクスチャ読み込み
-//******************************************************************************
-HRESULT CBomUI::Load(void)
-{
-	LPDIRECT3DDEVICE9 pDevice = CSceneManager::GetRenderer()->GetDevice();
-	//テクスチャ読み込み
-	D3DXCreateTextureFromFile(pDevice, "data/Texture/bom3.png", &m_pTexture);
-	return S_OK;
-}
-//******************************************************************************
-// テクスチャ破棄
-//******************************************************************************
-void CBomUI::Unload(void)
-{
-	m_pTexture->Release();
-	m_pTexture = NULL;
 }
 //******************************************************************************
 // 初期化関数

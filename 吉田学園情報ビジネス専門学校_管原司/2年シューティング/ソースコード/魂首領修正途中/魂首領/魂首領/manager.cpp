@@ -339,8 +339,6 @@ void CSceneManager::LoadAll(void)
 	CWarning::Load();
 	// チュートリアル
 	CTutrial::Load();
-	// パーティクル
-	//CParticle::Load();
 }
 //******************************************************************************
 // テクスチャ全破棄関数

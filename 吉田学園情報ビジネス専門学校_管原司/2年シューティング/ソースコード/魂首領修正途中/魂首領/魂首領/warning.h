@@ -26,8 +26,8 @@ public:
 	void Draw(void);
 	
 private:
-	static LPDIRECT3DTEXTURE9 m_pTexture;	//texture
-	bool m_bColor;							//カラー状態
-	int m_nWarnigCount;						//カウント
+	static LPDIRECT3DTEXTURE9 m_pTexture;	// テクスチャ
+	bool m_bColor;							// カラー状態
+	int m_nWarnigCount;						// カウント
 };
 #endif

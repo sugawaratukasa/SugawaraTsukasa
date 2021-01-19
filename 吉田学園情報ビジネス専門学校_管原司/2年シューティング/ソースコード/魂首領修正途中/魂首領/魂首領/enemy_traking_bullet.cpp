@@ -21,8 +21,8 @@
 //******************************************************************************
 CEnemy_Traking_Bullet::CEnemy_Traking_Bullet(int nPriority) : CBullet(nPriority)
 {
-	m_move = D3DXVECTOR3(0.0f,0.0f,0.0f);
-	m_fAngle = 0.0f;
+	m_move		= D3DXVECTOR3(0.0f,0.0f,0.0f);
+	m_fAngle	= 0.0f;
 }
 //******************************************************************************
 // デストラクタ

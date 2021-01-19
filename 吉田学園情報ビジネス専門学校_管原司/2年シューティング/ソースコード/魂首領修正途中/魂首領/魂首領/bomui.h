@@ -33,7 +33,7 @@ private:
 	static LPDIRECT3DTEXTURE9 m_pTexture;	// テクスチャ情報
 	CScene2d * m_apScene2D[MAX_BOM];		// ライフの情報
 	D3DXVECTOR3 m_pos;						// 位置座標
-	D3DXVECTOR3 m_size;
+	D3DXVECTOR3 m_size;						// サイズ
 	int m_nBom_Posession;					// ボムの所持数
 };
 #endif

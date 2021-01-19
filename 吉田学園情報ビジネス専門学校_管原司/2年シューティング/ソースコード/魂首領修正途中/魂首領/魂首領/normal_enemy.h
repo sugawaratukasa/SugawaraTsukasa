@@ -28,6 +28,7 @@ public:
 	void Update(void);
 	void Draw(void);
 private:
+	void Attack(void);
 	int m_nAttackCount;	// UŒ‚ƒJƒEƒ“ƒg
 };
 #endif

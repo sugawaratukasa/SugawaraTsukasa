@@ -26,8 +26,8 @@
 //******************************************************************************
 CShip_Battery::CShip_Battery(int nPriority) : CEnemy(nPriority)
 {
-	m_pos = D3DXVECTOR3(0.0f,0.0f,0.0f);
-	m_nAttackCount = 0;
+	m_pos			= D3DXVECTOR3(0.0f,0.0f,0.0f);
+	m_nAttackCount	= 0;
 }
 //******************************************************************************
 // デストラクタ

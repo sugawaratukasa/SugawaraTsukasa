@@ -502,7 +502,7 @@ void CPlayer::Shot(void)
 			if (g_lpDIDevice != NULL &&pInputJoystick->GetJoystickTrigger(JS_A) || pInputKeyboard->GetKeyboardTrigger(DIK_SPACE))
 			{
 				// ショット音
-				//pSound->PlaySound(CSound::SOUND_LABEL_SE_SHOT);
+				pSound->PlaySound(CSound::SOUND_LABEL_SE_SHOT);
 
 				// プレイヤーレベルが1の場合
 				if (m_Level == LEVEL_1)

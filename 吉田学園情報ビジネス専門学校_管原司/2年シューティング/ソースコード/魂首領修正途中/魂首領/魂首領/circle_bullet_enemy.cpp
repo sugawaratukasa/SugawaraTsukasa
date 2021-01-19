@@ -93,25 +93,8 @@ void CCirecle_Bullet_Enemy::Update(void)
 	// 状態取得
 	int nState = CEnemy::GetState();
 
-	// インクリメント
-	m_nAttackCount++;
-
-	// カウント数が100の場合
-	if (m_nAttackCount == 100)
-	{
-		// 20回繰り返す
-		for (int nCount = 0; nCount < 20; nCount++)
-		{
-			CEnemy_Normal_Bullet::Create(D3DXVECTOR3(pos.x, pos.y, pos.z), 
-				D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)), 
-				ENEMY_NORMAL_BULLET_SIZE,
-				D3DXVECTOR3(cosf(D3DXToRadian(nCount * (360 / 20)))*BULLET_MOVE_VALUE.x, sinf(D3DXToRadian(nCount * (360 / 20)))*BULLET_MOVE_VALUE.y, 0.0f),
-				D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
-				CBullet::TEX_TYPE_ENEMY_NORMAL);
-		}
-		// カウント数を0にする
-		m_nAttackCount = 0;
-	}
+	// 攻撃処理
+	Attack();
 
 	// 死亡状態なら
 	if (nState == STATE_DEATH)
@@ -143,4 +126,35 @@ void CCirecle_Bullet_Enemy::Draw(void)
 {
 	// 描画
 	CEnemy::Draw();
+}
+//******************************************************************************
+// 攻撃処理関数
+//******************************************************************************
+void CCirecle_Bullet_Enemy::Attack(void)
+{
+	// 位置座標取得
+	D3DXVECTOR3 pos = GetPosition();
+
+	// インクリメント
+	m_nAttackCount++;
+
+	// インクリメント
+	m_nAttackCount++;
+
+	// カウント数が100の場合
+	if (m_nAttackCount == 100)
+	{
+		// 20回繰り返す
+		for (int nCount = 0; nCount < 20; nCount++)
+		{
+			CEnemy_Normal_Bullet::Create(D3DXVECTOR3(pos.x, pos.y, pos.z),
+				D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)),
+				ENEMY_NORMAL_BULLET_SIZE,
+				D3DXVECTOR3(cosf(D3DXToRadian(nCount * (360 / 20)))*BULLET_MOVE_VALUE.x, sinf(D3DXToRadian(nCount * (360 / 20)))*BULLET_MOVE_VALUE.y, 0.0f),
+				D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
+				CBullet::TEX_TYPE_ENEMY_NORMAL);
+		}
+		// カウント数を0にする
+		m_nAttackCount = 0;
+	}
 }

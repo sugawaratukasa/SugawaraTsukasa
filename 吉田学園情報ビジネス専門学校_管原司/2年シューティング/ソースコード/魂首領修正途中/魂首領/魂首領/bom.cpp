@@ -21,7 +21,7 @@
 CBom::CBom(int nPriority) : CBullet(nPriority)
 {
 	m_nPatternCount = 0;
-	m_nAnimCount = 0;
+	m_nAnimCount	= 0;
 }
 //******************************************************************************
 // デストラクタ

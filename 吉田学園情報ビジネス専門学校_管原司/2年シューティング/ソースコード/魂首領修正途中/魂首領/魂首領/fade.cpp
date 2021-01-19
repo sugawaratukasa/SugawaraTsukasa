@@ -17,12 +17,12 @@
 //******************************************************************************
 CFade::CFade()
 {
-	m_pVtxBuff = NULL;
-	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_size = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_fade = FADE_NONE;
-	m_ModeNext = CSceneManager::MODE_NONE;
-	m_colorFade = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+	m_pVtxBuff		= NULL;
+	m_pos			= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_size			= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_fade			= FADE_NONE;
+	m_ModeNext		= CSceneManager::MODE_NONE;
+	m_colorFade		= D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
 }
 //******************************************************************************
 // デストラクタ

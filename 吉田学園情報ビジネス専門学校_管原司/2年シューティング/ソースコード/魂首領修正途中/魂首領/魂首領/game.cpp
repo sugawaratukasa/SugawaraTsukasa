@@ -44,6 +44,24 @@ CBomUI * CGame::m_pBom = NULL;
 CShip * CGame::m_pShip = NULL;
 CBoss * CGame::m_pBoss = NULL;
 //******************************************************************************
+// コンストラクタ
+//******************************************************************************
+CGame::CGame(int nPriority) : CScene(nPriority)
+{
+	m_pos				= D3DXVECTOR3(0.0f,0.0f,0.0f);
+	m_size				= D3DXVECTOR3(0.0f,0.0f,0.0f);
+	m_nCount			= 0;
+	m_nRespawn_Count	= 0;
+	m_bfade				= false;
+	m_bUseBoss			= false;
+}
+//******************************************************************************
+// デストラクタ
+//******************************************************************************
+CGame::~CGame()
+{
+}
+//******************************************************************************
 // 生成関数
 //******************************************************************************
 CGame * CGame::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
@@ -65,24 +83,6 @@ CGame * CGame::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 
 	// ポインタを返す
 	return pGame;
- }
-//******************************************************************************
-// コンストラクタ
-//******************************************************************************
-CGame::CGame(int nPriority) : CScene(nPriority)
-{
-	m_pos				= D3DXVECTOR3(0.0f,0.0f,0.0f);
-	m_size				= D3DXVECTOR3(0.0f,0.0f,0.0f);
-	m_nCount			= 0;
-	m_nRespawn_Count	= 0;
-	m_bfade				= false;
-	m_bUseBoss			= false;
-}
-//******************************************************************************
-// デストラクタ
-//******************************************************************************
-CGame::~CGame()
-{
 }
 //******************************************************************************
 // 初期化関数
@@ -93,7 +93,7 @@ HRESULT CGame::Init(void)
 	CSound * pSound = CSceneManager::GetSound();
 	CSound::SOUND_LABEL type;
 	type = CSound::SOUND_LABEL_SE_SHOT;
-	//pSound->PlaySound(CSound::SOUND_LABEL_BGM000);
+	pSound->PlaySound(CSound::SOUND_LABEL_BGM000);
 	CPolygon::Create(POLYGON_RIGHT_POS, POLYGON_SIZE);
 	CPolygon::Create(POLYGON_LEFT_POS, POLYGON_SIZE);
 	//背景

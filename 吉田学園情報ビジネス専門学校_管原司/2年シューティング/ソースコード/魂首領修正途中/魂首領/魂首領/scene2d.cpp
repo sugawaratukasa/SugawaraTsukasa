@@ -19,19 +19,19 @@
 //******************************************************************************
 CScene2d::CScene2d(int nPriority) : CScene(nPriority)
 {
-	m_pTexture = NULL;
-	m_pVtxBuff = NULL;
-	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_size = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_col = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
-	m_fAngle = 0.0f;
-	m_fLength = 0.0f;
-	m_fTexX = 0.0f;
-	m_fTexY = 0.0f;
+	m_pTexture	= NULL;
+	m_pVtxBuff	= NULL;
+	m_pos		= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_rot		= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_size		= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_col		= D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+	m_fAngle	= 0.0f;
+	m_fLength	= 0.0f;
+	m_fTexX		= 0.0f;
+	m_fTexY		= 0.0f;
 	m_fTexAnimX = 1.0f;
 	m_fTexAnimY = 1.0f;
-	m_fScale = 0.0f;
+	m_fScale	= 0.0f;
 }
 //******************************************************************************
 // デストラクタ

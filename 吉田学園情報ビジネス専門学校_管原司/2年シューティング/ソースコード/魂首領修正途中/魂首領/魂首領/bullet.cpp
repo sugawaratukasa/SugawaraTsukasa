@@ -53,8 +53,8 @@ void CBullet::Unload(void)
 //******************************************************************************
 CBullet::CBullet(int nPriority) : CScene2d(nPriority)
 {
-	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_Textype = TEX_TYPE_NONE;
+	m_rot		= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_Textype	= TEX_TYPE_NONE;
 }
 //******************************************************************************
 // デストラクタ

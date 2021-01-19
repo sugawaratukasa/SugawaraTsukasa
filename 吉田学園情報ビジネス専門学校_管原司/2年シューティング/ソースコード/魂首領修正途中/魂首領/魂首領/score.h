@@ -30,7 +30,7 @@ public:
 	void AddScore(int nValue);
 	int GetScore(void) { return m_nScore; }
 private:
-	CNumber * m_apNumber[MAX_SCORE];	// Scoreの情報
+	CNumber * m_apNumber[MAX_SCORE];	// ナンバーの情報
 	D3DXVECTOR3 m_pos;					// 位置座標
 	D3DXVECTOR3 m_size;					// サイズ
 	int m_nScore;						// スコア

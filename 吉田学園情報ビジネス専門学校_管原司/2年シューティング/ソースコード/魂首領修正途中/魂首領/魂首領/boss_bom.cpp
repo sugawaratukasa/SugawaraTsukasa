@@ -30,8 +30,8 @@ bool CBoss_Bom::m_bUseBoss_Bom = true;
 //******************************************************************************
 CBoss_Bom::CBoss_Bom(int nPriority) : CBullet(nPriority)
 {
-	m_move = D3DXVECTOR3(0.0f,0.0f,0.0f);
-	m_bUseBoss_Bom = true;
+	m_move			= D3DXVECTOR3(0.0f,0.0f,0.0f);
+	m_bUseBoss_Bom	= true;
 }
 //******************************************************************************
 // デストラクタ

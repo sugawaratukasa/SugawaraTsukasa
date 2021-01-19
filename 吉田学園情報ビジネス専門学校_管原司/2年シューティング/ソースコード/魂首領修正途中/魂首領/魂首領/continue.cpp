@@ -20,11 +20,11 @@
 //******************************************************************************
 CContinue::CContinue(int nPriority)
 {
-	m_pNumber = NULL;
-	m_pos  = D3DXVECTOR3(0.0f,0.0f,0.0f);
-	m_size = D3DXVECTOR3(0.0f,0.0f,0.0f);
-	m_nContinueCount = 0;
-	m_nContinueNum = 0;
+	m_pNumber			= NULL;
+	m_pos				= D3DXVECTOR3(0.0f,0.0f,0.0f);
+	m_size				= D3DXVECTOR3(0.0f,0.0f,0.0f);
+	m_nContinueCount	= 0;
+	m_nContinueNum		= 0;
 }
 //******************************************************************************
 // デストラクタ

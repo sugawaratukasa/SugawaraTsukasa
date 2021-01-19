@@ -55,6 +55,24 @@ void CTitle::Unload(void)
 	}
 }
 //******************************************************************************
+// コンストラクタ
+//******************************************************************************
+CTitle::CTitle(int nPriority) : CScene(nPriority)
+{
+	memset(m_apScene2D, 0, sizeof(m_apScene2D));
+	m_pos		= D3DXVECTOR3(0.0f,0.0f,0.0f);
+	m_size		= D3DXVECTOR3(0.0f,0.0f,0.0f);
+	m_color		= D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	m_bColor	= false;
+	m_bfade		= false;
+}
+//******************************************************************************
+// デストラクタ
+//******************************************************************************
+CTitle::~CTitle()
+{
+}
+//******************************************************************************
 // 生成関数
 //******************************************************************************
 CTitle * CTitle::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
@@ -76,24 +94,6 @@ CTitle * CTitle::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 
 	// ポインタを返す
 	return pTitle;
-}
-//******************************************************************************
-// コンストラクタ
-//******************************************************************************
-CTitle::CTitle(int nPriority) : CScene(nPriority)
-{
-	memset(m_apScene2D, 0, sizeof(m_apScene2D));
-	m_pos		= D3DXVECTOR3(0.0f,0.0f,0.0f);
-	m_size		= D3DXVECTOR3(0.0f,0.0f,0.0f);
-	m_color		= D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	m_bColor	= false;
-	m_bfade		= false;
-}
-//******************************************************************************
-// デストラクタ
-//******************************************************************************
-CTitle::~CTitle()
-{
 }
 //******************************************************************************
 // 初期化関数
@@ -196,7 +196,8 @@ void CTitle::Update(void)
 	if (g_lpDIDevice != NULL &&pInputJoystick->GetJoystickTrigger(JS_A) || pInputKeyboard->GetKeyboardTrigger(DIK_RETURN))
 	{
 		// サウンド再生
-		//pSound->PlaySound(CSound::SOUND_LABEL_SE_SELECT);
+		pSound->PlaySound(CSound::SOUND_LABEL_SE_SELECT);
+
 		// trueに
 		m_bfade = true;
 	}
