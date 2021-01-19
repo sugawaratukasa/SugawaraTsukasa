@@ -1,0 +1,47 @@
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (test.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  warning.cpp
+  tutrial.cpp
+  title.cpp
+  sound.cpp
+  ship_battery.cpp
+  ship.cpp
+  score.cpp
+  scene2d.cpp
+  scene.cpp
+  result.cpp
+  renderer.cpp
+  ranking.cpp
+  polygon.cpp
+  player_beam.cpp
+  player.cpp
+c:\users\gsp015\desktop\gittest1\sugawaratsukasa\吉田学園情報ビジネス専門学校_管原司\2年シューティング\ソースコード\魂首領修正途中\魂首領\魂首領\player.cpp(469): warning C4101: 'js': ローカル変数は 1 度も使われていません。
+  number.cpp
+  normal_enemy.cpp
+  normal_bullet.cpp
+  manager.cpp
+  main.cpp
+  コードを生成中...
+  コンパイル中...
+  life.cpp
+  item.cpp
+  inputkeyboard.cpp
+  inputjoystick.cpp
+  input.cpp
+  game.cpp
+  fade.cpp
+  explosion.cpp
+  enemy_traking_bullet.cpp
+  enemy_normal_bullet.cpp
+  enemy_diffusion_bullet.cpp
+  enemy.cpp
+  continue.cpp
+  circle_bullet_enemy.cpp
+  bullet.cpp
+  boss_bom.cpp
+  boss.cpp
+  bomui.cpp
+  bom.cpp
+  bg.cpp
+  コードを生成中...
+  魂首領.vcxproj -> C:\Users\gsp015\Desktop\GitTest1\SugawaraTsukasa\吉田学園情報ビジネス専門学校_管原司\2年シューティング\ソースコード\魂首領修正途中\魂首領\Debug\魂首領.exe
+  魂首領.vcxproj -> C:\Users\gsp015\Desktop\GitTest1\SugawaraTsukasa\吉田学園情報ビジネス専門学校_管原司\2年シューティング\ソースコード\魂首領修正途中\魂首領\Debug\魂首領.pdb (Full PDB)

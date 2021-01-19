@@ -6,4 +6,4 @@ WASD          移動
 SPACEトリガー 3方向弾発射
 SPACE 長押し  ビーム発射
 B             ボム発射
-ENTER         画面遷移 
+ENTER         画面遷移  コンティニュー
