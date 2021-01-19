@@ -7,22 +7,21 @@
 //******************************************************************************
 // マクロ定義
 //******************************************************************************
-#define PLAYER_SIZE				(D3DXVECTOR3(50.0f,50.0f,0.0f))
-#define PLAYER_COLLISION_SIZE	(D3DXVECTOR3(5.0f,5.0f,0.0f))
-#define PLAYER_WEPON_SIZE		(D3DXVECTOR3(25.0f,25.0f,0.0f))
-#define PLAYER_MOVE				(D3DXVECTOR3(8.0f,8.0f,0.0f))
-#define PLAYER_BEAM_MOVE		(D3DXVECTOR3(5.0f,5.0f,0.0f))
-#define PLAYER_COLLISION_SIZE	(D3DXVECTOR3(5.0f,5.0f,0.0f))
-#define RATE_MOVE				(0.4f)
-#define MAX_PLAYER_TEX			(3)
-#define MAX_PLAYER				(3)
-#define DAMAGE_RESPAWN_COUNT	(30)
-#define NODAMAGE_COUNT			(50)
-#define DAMAGE_COUNT			(300)
-#define BOM_LAUNCH_TIME			(200)
-#define MAX_BOM_POSSESION		(5)
-#define PLAYER_LIFE				(3)
-#define PLAYER_CONTINUE			(1)
+#define PLAYER_SIZE				(D3DXVECTOR3(50.0f,50.0f,0.0f))	// プレイヤーサイズ
+#define PLAYER_COLLISION_SIZE	(D3DXVECTOR3(5.0f,5.0f,0.0f))	// プレイヤー判定サイズ
+#define PLAYER_WEPON_SIZE		(D3DXVECTOR3(25.0f,25.0f,0.0f))	// プレイヤー武器サイズ
+#define PLAYER_MOVE				(D3DXVECTOR3(8.0f,8.0f,0.0f))	// プレイヤーサイズ
+#define PLAYER_BEAM_MOVE		(D3DXVECTOR3(5.0f,5.0f,0.0f))	// プレイヤービームサイズ
+#define PLAYER_COLLISION_SIZE	(D3DXVECTOR3(5.0f,5.0f,0.0f))	// プレイヤー判定サイズ
+#define RATE_MOVE				(0.4f)							// 慣性の移動量				
+#define MAX_PLAYER				(3)								// プレイヤー最大数
+#define DAMAGE_RESPAWN_COUNT	(30)							// ダメージリスポンカウント
+#define NODAMAGE_COUNT			(50)							// 無敵時間
+#define DAMAGE_COUNT			(300)							// ダメージカウント
+#define BOM_LAUNCH_TIME			(200)							// ボムの待機時間
+#define MAX_BOM_POSSESION		(5)								// ボムの最大所持数
+#define PLAYER_LIFE				(3)								// プレイヤーライフ
+#define PLAYER_CONTINUE			(1)								// プレイヤーのコンティニュー
 //******************************************************************************
 // クラス
 //******************************************************************************
@@ -91,7 +90,7 @@ private:
 	D3DXVECTOR3 m_RightPos;									// 右
 	D3DXVECTOR3 m_LeftPos;									// 左
 	D3DXVECTOR3 m_Size;										// サイズ
-	D3DXVECTOR3 m_Collision_Size;								// 当たり判定サイズ
+	D3DXVECTOR3 m_Collision_Size;							// 当たり判定サイズ
 	int m_nContinue;										// コンティニューカウント
 	int m_nLife;											// 体力
 	int m_nCountAnim;										// カウンター

@@ -16,7 +16,6 @@ CScene *CScene::m_pTop[OBJTYPE_MAX] = {};
 CScene *CScene::m_pCur[OBJTYPE_MAX] = {};
 int CScene::m_nNext = 0;
 bool CScene::m_bUpdateStop = false;
-
 //******************************************************************************
 // コンストラクタ
 //******************************************************************************

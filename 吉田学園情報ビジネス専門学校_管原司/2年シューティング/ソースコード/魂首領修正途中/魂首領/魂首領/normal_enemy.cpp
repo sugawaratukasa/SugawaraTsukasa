@@ -2,7 +2,10 @@
 // 通常の敵 [normal_enemy.cpp]
 // Author : 管原　司
 //******************************************************************************
-
+//******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define BULLET_MOVE_VALUE (D3DXVECTOR3(5.0f,5.0f,0.0f))
 //******************************************************************************
 // インクルードファイル
 //******************************************************************************
@@ -92,7 +95,12 @@ void CNormal_Enemy::Update(void)
 		// 二発生成
 		for (int nCount = 0; nCount < 2; nCount++)
 		{
-			CEnemy_Traking_Bullet::Create(D3DXVECTOR3(pos.x, pos.y, pos.z), D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)), ENEMY_TRAKING_BULLET_SIZE, D3DXVECTOR3(5.0f + nCount, 5.0f + nCount, 0.0f),  D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), CBullet::TEX_TYPE_ENEMY_NORMAL);
+			CEnemy_Traking_Bullet::Create(D3DXVECTOR3(pos.x, pos.y, pos.z),
+				D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)),
+				ENEMY_TRAKING_BULLET_SIZE,
+				D3DXVECTOR3(BULLET_MOVE_VALUE.x + nCount, BULLET_MOVE_VALUE.y + nCount, BULLET_MOVE_VALUE.z),
+				D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
+				CBullet::TEX_TYPE_ENEMY_NORMAL);
 		}
 		// カウントを0にする
 		m_nAttackCount = 0;

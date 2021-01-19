@@ -19,6 +19,7 @@
 #include "normal_bullet.h"
 #include "player_beam.h"
 #include "boss.h"
+#include "score.h"
 //******************************************************************************
 // 静的メンバ変数
 //******************************************************************************
@@ -154,6 +155,9 @@ void CPlayer_Beam::HitEnemy(void)
 	// サイズ取得
 	D3DXVECTOR3 size = GetSize();
 
+	// スコアの取得
+	CScore * pScore = CGame::GetScore();
+
 	// CScene型のポインタ
 	CScene *pScene = NULL;
 
@@ -176,6 +180,8 @@ void CPlayer_Beam::HitEnemy(void)
 				{
 					// 敵にダメージを与える
 					((CEnemy*)pScene)->HitEnemy(10);
+					// スコア加算
+					pScore->AddScore(100);
 					// 弾を消す
 					Uninit();
 					return;
@@ -193,6 +199,8 @@ void CPlayer_Beam::HitEnemy(void)
 	{
 		// ボスにダメージを与える
 		pBoss->HitBoss(20);
+		// スコア加算
+		pScore->AddScore(100);
 		// 弾を消す
 		Uninit();
 		return;

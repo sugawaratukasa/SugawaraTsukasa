@@ -18,6 +18,7 @@
 #include "player.h"
 #include "normal_bullet.h"
 #include "boss.h"
+#include "score.h"
 //******************************************************************************
 // コンストラクタ
 //******************************************************************************
@@ -115,6 +116,9 @@ void CNormal_Bullet::HitEnemy(void)
 	// サイズ取得
 	D3DXVECTOR3 size = GetSize();
 
+	// スコアの取得
+	CScore * pScore = CGame::GetScore();
+
 	//ゲーム取得
 	CGame * pGame = CSceneManager::GetGame();
 
@@ -145,7 +149,8 @@ void CNormal_Bullet::HitEnemy(void)
 				{
 					// 敵にダメージを与える
 					((CEnemy*)pScene)->HitEnemy(10);
-
+					// スコア加算
+					pScore->AddScore(100);
 					// 弾を消す
 					Uninit();
 					return;
@@ -163,6 +168,8 @@ void CNormal_Bullet::HitEnemy(void)
 	{
 		// ボスにダメージを与える
 		pBoss->HitBoss(30);
+		// スコア加算
+		pScore->AddScore(100);
 		// 弾を消す
 		Uninit();
 		return;

@@ -2,7 +2,14 @@
 // ボス [boss.cpp]
 // Author : 管原　司
 //******************************************************************************
-
+//******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define BULLET_MOVE_VALUE			(D3DXVECTOR3(5.0f,5.0f,0.0f))
+#define BULLET_NORMAL_MOVE_VALUE	(D3DXVECTOR3(2.0f,6.0f,0.0f))
+#define BULLET_TRAKING_MOVE_VALUE	(D3DXVECTOR3(6.0f,6.0f,0.0f))
+#define BULLET_DIFFUSION_MOVE_VALUE	(D3DXVECTOR3(0.0f,2.0f,0.0f))
+#define BULLET_SPINING_MOVE_VALUE	(D3DXVECTOR3(3.0f,3.0f,0.0f))
 //******************************************************************************
 // インクルードファイル
 //******************************************************************************
@@ -239,7 +246,7 @@ void CBoss::Attack(void)
 				CEnemy_Normal_Bullet::Create(D3DXVECTOR3(m_Rightpos.x + BOSS_RIGHT_SIZE.x / 2, m_Rightpos.y + BOSS_RIGHT_SIZE.y / 2, m_Rightpos.z),
 					D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)),
 					ENEMY_NORMAL_BULLET_SIZE,
-					D3DXVECTOR3(-2.0f - nCount, 6.0f, 0.0f),
+					D3DXVECTOR3(-BULLET_NORMAL_MOVE_VALUE.x - nCount, BULLET_NORMAL_MOVE_VALUE.y, 0.0f),
 					D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
 					CBullet::TEX_TYPE_ENEMY_NORMAL);
 
@@ -247,7 +254,7 @@ void CBoss::Attack(void)
 				CEnemy_Normal_Bullet::Create(D3DXVECTOR3(m_Leftpos.x + BOSS_LEFT_SIZE.x / 2, m_Leftpos.y + BOSS_LEFT_SIZE.y / 2, m_Leftpos.z),
 					D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)),
 					ENEMY_NORMAL_BULLET_SIZE,
-					D3DXVECTOR3(2.0f + nCount, 6.0f, 0.0f),
+					D3DXVECTOR3(BULLET_NORMAL_MOVE_VALUE.x + nCount, BULLET_NORMAL_MOVE_VALUE.y, 0.0f),
 					D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
 					CBullet::TEX_TYPE_ENEMY_NORMAL);
 			}
@@ -262,7 +269,7 @@ void CBoss::Attack(void)
 				CEnemy_Traking_Bullet::Create(D3DXVECTOR3(m_pos.x, m_pos.y, m_pos.z),
 					D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)),
 					ENEMY_TRAKING_BULLET_SIZE,
-					D3DXVECTOR3(6.0f + nCount, 6.0f + nCount, 0.0f),
+					D3DXVECTOR3(BULLET_TRAKING_MOVE_VALUE.x + nCount, BULLET_TRAKING_MOVE_VALUE.y + nCount, BULLET_TRAKING_MOVE_VALUE.z),
 					D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
 					CBullet::TEX_TYPE_ENEMY_NORMAL);
 			}
@@ -274,7 +281,7 @@ void CBoss::Attack(void)
 			CEnemy_Diffusion_Bullet::Create(D3DXVECTOR3(m_pos.x, m_pos.y, m_pos.z),
 				D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)),
 				FIFFUSION_BULLET_SIZE,
-				D3DXVECTOR3(0.0f, 2.0f, 0.0f),
+				D3DXVECTOR3(BULLET_DIFFUSION_MOVE_VALUE.x, BULLET_DIFFUSION_MOVE_VALUE.y, BULLET_DIFFUSION_MOVE_VALUE.z),
 				D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
 				CBullet::TEX_TYPE_ENEMY_NORMAL);
 		}
@@ -292,7 +299,7 @@ void CBoss::Attack(void)
 				CEnemy_Traking_Bullet::Create(D3DXVECTOR3(m_pos.x, m_pos.y, m_pos.z),
 					D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)),
 					ENEMY_TRAKING_BULLET_SIZE,
-					D3DXVECTOR3(6.0f + nCount, 6.0f + nCount, 0.0f),
+					D3DXVECTOR3(BULLET_TRAKING_MOVE_VALUE.x + nCount, BULLET_TRAKING_MOVE_VALUE.y + nCount, BULLET_TRAKING_MOVE_VALUE.z),
 					D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
 					CBullet::TEX_TYPE_ENEMY_NORMAL);
 			}
@@ -308,7 +315,7 @@ void CBoss::Attack(void)
 				CEnemy_Normal_Bullet::Create(D3DXVECTOR3(m_Rightpos.x + BOSS_LEFT_SIZE.x / 2, m_Rightpos.y + BOSS_LEFT_SIZE.y / 2, m_Rightpos.z),
 					D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)),
 					ENEMY_NORMAL_BULLET_SIZE,
-					D3DXVECTOR3(cosf(D3DXToRadian(m_nAttackCount2 / 3 * (360 / 20)))*3.0f, sinf(D3DXToRadian(m_nAttackCount2 / 3 * (360 / 20)))*3.0f, 0.0f),
+					D3DXVECTOR3(cosf(D3DXToRadian(m_nAttackCount2 / 3 * (360 / 20)))*BULLET_SPINING_MOVE_VALUE.x, sinf(D3DXToRadian(m_nAttackCount2 / 3 * (360 / 20)))*BULLET_SPINING_MOVE_VALUE.y, 0.0f),
 					D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
 					CBullet::TEX_TYPE_ENEMY_NORMAL);
 
@@ -316,7 +323,7 @@ void CBoss::Attack(void)
 				CEnemy_Normal_Bullet::Create(D3DXVECTOR3(m_Leftpos.x + BOSS_LEFT_SIZE.x / 2, m_Leftpos.y + BOSS_LEFT_SIZE.y / 2, m_Leftpos.z),
 					D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)),
 					ENEMY_NORMAL_BULLET_SIZE,
-					D3DXVECTOR3(cosf(D3DXToRadian(m_nAttackCount2 / 3 * (360 / 20)))* -3.0f, sinf(D3DXToRadian(m_nAttackCount2 / 3 * (360 / 20)))* -3.0f, 0.0f),
+					D3DXVECTOR3(cosf(D3DXToRadian(m_nAttackCount2 / 3 * (360 / 20)))* -BULLET_SPINING_MOVE_VALUE.x, sinf(D3DXToRadian(m_nAttackCount2 / 3 * (360 / 20)))* -BULLET_SPINING_MOVE_VALUE.y, 0.0f),
 					D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
 					CBullet::TEX_TYPE_ENEMY_NORMAL);
 

@@ -14,6 +14,7 @@
 #include "bullet.h"
 #include "enemy.h"
 #include "bom.h"
+#include "score.h"
 //******************************************************************************
 // コンストラクタ
 //******************************************************************************
@@ -134,6 +135,9 @@ void CBom::HitEnemy(void)
 	// サイズ取得
 	D3DXVECTOR3 size = GetSize();
 
+	// スコアの取得
+	CScore * pScore = CGame::GetScore();
+
 	// CScene型のポインタ
 	CScene *pScene = NULL;
 
@@ -160,6 +164,8 @@ void CBom::HitEnemy(void)
 				{
 					// 敵にダメージを与える
 					((CEnemy*)pScene)->HitEnemy(100);
+					// スコア加算
+					pScore->AddScore(100);
 				}
 			}
 		}
@@ -189,6 +195,8 @@ void CBom::HitEnemy(void)
 				{
 					// 敵にダメージを与える
 					((CBullet*)pScene)->Uninit();
+					// スコア加算
+					pScore->AddScore(100);
 				}
 			}
 		}

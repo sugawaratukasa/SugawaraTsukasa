@@ -3,7 +3,6 @@
 // Author : 管原　司
 //******************************************************************************
 #define	_CRT_SECURE_NO_WARNINGS	//scanfエラー
-
 //******************************************************************************
 // ファイルインクルード
 //******************************************************************************
@@ -30,6 +29,12 @@
 #include "boss_bom.h"
 #include <stdio.h>
 //******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define BULLET_NORMAL_MOVE_VALUE		(D3DXVECTOR3(0.0f,15.0f,0.0f))
+#define WEPON_BULLET_NORMAL_MOVE_VALUE	(D3DXVECTOR3(7.5f,15.0f,0.0f))
+#define BEAM_BULLET_MOVE_VALUE			(D3DXVECTOR3(0.0f,15.0f,0.0f))
+//******************************************************************************
 // 静的メンバ変数
 //******************************************************************************
 LPDIRECT3DTEXTURE9 CPlayer::m_apTexture[TYPE_MAX] = {};
@@ -52,7 +57,7 @@ HRESULT CPlayer::Load(void)
 void CPlayer::Unload(void)
 {
 	// 最大数分繰り返す
-	for (int nCnt = 0; nCnt < MAX_PLAYER_TEX; nCnt++)
+	for (int nCnt = 0; nCnt < TYPE_MAX; nCnt++)
 	{
 		// テクスチャの破棄
 		if (m_apTexture[nCnt] != NULL)
@@ -209,18 +214,25 @@ void CPlayer::HitPlayer(void)
 		CSound * pSound = CSceneManager::GetSound();
 		CSound::SOUND_LABEL type;
 		type = CSound::SOUND_LABEL_SE_SHOT;
+
 		// 爆発音生成
 		pSound->PlaySound(CSound::SOUND_LABEL_SE_EXPLOSION);
+
 		// ライフの取得
 		CLife * pLife = CGame::GetLife();
+
 		// ライフ減算
 		m_nLife--;
+
 		// ライフUIの減算
 		pLife->HitDamage(1);
+
 		// 爆発の生成
 		CExplosion::Create(m_MainPos, EXPLOSION_SIZE);
+
 		// 位置座標設定
 		m_apScene2D[TYPE_MAIN]->SetPosition(D3DXVECTOR3(-100.0f, -100.0f, 0.0f));
+
 		// StateをRespawnに
 		m_nPlayerState = STATE_RESPAWN;
 	}
@@ -427,35 +439,35 @@ void CPlayer::Move(void)
 	move.x += (0.0f - move.x) * RATE_MOVE;
 	move.y += (0.0f - move.y) * RATE_MOVE;
 
-	//stateがNormalまたはDamageの時
+	// stateがNormalまたはDamageの時
 	if (m_nPlayerState == STATE_NORMAL || m_nPlayerState == STATE_DAMAGE)
 	{
-		//上画面外に出たとき
+		// 上画面外に出たとき
 		if (m_MainPos.y - PLAYER_SIZE.y < 0)
 		{
-			//プレイヤーのサイズ分ずらす
+			// プレイヤーのサイズ分ずらす
 			m_MainPos.y = PLAYER_SIZE.y;
 		}
-		//もしプレイヤーが下画面外に行ったら
+		// もしプレイヤーが下画面外に行ったら
 		if (m_MainPos.y + PLAYER_SIZE.y > SCREEN_HEIGHT)
 		{
-			//プレイヤーのサイズ分ずらす
+			// プレイヤーのサイズ分ずらす
 			m_MainPos.y = SCREEN_HEIGHT - PLAYER_SIZE.y;
 		}
-		//もしプレイヤーが左画面外に行ったら
+		// もしプレイヤーが左画面外に行ったら
 		if (m_MainPos.x - PLAYER_SIZE.x - PLAYER_WEPON_SIZE.x / 2 < MIN_GAME_WIDTH)
 		{
-			//プレイヤーと武器のサイズ分ずらす
+			// プレイヤーと武器のサイズ分ずらす
 			m_MainPos.x = MIN_GAME_WIDTH + PLAYER_SIZE.x + PLAYER_WEPON_SIZE.x / 2;
 		}
-		//もしプレイヤーが右画面外に行ったら
+		// もしプレイヤーが右画面外に行ったら
 		if (m_MainPos.x + PLAYER_SIZE.x + PLAYER_WEPON_SIZE.x / 2 > MAX_GAME_WIDTH)
 		{
-			//プレイヤーと武器のサイズ分ずらす
+			// プレイヤーと武器のサイズ分ずらす
 			m_MainPos.x = MAX_GAME_WIDTH - PLAYER_SIZE.x - PLAYER_WEPON_SIZE.x / 2;
 		}
 	}
-	//位置設定
+	// 位置設定
 	m_apScene2D[TYPE_MAIN]->SetPosition(m_MainPos);
 }
 //******************************************************************************
@@ -491,29 +503,81 @@ void CPlayer::Shot(void)
 			{
 				// ショット音
 				//pSound->PlaySound(CSound::SOUND_LABEL_SE_SHOT);
+
 				// プレイヤーレベルが1の場合
 				if (m_Level == LEVEL_1)
 				{
 					// 弾の生成
-					CNormal_Bullet::Create(D3DXVECTOR3(m_MainPos), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BULLET_LEVEL1_SIZE, D3DXVECTOR3(0.0f, -10.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), CBullet::TEX_TYPE_NORMAL);
-					CNormal_Bullet::Create(D3DXVECTOR3(m_RightPos), D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(-30.0f)), BULLET_LEVEL1_SIZE, D3DXVECTOR3(7.5f, -10.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), CBullet::TEX_TYPE_NORMAL);
-					CNormal_Bullet::Create(D3DXVECTOR3(m_LeftPos), D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(30.0f)), BULLET_LEVEL1_SIZE, D3DXVECTOR3(-7.5f, -10.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), CBullet::TEX_TYPE_NORMAL);
+					CNormal_Bullet::Create(D3DXVECTOR3(m_MainPos), 
+						D3DXVECTOR3(0.0f, 0.0f, 0.0f), 
+						BULLET_LEVEL1_SIZE, 
+						D3DXVECTOR3(BULLET_NORMAL_MOVE_VALUE.x, -BULLET_NORMAL_MOVE_VALUE.y, BULLET_NORMAL_MOVE_VALUE.z),
+						D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)
+						, CBullet::TEX_TYPE_NORMAL);
+
+					CNormal_Bullet::Create(D3DXVECTOR3(m_RightPos),
+						D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(-30.0f)),
+						BULLET_LEVEL1_SIZE, 
+						D3DXVECTOR3(WEPON_BULLET_NORMAL_MOVE_VALUE.x, -WEPON_BULLET_NORMAL_MOVE_VALUE.y, WEPON_BULLET_NORMAL_MOVE_VALUE.z),
+						D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
+						CBullet::TEX_TYPE_NORMAL);
+
+					CNormal_Bullet::Create(D3DXVECTOR3(m_LeftPos),
+						D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(30.0f)),
+						BULLET_LEVEL1_SIZE,
+						D3DXVECTOR3(-WEPON_BULLET_NORMAL_MOVE_VALUE.x, -WEPON_BULLET_NORMAL_MOVE_VALUE.y, WEPON_BULLET_NORMAL_MOVE_VALUE.z),
+						D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)
+						, CBullet::TEX_TYPE_NORMAL);
 				}
 				// プレイヤーレベルが2の場合
 				if (m_Level == LEVEL_2)
 				{
 					// 弾の生成
-					CNormal_Bullet::Create(D3DXVECTOR3(m_MainPos), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BULLET_LEVEL2_SIZE, D3DXVECTOR3(0.0f, -10.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), CBullet::TEX_TYPE_NORMAL);
-					CNormal_Bullet::Create(D3DXVECTOR3(m_RightPos), D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(-30.0f)), BULLET_LEVEL2_SIZE, D3DXVECTOR3(7.5f, -10.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), CBullet::TEX_TYPE_NORMAL);
-					CNormal_Bullet::Create(D3DXVECTOR3(m_LeftPos), D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(30.0f)), BULLET_LEVEL2_SIZE, D3DXVECTOR3(-7.5f, -10.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), CBullet::TEX_TYPE_NORMAL);
+					CNormal_Bullet::Create(D3DXVECTOR3(m_MainPos),
+						D3DXVECTOR3(0.0f, 0.0f, 0.0f),
+						BULLET_LEVEL2_SIZE, 
+						D3DXVECTOR3(BULLET_NORMAL_MOVE_VALUE.x, -BULLET_NORMAL_MOVE_VALUE.y, BULLET_NORMAL_MOVE_VALUE.z),
+						D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
+						CBullet::TEX_TYPE_NORMAL);
+
+					CNormal_Bullet::Create(D3DXVECTOR3(m_RightPos),
+						D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(-30.0f)),
+						BULLET_LEVEL2_SIZE,
+						D3DXVECTOR3(WEPON_BULLET_NORMAL_MOVE_VALUE.x, -WEPON_BULLET_NORMAL_MOVE_VALUE.y, WEPON_BULLET_NORMAL_MOVE_VALUE.z),
+						D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
+						CBullet::TEX_TYPE_NORMAL);
+
+					CNormal_Bullet::Create(D3DXVECTOR3(m_LeftPos),
+						D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(30.0f)),
+						BULLET_LEVEL2_SIZE, 
+						D3DXVECTOR3(-WEPON_BULLET_NORMAL_MOVE_VALUE.x, -WEPON_BULLET_NORMAL_MOVE_VALUE.y, WEPON_BULLET_NORMAL_MOVE_VALUE.z),
+						D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
+						CBullet::TEX_TYPE_NORMAL);
 				}
 				// プレイヤーレベルが3の場合
 				if (m_Level == LEVEL_3)
 				{
 					// 弾の生成
-					CNormal_Bullet::Create(D3DXVECTOR3(m_MainPos), D3DXVECTOR3(0.0f, 0.0f, 0.0f), BULLET_LEVEL3_SIZE, D3DXVECTOR3(0.0f, -10.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), CBullet::TEX_TYPE_NORMAL);
-					CNormal_Bullet::Create(D3DXVECTOR3(m_RightPos), D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(-30.0f)), BULLET_LEVEL3_SIZE, D3DXVECTOR3(7.5f, -10.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), CBullet::TEX_TYPE_NORMAL);
-					CNormal_Bullet::Create(D3DXVECTOR3(m_LeftPos), D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(30.0f)), BULLET_LEVEL3_SIZE, D3DXVECTOR3(-7.5f, -10.0f, 0.0f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), CBullet::TEX_TYPE_NORMAL);
+					CNormal_Bullet::Create(D3DXVECTOR3(m_MainPos),
+						D3DXVECTOR3(0.0f, 0.0f, 0.0f),
+						BULLET_LEVEL3_SIZE,
+						D3DXVECTOR3(BULLET_NORMAL_MOVE_VALUE.x, -BULLET_NORMAL_MOVE_VALUE.y, BULLET_NORMAL_MOVE_VALUE.z),
+						D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
+						CBullet::TEX_TYPE_NORMAL);
+
+					CNormal_Bullet::Create(D3DXVECTOR3(m_RightPos),
+						D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(-30.0f)),
+						BULLET_LEVEL3_SIZE,
+						D3DXVECTOR3(WEPON_BULLET_NORMAL_MOVE_VALUE.x, -WEPON_BULLET_NORMAL_MOVE_VALUE.y, WEPON_BULLET_NORMAL_MOVE_VALUE.z),
+						D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
+						CBullet::TEX_TYPE_NORMAL);
+
+					CNormal_Bullet::Create(D3DXVECTOR3(m_LeftPos),
+						D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(30.0f)),
+						BULLET_LEVEL3_SIZE, 
+						D3DXVECTOR3(-WEPON_BULLET_NORMAL_MOVE_VALUE.x, -WEPON_BULLET_NORMAL_MOVE_VALUE.y, WEPON_BULLET_NORMAL_MOVE_VALUE.z),
+						D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
+						CBullet::TEX_TYPE_NORMAL);
 				}
 			}
 		}
@@ -565,7 +629,7 @@ void CPlayer::Shot(void)
 					CPlayer_Beam::Create(D3DXVECTOR3(m_MainPos.x, m_MainPos.y - 45, m_MainPos.z), 
 						D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 						BULLET_LEVEL1_BEAM_SIZE,
-						D3DXVECTOR3(0.0f, -15.0f, 0.0f), 
+						D3DXVECTOR3(BEAM_BULLET_MOVE_VALUE.x, -BEAM_BULLET_MOVE_VALUE.y, BEAM_BULLET_MOVE_VALUE.z),
 						D3DXCOLOR (1.0f,1.0f,1.0f,1.0f),
 						CBullet::TEX_TYPE_BEAM);
 				}
@@ -576,7 +640,7 @@ void CPlayer::Shot(void)
 					CPlayer_Beam::Create(D3DXVECTOR3(m_MainPos.x, m_MainPos.y - 45, m_MainPos.z),
 						D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 						BULLET_LEVEL2_BEAM_SIZE,
-						D3DXVECTOR3(0.0f, -15.0f, 0.0f),
+						D3DXVECTOR3(BEAM_BULLET_MOVE_VALUE.x, -BEAM_BULLET_MOVE_VALUE.y, BEAM_BULLET_MOVE_VALUE.z),
 						D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
 						CBullet::TEX_TYPE_BEAM);
 				}
@@ -587,7 +651,7 @@ void CPlayer::Shot(void)
 					CPlayer_Beam::Create(D3DXVECTOR3(m_MainPos.x, m_MainPos.y - 45, m_MainPos.z),
 						D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 						BULLET_LEVEL3_BEAM_SIZE,
-						D3DXVECTOR3(0.0f, -15.0f, 0.0f),
+						D3DXVECTOR3(BEAM_BULLET_MOVE_VALUE.x, -BEAM_BULLET_MOVE_VALUE.y, BEAM_BULLET_MOVE_VALUE.z),
 						D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
 						CBullet::TEX_TYPE_BEAM);
 				}
@@ -645,7 +709,7 @@ void CPlayer::Shot(void)
 				CBoss_Bom::Create(D3DXVECTOR3(m_MainPos.x, m_MainPos.y - 45, m_MainPos.z),
 					D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 					BOSS_BOM_SIZE,
-					D3DXVECTOR3(0.0f, -15.0f, 0.0f),
+					D3DXVECTOR3(BEAM_BULLET_MOVE_VALUE.x, -BEAM_BULLET_MOVE_VALUE.y, BEAM_BULLET_MOVE_VALUE.z),
 					CBullet::TEX_TYPE_BEAM);
 			}
 			// カウントが200以上になったら
@@ -751,56 +815,56 @@ void CPlayer::PlayerState(void)
 				m_nRespawnCount = 0;
 			}
 		}
-		//ダメージ状態
+		// ダメージ状態
 		if (m_nPlayerState == STATE_DAMAGE)
 		{
-			//カウントインクリメント
+			// カウントインクリメント
 			m_nDamageCount++;
-			//ダメージのカウントが10になったら
+			// ダメージのカウントが10になったら
 			if (m_nDamageCount % 5 == 0)
 			{
-				//カラー設定
+				// カラー設定
 				m_apScene2D[TYPE_MAIN]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 				m_apScene2D[TYPE_RIGHT]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 				m_apScene2D[TYPE_LEFT]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 			}
-			//ダメージのカウントが20になったら
+			// ダメージのカウントが20になったら
 			if (m_nDamageCount % 6 == 0)
 			{
-				//カラー設定
+				// カラー設定
 				m_apScene2D[TYPE_MAIN]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
 				m_apScene2D[TYPE_RIGHT]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
 				m_apScene2D[TYPE_LEFT]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f));
 				m_nNoDamageCount = 0;
 			}
-			//無敵時間が終了したら
+			// 無敵時間が終了したら
 			if (m_nDamageCount == DAMAGE_COUNT)
 			{
 				m_apScene2D[TYPE_MAIN]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 				m_apScene2D[TYPE_RIGHT]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 				m_apScene2D[TYPE_LEFT]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-				//stateをNormalに
+				// stateをNormalに
 				m_nPlayerState = STATE_NORMAL;
-				//カウントを0に
+				// カウントを0に
 				m_nDamageCount = 0;
 			}
 		}
-		//コンティニュー状態がfalseの時
+		// コンティニュー状態がfalseの時
 		if (m_bContinue == false)
 		{
-			//ライフが0以下の時
+			// ライフが0以下の時
 			if (m_nLife <= 0)
 			{
-				//コンティニュー状態をtrueに
+				// コンティニュー状態をtrueに
 				m_bContinue = true;
 			}
 		}
-		//コンティニュー状態をtrueに
+		// コンティニュー状態をtrueに
 		if (m_bContinue == true)
 		{
-			//死亡状態に
+			// 死亡状態に
 			m_nPlayerState = STATE_DEAD;
-			//コンティニュー生成 
+			// コンティニュー生成 
 			CContinue::Create(D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f), CONTINUE_SIZE);
 		}
 	}
@@ -812,17 +876,22 @@ void CPlayer::PlayerState(void)
 		// コンティニューした場合
 		if (m_nContinue == PLAYER_CONTINUE)
 		{
-			//スコア取得
+			// スコア取得
 			CScore * pScore = CGame::GetScore();
 			pScore->AddScore(-3000);
-			//ライフの取得
+
+			// ライフの取得
 			CLife * pLife = CGame::GetLife();
+
 			//ライフを3に
 			m_nLife = PLAYER_LIFE;
+
 			//ライフを設定
 			pLife->AddLife(m_nLife);
+
 			//ボムの所持数を3に
 			GetBom(3);
+
 			//コンティニュー状態をfalseに
 			m_bContinue = false;
 			m_nContinue = 0;

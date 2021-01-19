@@ -25,7 +25,13 @@
 //******************************************************************************
 // マクロ定義
 //******************************************************************************
-#define RANKING_SCORE_SIZE (D3DXVECTOR3(30.0f,30.0f,0.0f))
+#define RANKING_SCORE_SIZE	(D3DXVECTOR3(30.0f,30.0f,0.0f))
+#define RANKING_POS			(D3DXVECTOR3(50.0f,100.0f,0.0f))
+#define RANKING_SCORE_POS1	(D3DXVECTOR3(0.0f,200.0f,0.0f))	
+#define RANKING_SCORE_POS2	(D3DXVECTOR3(0.0f,280.0f,0.0f))	
+#define RANKING_SCORE_POS3	(D3DXVECTOR3(0.0f,350.0f,0.0f))	
+#define RANKING_SCORE_POS4	(D3DXVECTOR3(0.0f,440.0f,0.0f))	
+#define RANKING_SCORE_POS5	(D3DXVECTOR3(0.0f,530.0f,0.0f))	
 //******************************************************************************
 // コンストラクタ
 //******************************************************************************
@@ -73,12 +79,12 @@ HRESULT CRanking::Init()
 	ReadPlayerFile();
 
 	// プレイヤーのスコア生成
-	m_pPlayerScore = CScore::Create(D3DXVECTOR3(m_pos.x + 50, 100, m_pos.z), RANKING_SCORE_SIZE);
+	m_pPlayerScore = CScore::Create(D3DXVECTOR3(m_pos.x + RANKING_POS.x, RANKING_POS.y, m_pos.z), RANKING_SCORE_SIZE);
 
 	// スコア設定
 	m_pPlayerScore->SetScore(m_nPlayerScore);
-	// ランキングテキスト読み込み
 
+	// ランキングテキスト読み込み
 	ReadFile();
 
 	// ランキング設定
@@ -88,15 +94,15 @@ HRESULT CRanking::Init()
 	ReadFile();
 
 	// スコア生成
-	m_apScore[0] = CScore::Create(D3DXVECTOR3(m_pos.x, 200, m_pos.z), RANKING_SCORE_SIZE);
+	m_apScore[0] = CScore::Create(D3DXVECTOR3(m_pos.x, RANKING_SCORE_POS1.y, m_pos.z), RANKING_SCORE_SIZE);
 	m_apScore[0]->SetScore(m_anScore[0]);
-	m_apScore[1] = CScore::Create(D3DXVECTOR3(m_pos.x, 280, m_pos.z), RANKING_SCORE_SIZE);
+	m_apScore[1] = CScore::Create(D3DXVECTOR3(m_pos.x, RANKING_SCORE_POS2.y, m_pos.z), RANKING_SCORE_SIZE);
 	m_apScore[1]->SetScore(m_anScore[1]);
-	m_apScore[2] = CScore::Create(D3DXVECTOR3(m_pos.x, 350, m_pos.z), RANKING_SCORE_SIZE);
+	m_apScore[2] = CScore::Create(D3DXVECTOR3(m_pos.x, RANKING_SCORE_POS3.y, m_pos.z), RANKING_SCORE_SIZE);
 	m_apScore[2]->SetScore(m_anScore[2]);
-	m_apScore[3] = CScore::Create(D3DXVECTOR3(m_pos.x, 440, m_pos.z), RANKING_SCORE_SIZE);
+	m_apScore[3] = CScore::Create(D3DXVECTOR3(m_pos.x, RANKING_SCORE_POS4.y, m_pos.z), RANKING_SCORE_SIZE);
 	m_apScore[3]->SetScore(m_anScore[3]);
-	m_apScore[4] = CScore::Create(D3DXVECTOR3(m_pos.x, 530, m_pos.z), RANKING_SCORE_SIZE);
+	m_apScore[4] = CScore::Create(D3DXVECTOR3(m_pos.x, RANKING_SCORE_POS5.y, m_pos.z), RANKING_SCORE_SIZE);
 	m_apScore[4]->SetScore(m_anScore[4]);
 	return S_OK;
 }

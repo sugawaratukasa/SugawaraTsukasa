@@ -2,7 +2,10 @@
 // 円形の弾を出す敵 [circle_bullet_enemy.cpp]
 // Author : 管原　司
 //******************************************************************************
-
+//******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define BULLET_MOVE_VALUE (D3DXVECTOR3(5.0f,5.0f,0.0f))
 //******************************************************************************
 // インクルードファイル
 //******************************************************************************
@@ -102,7 +105,7 @@ void CCirecle_Bullet_Enemy::Update(void)
 			CEnemy_Normal_Bullet::Create(D3DXVECTOR3(pos.x, pos.y, pos.z), 
 				D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)), 
 				ENEMY_NORMAL_BULLET_SIZE,
-				D3DXVECTOR3(cosf(D3DXToRadian(nCount * (360 / 20)))*5.0f, sinf(D3DXToRadian(nCount * (360 / 20)))*5.0f, 0.0f),
+				D3DXVECTOR3(cosf(D3DXToRadian(nCount * (360 / 20)))*BULLET_MOVE_VALUE.x, sinf(D3DXToRadian(nCount * (360 / 20)))*BULLET_MOVE_VALUE.y, 0.0f),
 				D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
 				CBullet::TEX_TYPE_ENEMY_NORMAL);
 		}

@@ -18,6 +18,10 @@
 #include "ship.h"
 #include "ship_battery.h"
 //******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define BULLET_MOVE_VALUE (D3DXVECTOR3(5.0f,5.0f,0.0f))
+//******************************************************************************
 // コンストラクタ
 //******************************************************************************
 CShip_Battery::CShip_Battery(int nPriority) : CEnemy(nPriority)
@@ -156,7 +160,7 @@ void CShip_Battery::Attack(void)
 				CEnemy_Traking_Bullet::Create(D3DXVECTOR3(Battery_Muzle_Pos.x, Battery_Muzle_Pos.y, Battery_Muzle_Pos.z)
 					, D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)),
 					ENEMY_TRAKING_BULLET_SIZE,
-					D3DXVECTOR3(5.0f + nCount, 5.0f + nCount, 0.0f),
+					D3DXVECTOR3(BULLET_MOVE_VALUE.x + nCount, BULLET_MOVE_VALUE.y + nCount, 0.0f),
 					D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
 					CBullet::TEX_TYPE_ENEMY_NORMAL);
 			}

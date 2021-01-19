@@ -20,6 +20,7 @@
 #include "bom.h"
 #include "boss_bom.h"
 #include "boss.h"
+#include "score.h"
 //******************************************************************************
 // 静的メンバ変数
 //******************************************************************************
@@ -156,6 +157,9 @@ void CBoss_Bom::HitBoss(void)
 	// サイズ取得
 	D3DXVECTOR3 size = GetSize();
 
+	// スコアの取得
+	CScore * pScore = CGame::GetScore();
+
 	// ボスの位置座標とサイズ取得
 	D3DXVECTOR3 BossPos = pBoss->GetPosition();
 	D3DXVECTOR3 BossSize = pBoss->GetSize();
@@ -186,6 +190,8 @@ void CBoss_Bom::HitBoss(void)
 				{
 					// 敵にダメージを与える
 					((CBullet*)pScene)->Uninit();
+					//スコア加算
+					pScore->AddScore(100);
 				}
 			}
 		}
@@ -195,7 +201,9 @@ void CBoss_Bom::HitBoss(void)
 	if (Collision(pos, BossPos, size, BossPos) == true)
 	{
 		// ボスにダメージを与える
-		pBoss->HitBoss(20);
+		pBoss->HitBoss(40);
+		//スコア加算
+		pScore->AddScore(100);
 		// 弾を消す
 		Uninit();
 		return;
