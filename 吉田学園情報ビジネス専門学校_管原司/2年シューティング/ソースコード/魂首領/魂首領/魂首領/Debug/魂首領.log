@@ -1,0 +1,23 @@
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (test.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  sound.cpp
+  result.cpp
+  game.cpp
+  boss.cpp
+  コードを生成中...
+  スキップ中... (関連する変更は検出されませんでした)
+  enemy.cpp
+  tutrial_polygon.cpp
+  tutrial.cpp
+  title_polygon.cpp
+  title.cpp
+  renderer.cpp
+  ranking_polygon.cpp
+  press_enter_polygon.cpp
+  polygon.cpp
+  manager.cpp
+  fade.cpp
+  continue_polygon.cpp
+  continue.cpp
+  black_polygon.cpp
+  魂首領.vcxproj -> C:\Users\gsp015\Desktop\魂首領修正途中\魂首領\Debug\魂首領.exe
+  魂首領.vcxproj -> C:\Users\gsp015\Desktop\魂首領修正途中\魂首領\Debug\魂首領.pdb (Full PDB)

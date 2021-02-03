@@ -1,0 +1,4 @@
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (test.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  circle_bullet_enemy.cpp
+  魂首領.vcxproj -> C:\Users\gsp015\Desktop\GitTest1\SugawaraTsukasa\吉田学園情報ビジネス専門学校_管原司\2年シューティング\ソースコード\魂首領修正途中\魂首領\Debug\魂首領.exe
+  魂首領.vcxproj -> C:\Users\gsp015\Desktop\GitTest1\SugawaraTsukasa\吉田学園情報ビジネス専門学校_管原司\2年シューティング\ソースコード\魂首領修正途中\魂首領\Debug\魂首領.pdb (Full PDB)

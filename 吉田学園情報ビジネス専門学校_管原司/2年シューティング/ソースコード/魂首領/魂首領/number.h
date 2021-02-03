@@ -1,0 +1,38 @@
+//******************************************************************************
+// ナンバー処理 [number.h]
+// Author : 管原　司
+//******************************************************************************
+#ifndef NUMBER_H_
+#define NUMBER_H_
+//******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define MAX_NUMBER (9)	// ナンバー最大数
+//******************************************************************************
+// クラス
+//******************************************************************************
+class CNumber
+{
+public:
+	CNumber();
+	~CNumber();
+	static HRESULT Load(void);
+	static void Unload(void);
+	static CNumber * Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);
+	HRESULT Init();
+	void Uninit(void);
+	void Update(void);
+	void Draw(void);
+	void SetNumber(int nNumber);
+	void SetPosition(D3DXVECTOR3 pos);
+	void SetSize(D3DXVECTOR3 size);
+	D3DXVECTOR3 GetPosition(void) { return m_pos; }
+	D3DXVECTOR3 GetSize(void) { return m_size; }
+private:
+	static LPDIRECT3DTEXTURE9 m_pTexture;		// テクスチャ
+	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;			// バッファ
+	D3DXVECTOR3 m_pos;							// 位置座標
+	D3DXVECTOR3 m_size;							// サイズ
+	int m_nNumber;								// ナンバー
+};
+#endif

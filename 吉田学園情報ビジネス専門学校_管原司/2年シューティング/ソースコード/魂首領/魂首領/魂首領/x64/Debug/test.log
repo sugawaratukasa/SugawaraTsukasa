@@ -1,0 +1,40 @@
+﻿  sound.cpp
+  score.cpp
+  scene2d.cpp
+c:\users\gsp015\documents\visual studio 2015\projects\test\test\scene2d.cpp(61): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+  scene.cpp
+  renderer.cpp
+  player.cpp
+  number.cpp
+  manager.cpp
+  main.cpp
+  life.cpp
+  inputkeyboard.cpp
+  inputjoystick.cpp
+  input.cpp
+  explosion.cpp
+  enemy.cpp
+  effect.cpp
+  bullet.cpp
+  bg.cpp
+  コードを生成中...
+explosion.obj : error LNK2019: 未解決の外部シンボル D3DXCreateTextureFromFileA が関数 "public: __cdecl CExplosion::CExplosion(int)" (??0CExplosion@@QEAA@H@Z) で参照されました。
+life.obj : error LNK2001: 外部シンボル "D3DXCreateTextureFromFileA" は未解決です。
+number.obj : error LNK2001: 外部シンボル "D3DXCreateTextureFromFileA" は未解決です。
+player.obj : error LNK2001: 外部シンボル "D3DXCreateTextureFromFileA" は未解決です。
+bg.obj : error LNK2001: 外部シンボル "D3DXCreateTextureFromFileA" は未解決です。
+bullet.obj : error LNK2001: 外部シンボル "D3DXCreateTextureFromFileA" は未解決です。
+effect.obj : error LNK2001: 外部シンボル "D3DXCreateTextureFromFileA" は未解決です。
+enemy.obj : error LNK2001: 外部シンボル "D3DXCreateTextureFromFileA" は未解決です。
+input.obj : error LNK2019: 未解決の外部シンボル DirectInput8Create が関数 "public: virtual long __cdecl CInput::Init(struct HINSTANCE__ *,struct HWND__ *)" (?Init@CInput@@UEAAJPEAUHINSTANCE__@@PEAUHWND__@@@Z) で参照されました。
+input.obj : error LNK2001: 外部シンボル "IID_IDirectInput8A" は未解決です。
+inputjoystick.obj : error LNK2001: 外部シンボル "c_dfDIJoystick" は未解決です。
+inputkeyboard.obj : error LNK2001: 外部シンボル "GUID_SysKeyboard" は未解決です。
+inputkeyboard.obj : error LNK2001: 外部シンボル "c_dfDIKeyboard" は未解決です。
+renderer.obj : error LNK2019: 未解決の外部シンボル Direct3DCreate9 が関数 "public: long __cdecl CRenderer::Init(struct HWND__ *,bool)" (?Init@CRenderer@@QEAAJPEAUHWND__@@_N@Z) で参照されました。
+renderer.obj : error LNK2019: 未解決の外部シンボル D3DXCreateFontA が関数 "public: long __cdecl CRenderer::Init(struct HWND__ *,bool)" (?Init@CRenderer@@QEAAJPEAUHWND__@@_N@Z) で参照されました。
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86\d3d9.lib : warning LNK4272: ライブラリのコンピューターの種類 'X86' がターゲットのコンピューターの種類' x64' と競合しています
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86\d3dx9.lib : warning LNK4272: ライブラリのコンピューターの種類 'X86' がターゲットのコンピューターの種類' x64' と競合しています
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86\dxguid.lib : warning LNK4272: ライブラリのコンピューターの種類 'X86' がターゲットのコンピューターの種類' x64' と競合しています
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86\dinput8.lib : warning LNK4272: ライブラリのコンピューターの種類 'X86' がターゲットのコンピューターの種類' x64' と競合しています
+c:\users\gsp015\documents\visual studio 2015\Projects\test\x64\Debug\test.exe : fatal error LNK1120: 8 件の未解決の外部参照
