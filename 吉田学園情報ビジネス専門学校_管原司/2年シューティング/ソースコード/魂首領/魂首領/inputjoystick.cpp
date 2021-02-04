@@ -4,7 +4,7 @@
 //******************************************************************************
 
 //******************************************************************************
-// ファイルインクルード
+// インクルードファイル
 //******************************************************************************
 #include "main.h"
 #include "manager.h"
@@ -15,7 +15,6 @@
 #include "inputkeyboard.h"
 #include "player.h"
 #include "bullet.h"
-#include "explosion.h"
 #include "enemy.h"
 #include "inputjoystick.h"
 //******************************************************************************
@@ -95,7 +94,9 @@ HRESULT CInputJoystick::Init(HINSTANCE hInstance, HWND hWnd)
 //******************************************************************************
 void CInputJoystick::Uninit(void)
 {
+	// 終了
 	CInput::Uninit();
+
 	if (m_pJDevice != NULL)
 	{
 		//デバイス制御の停止

@@ -2,10 +2,7 @@
 // 通常の敵 [normal_enemy.cpp]
 // Author : 管原　司
 //******************************************************************************
-//******************************************************************************
-// マクロ定義
-//******************************************************************************
-#define BULLET_MOVE_VALUE (D3DXVECTOR3(5.0f,5.0f,0.0f))
+
 //******************************************************************************
 // インクルードファイル
 //******************************************************************************
@@ -17,16 +14,25 @@
 #include "player.h"
 #include "bullet.h"
 #include "enemy_traking_bullet.h"
-#include "explosion.h"
 #include "enemy.h"
 #include "game.h"
 #include "normal_enemy.h"
+//******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define BULLET_MOVE_VALUE	(D3DXVECTOR3(5.0f,5.0f,0.0f))		// 弾の移動量
+#define MOVE_VALUE			(D3DXVECTOR3(0.0f,2.0f,0.0f))		// 移動量
+#define BULLET_ROT			(D3DXVECTOR3(0.0f,0.0f,0.0f))		// 弾の向き
+#define COLOR				(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))	// 色
+#define ATTACK_COUNT		(60)								// 攻撃カウント
+#define BULLET_NUMDER		(2)									// 弾の数
+#define INIT_ATTACK_COUNT	(0)									// 攻撃カウント初期化
 //******************************************************************************
 // コンストラクタ
 //******************************************************************************
 CNormal_Enemy::CNormal_Enemy(int nPriority) : CEnemy(nPriority)
 {
-	m_nAttackCount = 0;
+	m_nAttackCount = INIT_INT;
 }
 //******************************************************************************
 // デストラクタ
@@ -84,9 +90,9 @@ void CNormal_Enemy::Update(void)
 	D3DXVECTOR3 pos = GetPosition();
 
 	// 移動量
-	D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 2.0f, 0.0f);
+	D3DXVECTOR3 move = MOVE_VALUE;
 
-	// アタック処理
+	// 攻撃処理
 	Attack();
 
 	// 移動
@@ -115,19 +121,19 @@ void CNormal_Enemy::Attack(void)
 	m_nAttackCount++;
 
 	// 60あまり0の時
-	if (m_nAttackCount % 60 == 0)
+	if (m_nAttackCount == ATTACK_COUNT)
 	{
 		// 二発生成
-		for (int nCount = 0; nCount < 2; nCount++)
+		for (int nCount = 0; nCount < BULLET_NUMDER; nCount++)
 		{
 			CEnemy_Traking_Bullet::Create(D3DXVECTOR3(pos.x, pos.y, pos.z),
-				D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)),
+				BULLET_ROT,
 				ENEMY_TRAKING_BULLET_SIZE,
 				D3DXVECTOR3(BULLET_MOVE_VALUE.x + nCount, BULLET_MOVE_VALUE.y + nCount, BULLET_MOVE_VALUE.z),
-				D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
+				COLOR,
 				CBullet::TEX_TYPE_ENEMY_NORMAL);
 		}
 		// カウントを0にする
-		m_nAttackCount = 0;
+		m_nAttackCount = INIT_ATTACK_COUNT;
 	}
 }

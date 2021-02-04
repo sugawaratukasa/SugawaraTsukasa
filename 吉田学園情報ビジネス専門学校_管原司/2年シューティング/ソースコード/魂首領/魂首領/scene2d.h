@@ -15,10 +15,10 @@
 //******************************************************************************
 typedef struct
 {
-	D3DXVECTOR3 pos;//頂点座標
-	float rhw;//座標変換用紙係数
-	D3DCOLOR col;//頂点カラー
-	D3DXVECTOR2 tex;//テクスチャ
+	D3DXVECTOR3 pos;	// 頂点座標
+	float rhw;			// 座標変換用紙係数
+	D3DCOLOR col;		// 頂点カラー
+	D3DXVECTOR2 tex;	// テクスチャ
 }VERTEX_2D;
 //******************************************************************************
 // クラス
@@ -26,12 +26,16 @@ typedef struct
 class CScene2d : public CScene
 {
 public:
+
 	CScene2d(int nPriority = 3);
 	~CScene2d();
+	static CScene2d*Create();
+
 	HRESULT Init();
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
+
 	void SetPosition(D3DXVECTOR3 pos);
 	void SetTexture(float fTexX, float fTexY, float fTexAnimX , float fTexAnimY);
 	void SetRGBA(D3DXCOLOR col);
@@ -39,10 +43,12 @@ public:
 	void SetSize(D3DXVECTOR3 size);
 	void SetScale(float fScale);
 	void BindTexture(LPDIRECT3DTEXTURE9 pTexture);
+
 	D3DXVECTOR3 GetPosition(void) { return m_pos; }
 	D3DXCOLOR GetRGBA(void) { return m_col; }
 	D3DXVECTOR3 GetRot(void) { return m_rot; }
 	D3DXVECTOR3 GetSize(void) { return m_size; }
+	float GetScale(void) { return m_fScale; }
 private:
 	LPDIRECT3DTEXTURE9 m_pTexture;		// テクスチャ
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;	// バッファ

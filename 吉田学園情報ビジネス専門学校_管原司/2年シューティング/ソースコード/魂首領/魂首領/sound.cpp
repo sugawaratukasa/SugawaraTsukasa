@@ -4,7 +4,7 @@
 //******************************************************************************
 
 //******************************************************************************
-// ファイルインクルード
+// インクルードファイル
 //******************************************************************************
 #include "sound.h"
 #include "main.h"
@@ -13,19 +13,19 @@
 //******************************************************************************
 CSound::PARAM CSound::m_aParam[SOUND_LABEL_MAX] =
 {
-	{ "data/BGM/bgm000.wav", -1 },		// BGM0
-	{ "data/SE/shot000.wav", 0 },			// 弾発射音
-	{ "data/SE/explosion1.wav", 0 },	// 爆発音
-	{ "data/SE/select.wav", 0 },	// 選択音
-	{ "data/SE/Bom.wav", 0 }	// 選択音
+	{ "data/BGM/bgm000.wav", TYPE_LOOP },	// BGM0
+	{ "data/SE/shot000.wav", TYPE_SE },		// 弾発射音
+	{ "data/SE/explosion1.wav", TYPE_SE },	// 爆発音
+	{ "data/SE/select.wav", TYPE_SE },		// 選択音
+	{ "data/SE/Bom.wav", TYPE_SE }			// ボム
 };
 //******************************************************************************
 // コンストラクタ
 //******************************************************************************
 CSound::CSound()
 {
-	m_pXAudio2 = NULL;
-	m_pMasteringVoice = NULL;
+	m_pXAudio2			= NULL;
+	m_pMasteringVoice	= NULL;
 	memset(m_apSourceVoice, 0, sizeof(m_apSourceVoice));
 	memset(m_apDataAudio, 0, sizeof(m_apDataAudio));
 	memset(m_aSizeAudio, 0, sizeof(m_aSizeAudio));

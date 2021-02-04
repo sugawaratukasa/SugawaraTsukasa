@@ -4,7 +4,7 @@
 //******************************************************************************
 
 //******************************************************************************
-// ファイルインクルード
+// インクルードファイル
 //******************************************************************************
 #include "main.h"
 #include "manager.h"
@@ -114,26 +114,33 @@ void CEnemy_Normal_Bullet::HitPlayer(void)
 	// サイズ取得
 	D3DXVECTOR3 size = GetSize();
 
-	//ゲーム取得
-	CGame * pGame = CSceneManager::GetGame();
+	// CSceneクラスのポインタ
+	CScene * pScene = NULL;
 
-	//プレイヤーの取得
-	CPlayer * pPlayer = CGame::GetPlayer();
-
-	// プレイヤーの位置座標取得
-	D3DXVECTOR3 PlayerPos = pPlayer->GetPosition();
-
-	// プレイヤーのサイズ取得
-	D3DXVECTOR3 PlayerSize = pPlayer->GetCollisionSize();
-
-	// 当たり判定
-	if (Collision(pos, PlayerPos, size, PlayerSize) == true)
+	// 敵の当たり判定
+	do
 	{
-		// プレイヤーにダメージを与える
-		pPlayer->HitPlayer();
+		// オブジェタイプが敵の場合
+		pScene = GetScene(OBJTYPE_PLAYER);
+		if (pScene != NULL)
+		{
+			OBJTYPE objType = pScene->GetObjType();
+			if (objType == OBJTYPE_PLAYER)
+			{
+				// 座標とサイズ取得
+				D3DXVECTOR3 PlayerPos = ((CPlayer*)pScene)->GetPosition();
+				D3DXVECTOR3 PlayerSize = ((CPlayer*)pScene)->GetCollisionSize();
 
-		// 弾を消す
-		Uninit();
-		return;
-	}
+				// 当たり判定
+				if (Collision(pos, PlayerPos, size, PlayerSize) == true)
+				{
+					// 敵にダメージを与える
+					((CPlayer*)pScene)->HitPlayer();
+					// 弾を消す
+					Uninit();
+					return;
+				}
+			}
+		}
+	} while (pScene != NULL);
 }

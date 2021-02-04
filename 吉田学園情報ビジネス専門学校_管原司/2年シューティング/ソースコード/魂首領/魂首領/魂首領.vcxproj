@@ -145,18 +145,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bg.cpp" />
+    <ClCompile Include="black_polygon.cpp" />
     <ClCompile Include="bom.cpp" />
     <ClCompile Include="bomui.cpp" />
     <ClCompile Include="boss.cpp" />
     <ClCompile Include="boss_bom.cpp" />
+    <ClCompile Include="boss_left.cpp" />
+    <ClCompile Include="boss_right.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="circle_bullet_enemy.cpp" />
     <ClCompile Include="continue.cpp" />
+    <ClCompile Include="continue_polygon.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="enemy_diffusion_bullet.cpp" />
     <ClCompile Include="enemy_normal_bullet.cpp" />
     <ClCompile Include="enemy_traking_bullet.cpp" />
-    <ClCompile Include="explosion.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="input.cpp" />
@@ -166,13 +169,19 @@
     <ClCompile Include="life.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
+    <ClCompile Include="mode.cpp" />
     <ClCompile Include="normal_bullet.cpp" />
     <ClCompile Include="normal_enemy.cpp" />
     <ClCompile Include="number.cpp" />
+    <ClCompile Include="particle.cpp" />
+    <ClCompile Include="particle_explosion.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="player_beam.cpp" />
+    <ClCompile Include="player_wepon.cpp" />
     <ClCompile Include="polygon.cpp" />
+    <ClCompile Include="press_enter_polygon.cpp" />
     <ClCompile Include="ranking.cpp" />
+    <ClCompile Include="ranking_polygon.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="scene.cpp" />
@@ -182,7 +191,9 @@
     <ClCompile Include="ship_battery.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="title.cpp" />
+    <ClCompile Include="title_polygon.cpp" />
     <ClCompile Include="tutrial.cpp" />
+    <ClCompile Include="tutrial_polygon.cpp" />
     <ClCompile Include="warning.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -191,14 +202,16 @@
     <ClInclude Include="bomui.h" />
     <ClInclude Include="boss.h" />
     <ClInclude Include="boss_bom.h" />
+    <ClInclude Include="boss_left.h" />
+    <ClInclude Include="boss_right.h" />
     <ClInclude Include="bullet.h" />
     <ClInclude Include="circle_bullet_enemy.h" />
     <ClInclude Include="continue.h" />
+    <ClInclude Include="continue_polygon.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="enemy_diffusion_bullet.h" />
     <ClInclude Include="enemy_normal_bullet.h" />
     <ClInclude Include="enemy_traking_bullet.h" />
-    <ClInclude Include="explosion.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="input.h" />
@@ -208,13 +221,20 @@
     <ClInclude Include="life.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
+    <ClInclude Include="mode.h" />
     <ClInclude Include="normal_bullet.h" />
     <ClInclude Include="normal_enemy.h" />
     <ClInclude Include="number.h" />
+    <ClInclude Include="particle.h" />
+    <ClInclude Include="particle_explosion.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="player_beam.h" />
+    <ClInclude Include="player_wepon.h" />
     <ClInclude Include="polygon.h" />
+    <ClInclude Include="black_polygon.h" />
+    <ClInclude Include="press_enter_polygon.h" />
     <ClInclude Include="ranking.h" />
+    <ClInclude Include="ranking_polygon.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="scene.h" />
@@ -224,7 +244,9 @@
     <ClInclude Include="ship_battery.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="title.h" />
+    <ClInclude Include="title_polygon.h" />
     <ClInclude Include="tutrial.h" />
+    <ClInclude Include="tutrial_polygon.h" />
     <ClInclude Include="warning.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

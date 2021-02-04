@@ -2,6 +2,10 @@
 // アイテム処理 [item.cpp]
 // Author : 管原 司
 //******************************************************************************
+
+//******************************************************************************
+// インクルードファイル
+//******************************************************************************
 #include "main.h"
 #include "manager.h"
 #include "renderer.h"
@@ -14,6 +18,15 @@
 #include "game.h"
 #include "item.h"
 //******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define BOM_TEXTURE		( "data/Texture/UI/bom3.png")		// ボムテクスチャ
+#define POWERUP_TEXTURE	( "data/Texture/UI/Powerup.png")	// パワーアップテクスチャ
+#define MOVE_VALUE		(3.0f)								// 移動量
+#define COLOR			(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))	// 色
+#define DEVIDE_VALUE	(2)									// 除算値
+#define GET_BOM_VALUE	(1)									// ボム取得数
+//******************************************************************************
 // 静的メンバ変数
 //******************************************************************************
 LPDIRECT3DTEXTURE9 CItem::m_apTexture[TYPE_MAX] = {};
@@ -24,9 +37,8 @@ HRESULT CItem::Load(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = CSceneManager::GetRenderer()->GetDevice();
 	//テクスチャ読み込み
-	D3DXCreateTextureFromFile(pDevice, "data/Texture/star.png", &m_apTexture[TYPE_STAR]);
-	D3DXCreateTextureFromFile(pDevice, "data/Texture/bom3.png", &m_apTexture[TYPE_BOM]);
-	D3DXCreateTextureFromFile(pDevice, "data/Texture/Powerup.png", &m_apTexture[TYPE_POWERUP]);
+	D3DXCreateTextureFromFile(pDevice, BOM_TEXTURE, &m_apTexture[TYPE_BOM]);
+	D3DXCreateTextureFromFile(pDevice, POWERUP_TEXTURE, &m_apTexture[TYPE_POWERUP]);
 	return S_OK;
 }
 //******************************************************************************
@@ -35,7 +47,7 @@ HRESULT CItem::Load(void)
 void CItem::Unload(void)
 {
 	// テクスチャの破棄
-	for (int nCnt = 0; nCnt < MAX_ITEM_TEX; nCnt++)
+	for (int nCnt = 0; nCnt < TYPE_MAX; nCnt++)
 	{
 		if (m_apTexture[nCnt] != NULL)
 		{
@@ -43,21 +55,6 @@ void CItem::Unload(void)
 			m_apTexture[nCnt] = NULL;
 		}
 	}
-}
-
-//******************************************************************************
-// コンストラクタ
-//******************************************************************************
-CItem::CItem(int nPriority) : CScene2d(nPriority)
-{
-	m_move	= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_bMove = false;
-}
-//******************************************************************************
-// デストラクタ
-//******************************************************************************
-CItem::~CItem()
-{
 }
 //******************************************************************************
 // 生成関数
@@ -80,7 +77,7 @@ CItem * CItem::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, TYPE type)
 	pItem->m_type = type;
 
 	// 弾の初期設定
-	pItem->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	pItem->SetRGBA(COLOR);
 
 	// テクスチャ受け渡し
 	pItem->BindTexture(m_apTexture[pItem->m_type]);
@@ -93,6 +90,20 @@ CItem * CItem::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, TYPE type)
 
 	// pItemポインタを返す
 	return pItem;
+}
+//******************************************************************************
+// コンストラクタ
+//******************************************************************************
+CItem::CItem(int nPriority) : CScene2d(nPriority)
+{
+	m_move	= INIT_D3DXVECTOR3;
+	m_bMove = false;
+}
+//******************************************************************************
+// デストラクタ
+//******************************************************************************
+CItem::~CItem()
+{
 }
 //******************************************************************************
 // 初期化関数
@@ -133,67 +144,69 @@ void CItem::Update(void)
 	// falseの場合
 	if (m_bMove == false)
 	{
-		m_move.y = 3.0f;
+		m_move.y = MOVE_VALUE;
 	}
-	//画面の右に当たった時
-	if (pos.x + ITEM_SIZE.x / 2 > MAX_GAME_WIDTH)
+	// 画面の右に当たった時
+	if (pos.x + ITEM_SIZE.x / DEVIDE_VALUE > MAX_GAME_WIDTH)
 	{
 		m_bMove = true;
-		//真ん中より低かったら
-		if (pos.y + ITEM_SIZE.y/ 2 < SCREEN_HEIGHT / 2)
+		// 真ん中より低かったら
+		if (pos.y + ITEM_SIZE.y/ DEVIDE_VALUE < SCREEN_HEIGHT / DEVIDE_VALUE)
 		{
-			m_move.x = -3.0f;
-			m_move.y = 3.0f;
+			m_move.x = -MOVE_VALUE;
+			m_move.y = MOVE_VALUE;
 		}
-		//真ん中より高かったら
-		if (pos.y - ITEM_SIZE.y / 2 > SCREEN_HEIGHT / 2)
+		// 真ん中より高かったら
+		if (pos.y - ITEM_SIZE.y / DEVIDE_VALUE > SCREEN_HEIGHT / DEVIDE_VALUE)
 		{
-			m_move.x = -3.0f;
-			m_move.y = 3.0f;
+			m_move.x = -MOVE_VALUE;
+			m_move.y = MOVE_VALUE;
 		}
 	}
-	//画面左に当たった時
-	if (pos.x - ITEM_SIZE.x / 2 < MIN_GAME_WIDTH)
+	// 画面左に当たった時
+	if (pos.x - ITEM_SIZE.x / DEVIDE_VALUE < MIN_GAME_WIDTH)
 	{
 		// trueにする
 		m_bMove = true;
-		//真ん中より低かったら
-		if (pos.y + ITEM_SIZE.y / 2 < SCREEN_HEIGHT / 2)
+		// 真ん中より低かったら
+		if (pos.y + ITEM_SIZE.y / DEVIDE_VALUE < SCREEN_HEIGHT / DEVIDE_VALUE)
 		{
-			m_move.x = 3.0f;
-			m_move.y = 3.0f;
+			m_move.x = MOVE_VALUE;
+			m_move.y = MOVE_VALUE;
 		}
-		//真ん中より高かったら
-		if (pos.y - ITEM_SIZE.y / 2 > SCREEN_HEIGHT / 2)
+		// 真ん中より高かったら
+		if (pos.y - ITEM_SIZE.y / DEVIDE_VALUE > SCREEN_HEIGHT / DEVIDE_VALUE)
 		{
-			m_move.x = 3.0f;
-			m_move.y = -3.0f;
+			m_move.x = MOVE_VALUE;
+			m_move.y = -MOVE_VALUE;
 		}
 	}
 	//画面下に当たった時
-	if (pos.y - ITEM_SIZE.y / 2 <= 0)
+	if (pos.y - ITEM_SIZE.y / DEVIDE_VALUE <= WINDOW_POS_Y)
 	{
+		// trueに
 		m_bMove = true;
-		if (pos.x + ITEM_SIZE.x / 2 > SCREEN_WIDTH / 2)
+		// 真ん中より右
+		if (pos.x + ITEM_SIZE.x / DEVIDE_VALUE > SCREEN_WIDTH / DEVIDE_VALUE)
 		{
-			m_move.x = 3.0f;
-			m_move.y = 3.0f;
+			m_move.x = MOVE_VALUE;
+			m_move.y = MOVE_VALUE;
 		}
-		if (pos.x + ITEM_SIZE.x / 2 < SCREEN_WIDTH / 2)
+		// 真ん中より左
+		if (pos.x + ITEM_SIZE.x / DEVIDE_VALUE < SCREEN_WIDTH / DEVIDE_VALUE)
 		{
-			m_move.x = -3.0f;
-			m_move.y = 3.0f;
+			m_move.x = -MOVE_VALUE;
+			m_move.y = MOVE_VALUE;
 		}
 	}
 	//画面上に当たった時
-	if (pos.y + ITEM_SIZE.y / 2 > SCREEN_HEIGHT)
+	if (pos.y + ITEM_SIZE.y / DEVIDE_VALUE > SCREEN_HEIGHT)
 	{
 		// trueにする
 		m_bMove = true;
-		m_move.y = -3.0f;
+		m_move.y = -MOVE_VALUE;
 	}
 	
-
 	// 移動
 	pos.x += m_move.x;
 	pos.y += m_move.y;
@@ -255,7 +268,7 @@ void CItem::HitPlayer(void)
 		if (m_type == TYPE_BOM)
 		{
 			// ボムの所持数の加算
-			pPlayer->GetBom(1);
+			pPlayer->GetBom(GET_BOM_VALUE);
 		}
 		// タイプがパワーアップの場合
 		if (m_type == TYPE_POWERUP)
@@ -263,6 +276,7 @@ void CItem::HitPlayer(void)
 			// パワーアップ
 			pPlayer->GetPowerUp();
 		}
+
 		// 弾を消す
 		Uninit();
 		return;

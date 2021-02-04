@@ -4,7 +4,7 @@
 //******************************************************************************
 
 //******************************************************************************
-// ファイルインクルード
+// インクルードファイル
 //******************************************************************************
 #include "main.h"
 #include "manager.h"
@@ -18,13 +18,22 @@
 #include "player.h"
 #include "normal_bullet.h"
 #include "boss.h"
+#include "boss_left.h"
+#include "boss_right.h"
 #include "score.h"
+//******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define ENEMY_DAMAGE			(10)		// 敵に与えるダメージ
+#define BOSS_MAIN_DAMAGE		(40)		// ボスの中心に与えるダメージ
+#define BOSS_DAMAGE				(20)		// ボスの中心に与えるダメージ
+#define ADD_SCORE				(100)		// スコア加算値
 //******************************************************************************
 // コンストラクタ
 //******************************************************************************
 CNormal_Bullet::CNormal_Bullet(int nPriority) : CBullet(nPriority)
 {
-	m_move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_move = INIT_D3DXVECTOR3;
 }
 //******************************************************************************
 // デストラクタ
@@ -119,9 +128,6 @@ void CNormal_Bullet::HitEnemy(void)
 	// スコアの取得
 	CScore * pScore = CGame::GetScore();
 
-	//ゲーム取得
-	CGame * pGame = CSceneManager::GetGame();
-
 	// ボス取得
 	CBoss * pBoss = CGame::GetBoss();
 
@@ -148,9 +154,9 @@ void CNormal_Bullet::HitEnemy(void)
 				if (Collision(pos, EnemyPos, size, EnemySize) == true)
 				{
 					// 敵にダメージを与える
-					((CEnemy*)pScene)->HitEnemy(10);
+					((CEnemy*)pScene)->HitEnemy(ENEMY_DAMAGE);
 					// スコア加算
-					pScore->AddScore(100);
+					pScore->AddScore(ADD_SCORE);
 					// 弾を消す
 					Uninit();
 					return;
@@ -159,19 +165,90 @@ void CNormal_Bullet::HitEnemy(void)
 		}
 	} while (pScene != NULL);
 
-	// ボスの位置座標とサイズ取得
-	D3DXVECTOR3 BossPos = pBoss->GetPosition();
-	D3DXVECTOR3 BossSize = pBoss->GetSize();
-
-	// 当たり判定
-	if (Collision(pos, BossPos, size, BossPos) == true)
+	// ボスの当たり判定
+	do
 	{
-		// ボスにダメージを与える
-		pBoss->HitBoss(30);
-		// スコア加算
-		pScore->AddScore(100);
-		// 弾を消す
-		Uninit();
-		return;
-	}
+		// オブジェタイプが敵の場合
+		pScene = GetScene(OBJTYPE_BOSS);
+		if (pScene != NULL)
+		{
+			OBJTYPE objType = pScene->GetObjType();
+			if (objType == OBJTYPE_BOSS)
+			{
+				// 座標とサイズ取得
+				D3DXVECTOR3 BossPos = ((CBoss*)pScene)->GetPosition();
+				D3DXVECTOR3 BossSize = ((CBoss*)pScene)->GetSize();
+
+				// 当たり判定
+				if (Collision(pos, BossPos, size, BossSize) == true)
+				{
+					// 敵にダメージを与える
+					((CBoss*)pScene)->HitBoss(BOSS_MAIN_DAMAGE);
+					// スコア加算
+					pScore->AddScore(ADD_SCORE);
+					// 弾を消す
+					Uninit();
+					return;
+				}
+			}
+		}
+	} while (pScene != NULL);
+
+	// ボスの右当たり判定
+	do
+	{
+		// オブジェタイプが敵の場合
+		pScene = GetScene(OBJTYPE_BOSS_RIGHT);
+		if (pScene != NULL)
+		{
+			OBJTYPE objType = pScene->GetObjType();
+			if (objType == OBJTYPE_BOSS_RIGHT)
+			{
+				// 座標とサイズ取得
+				D3DXVECTOR3 BossRightPos = ((CBoss_Right*)pScene)->GetPosition();
+				D3DXVECTOR3 BossRightSize = ((CBoss_Right*)pScene)->GetSize();
+
+				// 当たり判定
+				if (Collision(pos, BossRightPos, size, BossRightSize) == true)
+				{
+					// 敵にダメージを与える
+					((CBoss_Right*)pScene)->Hit(BOSS_DAMAGE);
+					// スコア加算
+					pScore->AddScore(ADD_SCORE);
+					// 弾を消す
+					Uninit();
+					return;
+				}
+			}
+		}
+	} while (pScene != NULL);
+
+	// ボスの左当たり判定
+	do
+	{
+		// オブジェタイプが敵の場合
+		pScene = GetScene(OBJTYPE_BOSS_LEFT);
+		if (pScene != NULL)
+		{
+			OBJTYPE objType = pScene->GetObjType();
+			if (objType == OBJTYPE_BOSS_LEFT)
+			{
+				// 座標とサイズ取得
+				D3DXVECTOR3 BossLeftPos = ((CBoss_Left*)pScene)->GetPosition();
+				D3DXVECTOR3 BossLeftSize = ((CBoss_Left*)pScene)->GetSize();
+
+				// 当たり判定
+				if (Collision(pos, BossLeftPos, size, BossLeftSize) == true)
+				{
+					// 敵にダメージを与える
+					((CBoss_Left*)pScene)->Hit(BOSS_DAMAGE);
+					// スコア加算
+					pScore->AddScore(ADD_SCORE);
+					// 弾を消す
+					Uninit();
+					return;
+				}
+			}
+		}
+	} while (pScene != NULL);
 }

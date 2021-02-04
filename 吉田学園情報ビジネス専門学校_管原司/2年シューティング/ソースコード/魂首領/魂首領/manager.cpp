@@ -4,7 +4,7 @@
 //******************************************************************************
 
 //*****************************************************************************
-// ファイルのインクルード
+// インクルードファイル
 //*****************************************************************************
 #include "main.h"
 #include "manager.h"
@@ -15,25 +15,30 @@
 #include "inputkeyboard.h"
 #include "inputjoystick.h"
 #include "player.h"
+#include "player_wepon.h"
 #include "bullet.h"
 #include "bg.h"
-#include "explosion.h"
 #include "sound.h"
 #include "enemy.h"
 #include "number.h"
 #include "score.h"
 #include "life.h"
-#include "title.h"
-#include "game.h"
-#include "result.h"
+#include "mode.h"
 #include "fade.h"
 #include "item.h"
 #include "bomui.h"
 #include "polygon.h"
 #include "boss.h"
+#include "boss_left.h"
+#include "boss_right.h"
 #include "warning.h"
 #include "tutrial.h"
 #include "ship.h"
+#include "particle.h"
+#include "polygon.h"
+#include "title.h"
+#include "game.h"
+#include "result.h"
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -41,17 +46,12 @@
 //*****************************************************************************
 // 静的メンバ変数
 //*****************************************************************************
-CRenderer * CSceneManager::m_pRenderer = NULL;
-CInputKeyboard * CSceneManager::m_pInputKeyboard = NULL;
-CInputJoystick * CSceneManager::m_pInputJoystick = NULL;
-CSound * CSceneManager::m_pSound = NULL;
-CTitle * CSceneManager::m_pTitle = NULL;
-CTutrial * CSceneManager::m_pTutrial = NULL;
-CGame * CSceneManager::m_pGame = NULL;
-CResult * CSceneManager::m_pResult = NULL;
-CFade * CSceneManager::m_pFade = NULL;
-CSceneManager::MODE CSceneManager::m_mode = MODE_NONE;
-bool CSceneManager::m_bUseFade = false;
+CRenderer * CSceneManager::m_pRenderer				= NULL;
+CInputKeyboard * CSceneManager::m_pInputKeyboard	= NULL;
+CInputJoystick * CSceneManager::m_pInputJoystick	= NULL;
+CSound * CSceneManager::m_pSound					= NULL;
+CMode *CSceneManager::m_pMode						= NULL;
+CSceneManager::MODE CSceneManager::m_mode			= MODE_NONE;
 //******************************************************************************
 // コンストラクタ
 //******************************************************************************
@@ -144,12 +144,6 @@ HRESULT CSceneManager::Init(HINSTANCE hInsitance, HWND hWnd, bool bWindow)
 	// タイトルに設定
 	SetMode(MODE_TITLE);
 
-	// NULLでない場合
-	if (m_pFade == NULL)
-	{
-		// フェード生成
-		m_pFade = CFade::Create(D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f), FADE_SIZE, m_mode);
-	}
 	return S_OK;
 }
 //******************************************************************************
@@ -164,14 +158,6 @@ void CSceneManager::Uninit(void)
 	//サウンド全停止
 	m_pSound->StopSound();
 
-	// NULLでない場合
-	if (m_pSound != NULL)
-	{
-		// サウンドの終了処理
-		m_pSound->Uninit();
-		delete m_pSound;
-		m_pSound = NULL;
-	}
 	// NULLでない場合
 	if (m_pInputJoystick != NULL)
 	{
@@ -197,13 +183,21 @@ void CSceneManager::Uninit(void)
 		m_pRenderer = NULL;
 	}
 	// NULLでない場合
-	if (m_pFade != NULL)
+	if (m_pMode != NULL)
 	{
-		// フェード終了
-		m_pFade->Uninit();
-		delete m_pFade;
-		m_pFade = NULL;
+		// モード終了
+		m_pMode->Uninit();
 	}
+
+	// NULLでない場合
+	if (m_pSound != NULL)
+	{
+		// サウンドの終了処理
+		m_pSound->Uninit();
+		delete m_pSound;
+		m_pSound = NULL;
+	}
+
 }
 
 //******************************************************************************
@@ -229,15 +223,11 @@ void CSceneManager::Update(void)
 		// コントローラー更新
 		m_pInputJoystick->Update();
 	}
-	// m_bUseFadeがtrueの場合
-	if (m_bUseFade == true)
+	// NULLでない場合
+	if (m_pMode != NULL)
 	{
-		// NULLでない場合
-		if (m_pFade != NULL)
-		{
-			// フェード更新
-			m_pFade->Update();
-		}
+		// モード更新
+		m_pMode->Update();
 	}
 }
 
@@ -246,85 +236,100 @@ void CSceneManager::Update(void)
 //******************************************************************************
 void CSceneManager::Draw(void)
 {
-	//描画処理
-	m_pRenderer->Draw(); 
+	// NULLでない場合
+	if (m_pRenderer != NULL)
+	{
+		//描画処理
+		m_pRenderer->Draw();
+	}
+	if (m_pMode != NULL)
+	{
+		// モード描画処理
+		m_pMode->Draw();
+	}
 }
 //******************************************************************************
 // モード設定
 //******************************************************************************
 void CSceneManager::SetMode(MODE mode)
 {
-	// mode代入
-	m_mode = mode;
-
-	// 全終了
-	CScene::ReleaseAll();
-
-	switch (m_mode)
+	// NULLでない場合
+	if (m_pMode != NULL)
 	{
-		// タイトル
-	case MODE_TITLE:
-		m_pTitle = CTitle::Create(D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f), MODE_SIZE);
-		break;
-		// チュートリアル
-	case MODE_TUTRIAL:
-		m_pTutrial = CTutrial::Create(D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f), MODE_SIZE);
-		break;
-		// ゲーム
-	case MODE_GAME:
-		m_pGame = CGame::Create(D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f), MODE_SIZE);
-		break;
-		// リザルト
-	case MODE_RESULT:
-		m_pResult = CResult::Create(D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f), MODE_SIZE);
-		break;
-		// その他の場合
-	default:
-		break;
-		return;
+		// その時のモードの終了処理
+		m_pMode->Uninit();
+		// メモリ破棄
+		delete m_pMode;
+		// NULLに
+		m_pMode = NULL;
+	}
+	// NULLの場合
+	if (m_pMode == NULL)
+	{
+		m_mode = mode;
+
+		switch (m_mode)
+		{
+		case MODE_TITLE:
+
+			// タイトルの生成
+			m_pMode = new CTitle;
+
+			// タイトルの初期化処理
+			m_pMode->Init();
+
+			break;
+
+		case MODE_GAME:
+			// ゲームの生成
+			m_pMode = new CGame;
+
+			// ゲームの初期化処理
+			m_pMode->Init();
+
+			break;
+
+		case MODE_TUTRIAL:
+
+			// チュートリアルの生成
+			m_pMode = new CTutrial;
+
+			// チュートリアルの初期化処理
+			m_pMode->Init();
+
+			break;
+
+		case MODE_RESULT:
+
+			// クリア画面の生成
+			m_pMode = new CResult;
+
+			// クリア画面の初期化処理
+			m_pMode->Init();
+
+			break;
+		}
 	}
 	// キーボード更新
 	m_pInputJoystick->Update();
-}
-//******************************************************************************
-// フェード開始
-//******************************************************************************
-void CSceneManager::StartFade(MODE mode)
-{
-	// modeを代入
-	m_mode = mode;
-	// trueに
-	m_bUseFade = true;
-}
-//******************************************************************************
-// フェード停止
-//******************************************************************************
-void CSceneManager::StopFade(void)
-{
-	// falseに
-	m_bUseFade = false;
 }
 //******************************************************************************
 // テクスチャ全読み込み関数
 //******************************************************************************
 void CSceneManager::LoadAll(void)
 {
-	// タイトル
-	CTitle::Load();
-	// リザルト
-	CResult::Load();
 	// 背景
 	CBg::Load();
 	// ライフ
 	CLife::Load();
 	// 自機
 	CPlayer::Load();
+	// プレイヤーの武器
+	CPlayer_Wepon::Load();
 	// 敵
 	CEnemy::Load();
 	// 弾
 	CBullet::Load();
-	// 爆発
-	CExplosion::Load();
 	// ナンバー
 	CNumber::Load();
 	// アイテム
@@ -335,10 +340,16 @@ void CSceneManager::LoadAll(void)
 	CShip::Load();
 	// ボス
 	CBoss::Load();
+	// ボスの左
+	CBoss_Left::Load();
+	// ボスの右
+	CBoss_Right::Load();
 	// warning
 	CWarning::Load();
-	// チュートリアル
-	CTutrial::Load();
+	// パーティクル
+	CParticle::Load();
+	// ポリゴン
+	CPolygon::Load();
 }
 //******************************************************************************
 // テクスチャ全破棄関数
@@ -346,12 +357,18 @@ void CSceneManager::LoadAll(void)
 void CSceneManager::UnloadAll(void)
 {
 	// テクスチャ破棄
-	// チュートリアル
-	CTutrial::Unload();
+	// ポリゴン
+	CPolygon::Unload();
+	// パーティクル
+	CParticle::Unload();
 	// warning
 	CWarning::Unload();
 	// ボス
 	CBoss::Unload();
+	// ボスの左
+	CBoss_Left::Unload();
+	// ボスの右
+	CBoss_Right::Unload();
 	// Ship
 	CShip::Unload();
 	// ボム
@@ -360,20 +377,16 @@ void CSceneManager::UnloadAll(void)
 	CItem::Unload();
 	// ナンバー
 	CNumber::Unload();
-	// 爆発
-	CExplosion::Unload();
 	// 弾
 	CBullet::Unload();
 	// 敵
 	CEnemy::Unload();
 	// 自機
 	CPlayer::Unload();
+	// プレイヤーの武器
+	CPlayer_Wepon::Unload();
 	// ライフ
 	CLife::Unload();
 	// 背景
 	CBg::Unload();
-	// Result
-	CResult::Unload();
-	// タイトル
-	CTitle::Unload();
 }

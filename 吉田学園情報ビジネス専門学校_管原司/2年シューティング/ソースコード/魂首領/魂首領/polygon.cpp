@@ -2,6 +2,9 @@
 // ポリゴン [polygon.cpp]
 // Author : 管原　司
 //******************************************************************************
+//******************************************************************************
+// インクルードファイル
+//******************************************************************************
 #include "sound.h"
 #include "main.h"
 #include "manager.h"
@@ -9,6 +12,18 @@
 #include "scene.h"
 #include "scene2d.h"
 #include "polygon.h"
+//******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define TITLE_TEXTURE			("data/Texture/UI/Title.png")		// タイトルテクスチャ
+#define PRESS_ENTER_TEXTURE		("data/Texture/UI/PressEnter.png")	// プレスエンターテクスチャ
+#define TUTRIAL_TEXTURE			("data/Texture/UI/Tutrial.png")		// チュートリアルテクスチャ
+#define RANKING_TEXTURE			("data/Texture/UI/Ranking.png")		// ランキングテクスチャ
+#define CONTINUE_TEXTURE		("data/Texture/UI/continue.png")	// コンティニューテクスチャ
+//******************************************************************************
+// 静的メンバ変数
+//******************************************************************************
+LPDIRECT3DTEXTURE9 CPolygon::m_apTexture[TEX_TYPE_MAX] = {};
 //******************************************************************************
 // コンストラクタ
 //******************************************************************************
@@ -22,30 +37,36 @@ CPolygon::~CPolygon()
 {
 }
 //******************************************************************************
-// 生成関数
+// テクスチャ読み込み
 //******************************************************************************
-CPolygon * CPolygon::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+HRESULT CPolygon::Load(void)
 {
-	// CPolygonクラスのポインタ
-	CPolygon * pPolygon;
-
-	// メモリ確保
-	pPolygon = new CPolygon;
-
-	// 位置座標設定
-	pPolygon->SetPosition(pos);
-
-	// サイズ設定
-	pPolygon->SetSize(size);
-
-	// カラー設定
-	pPolygon->SetRGBA(D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f));
-
-	// 初期化
-	pPolygon->Init();
-
-	// ポインタを返す
-	return pPolygon;
+	//デバイス取得
+	LPDIRECT3DDEVICE9 pDevice = CSceneManager::GetRenderer()->GetDevice();
+	//テクスチャ読み込み
+	D3DXCreateTextureFromFile(pDevice, TITLE_TEXTURE, &m_apTexture[TEX_TYPE_TITLE]);
+	D3DXCreateTextureFromFile(pDevice, PRESS_ENTER_TEXTURE, &m_apTexture[TEX_TYPE_PRESS_ENTER]);
+	D3DXCreateTextureFromFile(pDevice, TUTRIAL_TEXTURE, &m_apTexture[TEX_TYPE_TUTRIAL]);
+	D3DXCreateTextureFromFile(pDevice, RANKING_TEXTURE, &m_apTexture[TEX_TYPE_RANKING]);
+	D3DXCreateTextureFromFile(pDevice, CONTINUE_TEXTURE, &m_apTexture[TEX_TYPE_CONTINUE]);
+	return S_OK;
+}
+//******************************************************************************
+// テクスチャ破棄
+//******************************************************************************
+void CPolygon::Unload(void)
+{
+	for (int nCnt = 0; nCnt < TEX_TYPE_MAX; nCnt++)
+	{
+		// テクスチャの破棄
+		if (m_apTexture[nCnt] != NULL)
+		{
+			//テクスチャリリース
+			m_apTexture[nCnt]->Release();
+			//m_pTextureをNULLに
+			m_apTexture[nCnt] = NULL;
+		}
+	}
 }
 //******************************************************************************
 // 初期化関数
@@ -79,4 +100,22 @@ void CPolygon::Draw(void)
 {
 	//　描画
 	CScene2d::Draw();
+}
+//******************************************************************************
+// 情報設定
+//******************************************************************************
+void CPolygon::SetPolygon(D3DXVECTOR3 pos, D3DXVECTOR3 size, D3DXCOLOR col, TEX_TYPE textype)
+{
+	// 位置座標設定
+	SetPosition(pos);
+
+	// サイズ設定
+	SetSize(size);
+
+	// カラー設定
+	SetRGBA(col);
+
+	m_TexType = textype;
+
+	BindTexture(m_apTexture[m_TexType]);
 }

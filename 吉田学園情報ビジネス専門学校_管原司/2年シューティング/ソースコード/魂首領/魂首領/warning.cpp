@@ -4,7 +4,7 @@
 //******************************************************************************
 
 //******************************************************************************
-// ファイルインクルード
+// インクルードファイル
 //******************************************************************************
 #include "main.h"
 #include "manager.h"
@@ -14,6 +14,15 @@
 #include "boss.h"
 #include "game.h"
 #include "warning.h"
+//******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define TEXTURE				( "data/Texture/UI/warning.png")				// テクスチャ
+#define BOSS_RESPAWN_COUNT	(50)											// ボス生成カウント
+#define COLOR_ADD_VALUE		(0.05f)											// 色加算値
+#define COLOR_MAX_VALUE		(1.0f)											// 色の最大値
+#define COLOR_MIN_VALUE		(0.1f)											// 色の最小値
+#define COLOR				(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))				// 色の値
 //******************************************************************************
 // 静的メンバ変数
 //******************************************************************************
@@ -26,7 +35,7 @@ HRESULT CWarning::Load(void)
 	//デバイス取得
 	LPDIRECT3DDEVICE9 pDevice = CSceneManager::GetRenderer()->GetDevice();
 	//テクスチャ読み込み
-	D3DXCreateTextureFromFile(pDevice, "data/Texture/warning.png", &m_pTexture);
+	D3DXCreateTextureFromFile(pDevice, TEXTURE, &m_pTexture);
 	return S_OK;
 }
 //******************************************************************************
@@ -47,7 +56,7 @@ void CWarning::Unload(void)
 CWarning::CWarning(int nPriority) : CScene2d(nPriority)
 {
 	m_bColor		= false;
-	m_nWarnigCount	= 0;
+	m_nWarnigCount	= INIT_INT;
 }
 //******************************************************************************
 // デストラクタ
@@ -85,7 +94,7 @@ CWarning * CWarning::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 HRESULT CWarning::Init(void)
 {
 	// カラー設定
-	SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	SetRGBA(COLOR);
 
 	// テクスチャ受け渡し
 	BindTexture(m_pTexture);
@@ -118,9 +127,9 @@ void CWarning::Update(void)
 	if (m_bColor == false)
 	{
 		// α値減算
-		col.a -= 0.05f;
+		col.a -= COLOR_ADD_VALUE;
 		// 0.1以下になった場合
-		if (col.a <= 0.1f)
+		if (col.a <= COLOR_MIN_VALUE)
 		{
 			// trueにする
 			m_bColor = true;
@@ -130,9 +139,9 @@ void CWarning::Update(void)
 	else
 	{
 		// α値加算
-		col.a += 0.05f;
+		col.a += COLOR_ADD_VALUE;
 		// 1.0f以上の場合
-		if (col.a >= 1.0f)
+		if (col.a >= COLOR_MAX_VALUE)
 		{
 			// falseにする
 			m_bColor = false;
@@ -141,20 +150,19 @@ void CWarning::Update(void)
 		m_nWarnigCount++;
 	}
 	// 50の場合
-	if (m_nWarnigCount == 50)
+	if (m_nWarnigCount == BOSS_RESPAWN_COUNT)
 	{
-		 // ボス取得
-		CBoss *pBoss = CGame::GetBoss();
-		 // ボス更新開始
-		pBoss->SetBoss(1);
-		//終了
+		// ボス生成
+		CGame::CreateBoss();
+
+		// 終了
 		Uninit();
 		// 他の処理を通らないように
 		return;
 	}
 
 	// カラー設定
-	SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, col.a));
+	SetRGBA(col);
 }
 //******************************************************************************
 // 描画関数

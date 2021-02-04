@@ -4,6 +4,7 @@
 //******************************************************************************
 #ifndef _GAME_H_
 #define _GAME_H_
+#include "mode.h"
 //******************************************************************************
 // マクロ定義
 //******************************************************************************
@@ -19,19 +20,20 @@ class CEnemy;
 class CBomUI;
 class CShip;
 class CBoss;
+
 ///******************************************************************************
 // クラス
 //******************************************************************************
-class CGame : public CScene
+class CGame : public CMode
 {
 public:
-	CGame(int nPriority = 10);
+	CGame();
 	~CGame();
-	static CGame * Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);
 	HRESULT Init(void);
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
+	static void CreateBoss(void);
 	static CScore * GetScore(void) { return m_pScore; }
 	static CLife * GetLife(void) { return m_pLife; }
 	static CPlayer * GetPlayer(void) { return m_pPlayer; }
@@ -39,14 +41,15 @@ public:
 	static CShip * GetShip(void) { return m_pShip; }
 	static CBoss * GetBoss(void) { return m_pBoss; }
 private:
+	void Enemy_Respawn(void);
+
 	static CScore * m_pScore;	// スコア情報
 	static CLife * m_pLife;		// ライフ情報
 	static CPlayer * m_pPlayer;	// プレイヤー情報
 	static CBomUI * m_pBom;		// ボム
 	static CShip * m_pShip;		// 船
 	static CBoss * m_pBoss;		// ボス
-	D3DXVECTOR3 m_pos;			// 位置座標
-	D3DXVECTOR3 m_size;			// サイズ
+
 	bool m_bfade;				// フェード
 	int m_nCount;				// カウント
 	int m_nRespawn_Count;		// Respawnカウント

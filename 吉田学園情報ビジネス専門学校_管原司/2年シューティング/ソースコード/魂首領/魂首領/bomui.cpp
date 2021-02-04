@@ -2,6 +2,7 @@
 // ボムのUI [bomui.cpp]
 // Author : 管原　司
 //******************************************************************************
+
 //******************************************************************************
 // インクルードファイル
 //******************************************************************************
@@ -12,6 +13,12 @@
 #include "scene2d.h"
 #include "bomui.h"
 //******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define BOM_UI_TEXTURE				( "data/Texture/UI/bom3.png")		// ボムUIテクスチャ
+#define NOT_POSESSION_COLOR_VALUE	(D3DXCOLOR(0.3f,0.3f,0.3f,1.0f))	// ボムを所持してない時の色
+#define POSESSION_COLOR_VALUE		(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))	//	ボムを所持しているときの色
+//******************************************************************************
 // 静的メンバ変数
 //******************************************************************************
 LPDIRECT3DTEXTURE9 CBomUI::m_pTexture = NULL;
@@ -21,34 +28,15 @@ LPDIRECT3DTEXTURE9 CBomUI::m_pTexture = NULL;
 CBomUI::CBomUI(int nPriority) : CScene(nPriority)
 {
 	memset(m_apScene2D, 0, sizeof(m_apScene2D));
-	m_pos				= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_size				= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_nBom_Posession	= 0;
+	m_pos				= INIT_D3DXVECTOR3;
+	m_size				= INIT_D3DXVECTOR3;
+	m_nBom_Posession	= INIT_INT;
 }
 //******************************************************************************
 // デストラクタ
 //******************************************************************************
 CBomUI::~CBomUI()
 {
-}
-
-//******************************************************************************
-// テクスチャ読み込み
-//******************************************************************************
-HRESULT CBomUI::Load(void)
-{
-	LPDIRECT3DDEVICE9 pDevice = CSceneManager::GetRenderer()->GetDevice();
-	//テクスチャ読み込み
-	D3DXCreateTextureFromFile(pDevice, "data/Texture/bom3.png", &m_pTexture);
-	return S_OK;
-}
-//******************************************************************************
-// テクスチャ破棄
-//******************************************************************************
-void CBomUI::Unload(void)
-{
-	m_pTexture->Release();
-	m_pTexture = NULL;
 }
 //******************************************************************************
 // 生成関数
@@ -74,18 +62,36 @@ CBomUI * CBomUI::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 	return pBomUI;
 }
 //******************************************************************************
+// テクスチャ読み込み
+//******************************************************************************
+HRESULT CBomUI::Load(void)
+{
+	LPDIRECT3DDEVICE9 pDevice = CSceneManager::GetRenderer()->GetDevice();
+	//テクスチャ読み込み
+	D3DXCreateTextureFromFile(pDevice, BOM_UI_TEXTURE, &m_pTexture);
+	return S_OK;
+}
+//******************************************************************************
+// テクスチャ破棄
+//******************************************************************************
+void CBomUI::Unload(void)
+{
+	m_pTexture->Release();
+	m_pTexture = NULL;
+}
+//******************************************************************************
 // 初期化関数
 //******************************************************************************
 HRESULT CBomUI::Init()
 {
 	// 最大数分繰り返す
-	for (int nCnt = 0; nCnt < MAX_BOM; nCnt++)
+	for (int nCnt = INIT_INT; nCnt < MAX_BOM; nCnt++)
 	{
 		// メモリ確保
-		m_apScene2D[nCnt] = new CScene2d;
+		m_apScene2D[nCnt] = new CScene2d(OBJTYPE_UI);
 
 		// カラー設定
-		m_apScene2D[nCnt]->SetRGBA(D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f));
+		m_apScene2D[nCnt]->SetRGBA(NOT_POSESSION_COLOR_VALUE);
 
 		// テクスチャ受け渡し
 		m_apScene2D[nCnt]->BindTexture(m_pTexture);
@@ -134,61 +140,62 @@ void CBomUI::SetBomUI(int mBomPossesion)
 	m_nBom_Posession = mBomPossesion;
 	
 	// 所持数が5の場合
-	if (m_nBom_Posession == MAX_BOM)
+	if (m_nBom_Posession == POSESSION_MAX)
 	{
-		for (int nCount = 0; nCount < MAX_BOM; nCount++)
+		for (int nCount = INIT_INT; nCount < POSESSION_MAX; nCount++)
 		{
-			m_apScene2D[nCount]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			m_apScene2D[nCount]->SetRGBA(POSESSION_COLOR_VALUE);
 		}
 	}
 	// 所持数が4の場合
-	if (m_nBom_Posession == 4)
+	if (m_nBom_Posession == POSESSION_4)
 	{
-		for (int nCount = 0; nCount < 4; nCount++)
+		for (int nCount = INIT_INT; nCount < POSESSION_4; nCount++)
 		{
-			m_apScene2D[nCount]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			m_apScene2D[nCount]->SetRGBA(POSESSION_COLOR_VALUE);
 		}
-		m_apScene2D[4]->SetRGBA(D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f));
+		m_apScene2D[4]->SetRGBA(NOT_POSESSION_COLOR_VALUE);
 	}
 	// 所持数が3の場合
-	if (m_nBom_Posession == 3)
+	if (m_nBom_Posession == POSESSION_3)
 	{
-		for (int nCount = 0; nCount < 3; nCount++)
+		for (int nCount = INIT_INT; nCount < POSESSION_3; nCount++)
 		{
-			m_apScene2D[nCount]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			m_apScene2D[nCount]->SetRGBA(POSESSION_COLOR_VALUE);
 		}
-		m_apScene2D[3]->SetRGBA(D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f));
-		m_apScene2D[4]->SetRGBA(D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f));
+		m_apScene2D[3]->SetRGBA(NOT_POSESSION_COLOR_VALUE);
+		m_apScene2D[4]->SetRGBA(NOT_POSESSION_COLOR_VALUE);
 	}
 	// 所持数が2の場合
-	if (m_nBom_Posession == 2)
+	if (m_nBom_Posession == POSESSION_2)
 	{
-		for (int nCount = 0; nCount < 2; nCount++)
+		for (int nCount = INIT_INT; nCount < POSESSION_2; nCount++)
 		{
-			m_apScene2D[nCount]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			m_apScene2D[nCount]->SetRGBA(POSESSION_COLOR_VALUE);
 		}
-		m_apScene2D[2]->SetRGBA(D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f));
-		m_apScene2D[3]->SetRGBA(D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f));
-		m_apScene2D[4]->SetRGBA(D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f));
+		m_apScene2D[2]->SetRGBA(NOT_POSESSION_COLOR_VALUE);
+		m_apScene2D[3]->SetRGBA(NOT_POSESSION_COLOR_VALUE);
+		m_apScene2D[4]->SetRGBA(NOT_POSESSION_COLOR_VALUE);
 	}
 	// 所持数が1の場合
-	if (m_nBom_Posession == 1)
+	if (m_nBom_Posession == POSESSION_1)
 	{
-			m_apScene2D[0]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-			for (int nCount = 1; nCount < MAX_BOM; nCount++)
+			m_apScene2D[0]->SetRGBA(POSESSION_COLOR_VALUE);
+
+			for (int nCount = POSESSION_1; nCount < MAX_BOM; nCount++)
 			{
-				m_apScene2D[nCount]->SetRGBA(D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f));
-				m_apScene2D[nCount]->SetRGBA(D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f));
-				m_apScene2D[nCount]->SetRGBA(D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f));
-				m_apScene2D[nCount]->SetRGBA(D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f));
+				m_apScene2D[nCount]->SetRGBA(NOT_POSESSION_COLOR_VALUE);
+				m_apScene2D[nCount]->SetRGBA(NOT_POSESSION_COLOR_VALUE);
+				m_apScene2D[nCount]->SetRGBA(NOT_POSESSION_COLOR_VALUE);
+				m_apScene2D[nCount]->SetRGBA(NOT_POSESSION_COLOR_VALUE);
 			}
 	}
 	// 所持数が0の場合
-	if (m_nBom_Posession == 0)
+	if (m_nBom_Posession == POSESSION_NONE)
 	{
-		for (int nCount = 0; nCount < MAX_BOM; nCount++)
+		for (int nCount = INIT_INT; nCount < MAX_BOM; nCount++)
 		{
-			m_apScene2D[nCount]->SetRGBA(D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f));
+			m_apScene2D[nCount]->SetRGBA(NOT_POSESSION_COLOR_VALUE);
 		}
 	}
 }

@@ -7,7 +7,6 @@
 //******************************************************************************
 // マクロ定義
 //******************************************************************************
-#define MAX_ITEM_TEX	(3)								// テクスチャ最大数
 #define ITEM_SIZE		(D3DXVECTOR3(40.0f,40.0f,0.0f))	// アイテムサイズ
 //******************************************************************************
 // クラス
@@ -18,7 +17,6 @@ public:
 	typedef enum
 	{
 		TYPE_NONE = -1,
-		TYPE_STAR,
 		TYPE_BOM,
 		TYPE_POWERUP,
 		TYPE_MAX
@@ -38,6 +36,6 @@ private:
 	static LPDIRECT3DTEXTURE9 m_apTexture[TYPE_MAX];		// テクスチャ
 	TYPE m_type;											// タイプ
 	D3DXVECTOR3 m_move;										// 移動
-	bool m_bMove;											// move
+	bool m_bMove;											// moveのbool 変数
 };
 #endif

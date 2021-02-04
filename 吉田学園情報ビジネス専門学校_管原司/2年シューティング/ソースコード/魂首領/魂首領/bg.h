@@ -8,7 +8,7 @@
 // マクロ定義
 //******************************************************************************
 #define MAX_BG	(3)												// 背景最大数
-#define BG_SIZE (D3DXVECTOR3(SCREEN_WIDTH,SCREEN_HEIGHT,0.0f))	// 背景サイズ
+#define BG_SIZE (D3DXVECTOR3(SCREEN_WIDTH / 2,SCREEN_HEIGHT,0.0f))	// 背景サイズ
 //******************************************************************************
 // クラス
 //******************************************************************************
@@ -34,14 +34,11 @@ public:
 	void Update(void);
 	void Draw(void);
 private:
-	static LPDIRECT3DTEXTURE9 m_apTexture[MAX_BG];	// テクスチャ情報
-	CScene2d * m_apScene2D[MAX_BG];					// BGの情報
+	static LPDIRECT3DTEXTURE9 m_apTexture[TYPE_MAX];	// テクスチャ情報
+	CScene2d * m_apScene2D[TYPE_MAX];					// BGの情報
 	TYPE m_type;									// タイプ
 	D3DXVECTOR3 m_pos;								// 位置
 	D3DXVECTOR3 m_size;								// サイズ
-	float m_texsizeX;								// テクスチャX
-	float m_texsizeY;								// テクスチャY
-	float m_fFastMove;								// 速い
 	float m_fSlowMove;								// 遅い
 	float m_fmove;									// 移動
 };													   

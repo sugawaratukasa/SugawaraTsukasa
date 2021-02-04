@@ -17,7 +17,7 @@ public:
 	virtual void Uninit(void);
 	virtual void Update(void) = 0;
 protected:
-	LPDIRECTINPUTDEVICE8 m_pDevice;		// デバイス
-	static LPDIRECTINPUT8 m_pDInput;	// インプット
+	LPDIRECTINPUTDEVICE8 m_pDevice;		// Device
+	static LPDIRECTINPUT8 m_pDInput;	// DInput
 };
 #endif

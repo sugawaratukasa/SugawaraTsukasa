@@ -4,7 +4,7 @@
 //******************************************************************************
 
 //******************************************************************************
-// ファイルインクルード
+// インクルードファイル
 //******************************************************************************
 #include "main.h"
 #include "manager.h"
@@ -14,10 +14,16 @@
 #include "game.h"
 #include "bullet.h"
 //******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define PLAYER_BULLET_TEXTURE	( "data/Texture/Bullet/Playerbullet001.png")	// 自機の弾のテクスチャ	
+#define PLAYER_BEAM_TEXTURE		("data/Texture/Bullet/PlayerBeam001.png")		// 自機のビームのテクスチャ
+#define BOM_TEXTURE				("data/Texture/Bullet/bom.png")					// ボムのテクスチャ
+#define ENEMY_BULLET_TEXTURE	("data/Texture/Bullet/EnemyBullet.png")			// 敵の弾のテクスチャ
+//******************************************************************************
 // 静的メンバ変数
 //******************************************************************************
 LPDIRECT3DTEXTURE9 CBullet::m_apTexture[TEX_TYPE_MAX] = {};
-
 //******************************************************************************
 // テクスチャ読み込み関数
 //******************************************************************************
@@ -27,10 +33,10 @@ HRESULT CBullet::Load(void)
 	LPDIRECT3DDEVICE9 pDevice = CSceneManager::GetRenderer()->GetDevice();
 
 	// テクスチャ読み込み
-	D3DXCreateTextureFromFile(pDevice, "data/Texture/Playerbullet001.png", &m_apTexture[TEX_TYPE_NORMAL]);
-	D3DXCreateTextureFromFile(pDevice, "data/Texture/PlayerBeam001.png", &m_apTexture[TEX_TYPE_BEAM]);
-	D3DXCreateTextureFromFile(pDevice, "data/Texture/bom.png", &m_apTexture[TEX_TYPE_BOM]);
-	D3DXCreateTextureFromFile(pDevice, "data/Texture/EnemyBullet.png", &m_apTexture[TEX_TYPE_ENEMY_NORMAL]);
+	D3DXCreateTextureFromFile(pDevice, PLAYER_BULLET_TEXTURE, &m_apTexture[TEX_TYPE_NORMAL]);
+	D3DXCreateTextureFromFile(pDevice, PLAYER_BEAM_TEXTURE, &m_apTexture[TEX_TYPE_BEAM]);
+	D3DXCreateTextureFromFile(pDevice, BOM_TEXTURE, &m_apTexture[TEX_TYPE_BOM]);
+	D3DXCreateTextureFromFile(pDevice, ENEMY_BULLET_TEXTURE, &m_apTexture[TEX_TYPE_ENEMY_NORMAL]);
 	return S_OK;
 }
 //******************************************************************************
@@ -53,7 +59,7 @@ void CBullet::Unload(void)
 //******************************************************************************
 CBullet::CBullet(int nPriority) : CScene2d(nPriority)
 {
-	m_rot		= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_rot		= INIT_D3DXVECTOR3;
 	m_Textype	= TEX_TYPE_NONE;
 }
 //******************************************************************************
@@ -118,16 +124,22 @@ void CBullet::SetBullet(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 size, D3DX
 {
 	// 位置座標設定
 	SetPosition(pos);
+
 	// 向き設定
 	SetRot(rot);
+
 	// サイズ設定
 	SetSize(size);
+
 	// カラー設定
 	SetRGBA(col);
+
 	// テクスチャタイプ設定
 	m_Textype = textype;
+
 	// テクスチャ設定
 	BindTexture(m_apTexture[m_Textype]);
+
 	// オブジェクトタイプ設定
 	SetObjType(objtype);
 }

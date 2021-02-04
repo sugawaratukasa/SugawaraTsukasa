@@ -32,9 +32,9 @@ public:
 	static LPDIRECTINPUTDEVICE8 GetDevice(void) { return m_pJDevice; }
 private:
 	static LPDIRECTINPUTDEVICE8 m_pJDevice;
-	DIDEVCAPS	m_diDevCaps;					// Caps
+	DIDEVCAPS	m_diDevCaps;					//Caps
 	BYTE m_aJoyState[NUM_JS_MAX];				// キーボードの入力情報ワーク
-	BYTE m_aJoyStateTrigger[NUM_JS_MAX];		// キーボードトリガー情報
+	BYTE m_aJoyStateTrigger[NUM_JS_MAX];		//キーボードトリガー情報
 	BYTE m_aJoyStateRelease[NUM_JS_MAX];		// キーボードのリリース情報
 };
 #endif

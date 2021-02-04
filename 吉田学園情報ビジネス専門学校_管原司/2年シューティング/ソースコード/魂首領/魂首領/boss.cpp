@@ -2,14 +2,7 @@
 // ボス [boss.cpp]
 // Author : 管原　司
 //******************************************************************************
-//******************************************************************************
-// マクロ定義
-//******************************************************************************
-#define BULLET_MOVE_VALUE			(D3DXVECTOR3(5.0f,5.0f,0.0f))
-#define BULLET_NORMAL_MOVE_VALUE	(D3DXVECTOR3(2.0f,6.0f,0.0f))
-#define BULLET_TRAKING_MOVE_VALUE	(D3DXVECTOR3(6.0f,6.0f,0.0f))
-#define BULLET_DIFFUSION_MOVE_VALUE	(D3DXVECTOR3(0.0f,2.0f,0.0f))
-#define BULLET_SPINING_MOVE_VALUE	(D3DXVECTOR3(3.0f,3.0f,0.0f))
+
 //******************************************************************************
 // インクルードファイル
 //******************************************************************************
@@ -22,32 +15,71 @@
 #include "enemy_traking_bullet.h"
 #include "enemy_normal_bullet.h"
 #include "enemy_diffusion_bullet.h"
-#include "explosion.h"
 #include "player.h"
 #include "game.h"
 #include "boss.h"
+#include "boss_left.h"
+#include "boss_right.h"
+#include "fade.h"
+#include "particle.h"
+#include "particle_explosion.h"
+//******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define TEXTURE						("data/Texture/Enemy/BossMain2.png")// テクスチャ
+#define BOSS_MAIN_SIZE				(D3DXVECTOR3(150.0f,150.0f,0.0f))	// ボスの中央のサイズ
+#define BOSS_LEFT_SIZE				(D3DXVECTOR3(150.0f,150.0f,0.0f))	// ボスの左のサイズ
+#define BOSS_RIGHT_SIZE				(D3DXVECTOR3(150.0f,150.0f,0.0f))	// ボスの右のサイズ
+#define BULLET_MOVE_VALUE			(D3DXVECTOR3(5.0f,5.0f,0.0f))		// 移動量
+#define BULLET_TRAKING_MOVE_VALUE	(D3DXVECTOR3(6.0f,6.0f,0.0f))		// 狙い撃ち弾の移動量
+#define BULLET_DIFFUSION_MOVE_VALUE	(D3DXVECTOR3(0.0f,2.0f,0.0f))		// 拡散弾の移動量
+#define INIT_MOVE					(D3DXVECTOR3(0.0f,0.0f,0.0f))		// 移動初期化
+#define BULLET_ROT					(D3DXVECTOR3(0.0f,0.0f,0.0f))		// 弾の向き
+#define COLOR						(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))	// 色
+#define RED_COLOR					(D3DXCOLOR(1.0f,0.0f,0.0f,1.0f))	// 赤色
+#define BULLET_COLOR				(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))	// 弾の色
+#define BOSS_LIFE					(4000)								// ボスのライフ
+#define DIVIDE_VALUE				(2)									// 除算値
+#define INIT_ATTACK_COUNT			(0)									// 攻撃を0
+#define REMAINDER_VALUE				(0)									// あまり0
+#define ATTACK_COUNT				(60)								// 攻撃カウント
+#define ATTACK_COUNT2				(100)								// 攻撃カウント2
+#define ATTACK_COUNT3				(250)								// 攻撃カウント3
+#define BULLET_TRAKING_TIMES		(3)									// 狙い撃ち弾の数
+#define BULLET_TRAKING_TIMES2		(4)									// 狙い撃ち弾の数2
+#define DAMAGE_COUNT_MIN			(0)									// ダメージカウント最小
+#define DAMAGE_COUNT				(10)								// ダメージカウント
+#define LIFE_MIN					(0)									// ライフ最小値
+#define DEATH_COUNT					(90)								// 死亡カウント
+#define EXPLOSION_COUNT				(3)									// 爆発カウント
+#define RANDUM_POSX_VALUE			(600)								// 位置座標Xランダム数値
+#define RANDUM_POSX_VALUE2			(300)								// 位置座標Xランダム数値2
+#define RANDUM_POSY_VALUE			(200)								// 位置座標Yランダム数値
+#define RANDUM_POSY_VALUE2			(100)								// 位置座標Yランダム数値2
+#define RANDUM_SIZE_VALUE_MIN		(5)									// ランダムサイズ
+#define RANDUM_SIZE_VALUE_MAX		(8)									// ランダムサイズ2
+#define STATE_MOVE_VALUE			(2.0f)								// 移動量
+#define STATE_MOVE_VALUE_MIN		(0.0f)								// 移動量
+#define STATE_POS_VALUE				(200.0f)							// 位置量
+#define MOVE_VALUE					(3.0f)								// 移動量
 //******************************************************************************
 // 静的メンバ変数
 //******************************************************************************
-LPDIRECT3DTEXTURE9 CBoss::m_apTexture[MAX_BOSS] = {};
+LPDIRECT3DTEXTURE9 CBoss::m_pTexture = NULL;
 //******************************************************************************
 // コンストラクタ
 //******************************************************************************
-CBoss::CBoss(int nPriority) : CScene(nPriority)
+CBoss::CBoss(int nPriority) : CScene2d(nPriority)
 {
-	memset(m_apScene2D, 0, sizeof(m_apScene2D));
-	m_pos					= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_Rightpos				= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_Leftpos				= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_size					= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_move					= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_nLife					= 0;
-	m_nAttackCount			= 0;
-	m_nAttackCount2			= 0;
-	m_nDamageCount			= 0;
-	m_nSetCount				= 0;
+	m_move					= INIT_D3DXVECTOR3;
+	m_nLife					= INIT_INT;
+	m_nAttackCount			= INIT_INT;
+	m_nDamageCount			= INIT_INT;
+	m_nSetCount				= INIT_INT;
+	m_nDeathCount			= INIT_INT;
 	m_State					= STATE_NONE;
 	m_bMove					= false;
+	m_bLifeHalf				= false;
 }
 //******************************************************************************
 //デストラクタ
@@ -62,9 +94,7 @@ HRESULT CBoss::Load(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = CSceneManager::GetRenderer()->GetDevice();
 	//テクスチャ読み込み
-	D3DXCreateTextureFromFile(pDevice, "data/Texture/BossMain2.png", &m_apTexture[TYPE_MAIN]);
-	D3DXCreateTextureFromFile(pDevice, "data/Texture/BossRight2.png", &m_apTexture[TYPE_RIGHT]);
-	D3DXCreateTextureFromFile(pDevice, "data/Texture/BossLeft2.png", &m_apTexture[TYPE_LEFT]);
+	D3DXCreateTextureFromFile(pDevice, TEXTURE, &m_pTexture);
 	return S_OK;
 }
 //******************************************************************************
@@ -72,15 +102,12 @@ HRESULT CBoss::Load(void)
 //******************************************************************************
 void CBoss::Unload(void)
 {
-	for (int nCnt = 0; nCnt < MAX_BOSS; nCnt++)
-	{
 		// テクスチャの破棄
-		if (m_apTexture[nCnt] != NULL)
+		if (m_pTexture != NULL)
 		{
-			m_apTexture[nCnt]->Release();
-			m_apTexture[nCnt] = NULL;
+			m_pTexture->Release();
+			m_pTexture = NULL;
 		}
-	}
 }
 //******************************************************************************
 // 生成関数
@@ -93,11 +120,20 @@ CBoss * CBoss::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 	// メモリ確保
 	pBoss = new CBoss;
 
-	// 位置座標代入
-	pBoss->m_pos = pos;
+	// 位置座標設定
+	pBoss->SetPosition(pos);
 
-	// サイズ代入
-	pBoss->m_size = size;
+	// サイズ設定
+	pBoss->SetSize(size);
+
+	// カラー設定
+	pBoss->SetRGBA(COLOR);
+
+	// テクスチャ受け渡し
+	pBoss->BindTexture(m_pTexture);
+
+	// カラー設定
+	pBoss->SetObjType(OBJTYPE_BOSS);
 
 	// 初期化
 	pBoss->Init();
@@ -112,43 +148,19 @@ HRESULT CBoss::Init()
 {
 	// 体力
 	m_nLife = BOSS_LIFE;
+
 	// 状態
 	m_State = STATE_MOVE;
 
-	// メモリ確保
-	m_apScene2D[TYPE_MAIN] = new CScene2d;
-	m_apScene2D[TYPE_RIGHT] = new CScene2d;
-	m_apScene2D[TYPE_LEFT] = new CScene2d;
-
-	// 位置座標の設定
-	m_apScene2D[TYPE_MAIN]->SetPosition(m_pos);
-	m_apScene2D[TYPE_RIGHT]->SetPosition(m_pos);
-	m_apScene2D[TYPE_LEFT]->SetPosition(m_pos);
-
-	// サイズの設定
-	m_apScene2D[TYPE_MAIN]->SetSize(m_size);
-	m_apScene2D[TYPE_RIGHT]->SetSize(m_size);
-	m_apScene2D[TYPE_LEFT]->SetSize(m_size);
-
-	// RGBAの設定
-	m_apScene2D[TYPE_MAIN]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-	m_apScene2D[TYPE_RIGHT]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-	m_apScene2D[TYPE_LEFT]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-
-	// テクスチャの受け渡し
-	m_apScene2D[TYPE_MAIN]->BindTexture(m_apTexture[TYPE_MAIN]);
-	m_apScene2D[TYPE_RIGHT]->BindTexture(m_apTexture[TYPE_RIGHT]);
-	m_apScene2D[TYPE_LEFT]->BindTexture(m_apTexture[TYPE_LEFT]);
-	
-	// オブジェクトタイプの設定
-	m_apScene2D[TYPE_MAIN]->SetObjType(OBJTYPE_BOSS);
-	m_apScene2D[TYPE_RIGHT]->SetObjType(OBJTYPE_BOSS);
-	m_apScene2D[TYPE_LEFT]->SetObjType(OBJTYPE_BOSS);
-
 	// 初期化
-	m_apScene2D[TYPE_MAIN]->Init();
-	m_apScene2D[TYPE_RIGHT]->Init();
-	m_apScene2D[TYPE_LEFT]->Init();
+	CScene2d::Init();
+
+	// 左生成
+	CBoss_Left::Create(BOSS_LEFT_SIZE, BOSS_LEFT_SIZE);
+
+	// 右生成
+	CBoss_Right::Create(BOSS_RIGHT_SIZE, BOSS_RIGHT_SIZE);
+
 	return S_OK;
 }
 //******************************************************************************
@@ -157,46 +169,37 @@ HRESULT CBoss::Init()
 void CBoss::Uninit(void)
 {
 	//終了
-	Release();
+	CScene2d::Uninit();
 }
 //******************************************************************************
 // 更新関数
 //******************************************************************************
 void CBoss::Update(void)
 {
-	if (m_nSetCount == 1)
-	{
-		// 更新
-		m_apScene2D[TYPE_MAIN]->Update();
-		m_apScene2D[TYPE_RIGHT]->Update();
-		m_apScene2D[TYPE_LEFT]->Update();
+	// 更新
+	CScene2d::Update();
 
-		// ボスの中心
-		m_pos = m_apScene2D[TYPE_MAIN]->GetPosition();
-		// ボスの右
-		m_Rightpos = m_apScene2D[TYPE_RIGHT]->GetPosition();
-		// ボスの左
-		m_Leftpos = m_apScene2D[TYPE_LEFT]->GetPosition();
+	// 位置座標取得
+	D3DXVECTOR3 pos = GetPosition();
 
-		// 状態処理
-		State();
+	// 状態処理
+	State();
 
-		// 位置更新
-		m_pos.x += m_move.x;
-		m_pos.y += m_move.y;
+	// 位置更新
+	pos.x += m_move.x;
+	pos.y += m_move.y;
 
-		// 座標設定
-		m_apScene2D[TYPE_MAIN]->SetPosition(m_pos);
-		m_apScene2D[TYPE_RIGHT]->SetPosition(D3DXVECTOR3(m_pos.x + BOSS_RIGHT_SIZE.x, m_pos.y, m_pos.z));
-		m_apScene2D[TYPE_LEFT]->SetPosition(D3DXVECTOR3(m_pos.x - BOSS_LEFT_SIZE.x, m_pos.y, m_pos.z));
+	// 座標設定
+	SetPosition(pos);
 
-	}
 }
 //******************************************************************************
 // 描画関数
 //******************************************************************************
 void CBoss::Draw(void)
 {
+	// 描画
+	CScene2d::Draw();
 }
 //******************************************************************************
 // ヒット処理
@@ -207,22 +210,18 @@ void CBoss::HitBoss(int nDamage)
 	{
 		// 体力減算
 		m_nLife -= nDamage;
+
 		// StateをDamageに
 		m_State = STATE_DAMAGE;
 	}
-}
-//******************************************************************************
-// ボス更新開始
-//******************************************************************************
-void CBoss::SetBoss(int nSetCount)
-{
-	m_nSetCount = nSetCount;
 }
 //******************************************************************************
 // 攻撃処理関数
 //******************************************************************************
 void CBoss::Attack(void)
 {
+	// 位置座標取得
+	D3DXVECTOR3 pos = GetPosition();
 
 	// プレイヤー取得
 	CPlayer * pPlayer = CGame::GetPlayer();
@@ -230,103 +229,68 @@ void CBoss::Attack(void)
 	// プレイヤーのbomをボス専用に変更
 	pPlayer->SetBossBom(true);
 
-	// ライフが半分以上の場合
-	if (m_nLife >= BOSS_LIFE / 2)
+	if (m_State != STATE_DEATH || m_State != STATE_DEATH_EFFECT)
 	{
-		// インクリメント
-		m_nAttackCount++;
-
-		// 60あまり0の場合
-		if (m_nAttackCount % 60 == 0)
+		// ライフが半分以上の場合
+		if (m_bLifeHalf == false)
 		{
-			// 左右2発弾発射
-			for (int nCount = 0; nCount < 2; nCount++)
-			{
-				// 右
-				CEnemy_Normal_Bullet::Create(D3DXVECTOR3(m_Rightpos.x + BOSS_RIGHT_SIZE.x / 2, m_Rightpos.y + BOSS_RIGHT_SIZE.y / 2, m_Rightpos.z),
-					D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)),
-					ENEMY_NORMAL_BULLET_SIZE,
-					D3DXVECTOR3(-BULLET_NORMAL_MOVE_VALUE.x - nCount, BULLET_NORMAL_MOVE_VALUE.y, 0.0f),
-					D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
-					CBullet::TEX_TYPE_ENEMY_NORMAL);
+			// インクリメント
+			m_nAttackCount++;
 
-				// 左
-				CEnemy_Normal_Bullet::Create(D3DXVECTOR3(m_Leftpos.x + BOSS_LEFT_SIZE.x / 2, m_Leftpos.y + BOSS_LEFT_SIZE.y / 2, m_Leftpos.z),
-					D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)),
-					ENEMY_NORMAL_BULLET_SIZE,
-					D3DXVECTOR3(BULLET_NORMAL_MOVE_VALUE.x + nCount, BULLET_NORMAL_MOVE_VALUE.y, 0.0f),
-					D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
+			// 100あまり0の場合
+			if (m_nAttackCount % ATTACK_COUNT2 == REMAINDER_VALUE)
+			{
+				// 3回繰り返す
+				for (int nCount = INIT_INT; nCount < BULLET_TRAKING_TIMES; nCount++)
+				{
+					// 狙い撃ち弾生成
+					CEnemy_Traking_Bullet::Create(D3DXVECTOR3(pos.x, pos.y, pos.z),
+						BULLET_ROT,
+						ENEMY_TRAKING_BULLET_SIZE,
+						D3DXVECTOR3(BULLET_TRAKING_MOVE_VALUE.x + nCount, BULLET_TRAKING_MOVE_VALUE.y + nCount, BULLET_TRAKING_MOVE_VALUE.z),
+						BULLET_COLOR,
+						CBullet::TEX_TYPE_ENEMY_NORMAL);
+				}
+			}
+			// 拡散弾
+			if (m_nAttackCount % ATTACK_COUNT3 == REMAINDER_VALUE)
+			{
+				// 拡散弾生成
+				CEnemy_Diffusion_Bullet::Create(D3DXVECTOR3(pos.x, pos.y, pos.z),
+					BULLET_ROT,
+					FIFFUSION_BULLET_SIZE,
+					D3DXVECTOR3(BULLET_DIFFUSION_MOVE_VALUE.x, BULLET_DIFFUSION_MOVE_VALUE.y, BULLET_DIFFUSION_MOVE_VALUE.z),
+					BULLET_COLOR,
 					CBullet::TEX_TYPE_ENEMY_NORMAL);
 			}
 		}
-		//100あまり0の場合
-		if (m_nAttackCount % 100 == 0)
+		// ライフが半分以下になった場合
+		if (m_nLife <= BOSS_LIFE / DIVIDE_VALUE)
 		{
-			// 3回繰り返す
-			for (int nCount = 0; nCount < 3; nCount++)
-			{
-				// 狙い撃ち弾生成
-				CEnemy_Traking_Bullet::Create(D3DXVECTOR3(m_pos.x, m_pos.y, m_pos.z),
-					D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)),
-					ENEMY_TRAKING_BULLET_SIZE,
-					D3DXVECTOR3(BULLET_TRAKING_MOVE_VALUE.x + nCount, BULLET_TRAKING_MOVE_VALUE.y + nCount, BULLET_TRAKING_MOVE_VALUE.z),
-					D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
-					CBullet::TEX_TYPE_ENEMY_NORMAL);
-			}
+			// カウントを0に
+			m_nAttackCount = INIT_ATTACK_COUNT;
+			// trueに
+			m_bLifeHalf = true;
 		}
-		//拡散弾
-		if (m_nAttackCount % 250 == 0)
-		{
-			// 拡散弾生成
-			CEnemy_Diffusion_Bullet::Create(D3DXVECTOR3(m_pos.x, m_pos.y, m_pos.z),
-				D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)),
-				FIFFUSION_BULLET_SIZE,
-				D3DXVECTOR3(BULLET_DIFFUSION_MOVE_VALUE.x, BULLET_DIFFUSION_MOVE_VALUE.y, BULLET_DIFFUSION_MOVE_VALUE.z),
-				D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
-				CBullet::TEX_TYPE_ENEMY_NORMAL);
-		}
-	}
 		// ライフが半分以下の場合
-	if (m_nLife <= BOSS_LIFE / 2)
-	{
-		m_nAttackCount2++;
-		//100あまり0の場合
-		if (m_nAttackCount2 % 60 == 0)
+		if (m_bLifeHalf == true)
 		{
-			for (int nCount = 0; nCount < 4; nCount++)
+			// インクリメント
+			m_nAttackCount++;
+
+			// 60あまり0の場合
+			if (m_nAttackCount % ATTACK_COUNT == REMAINDER_VALUE)
 			{
-				// 狙い撃ち弾生成
-				CEnemy_Traking_Bullet::Create(D3DXVECTOR3(m_pos.x, m_pos.y, m_pos.z),
-					D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)),
-					ENEMY_TRAKING_BULLET_SIZE,
-					D3DXVECTOR3(BULLET_TRAKING_MOVE_VALUE.x + nCount, BULLET_TRAKING_MOVE_VALUE.y + nCount, BULLET_TRAKING_MOVE_VALUE.z),
-					D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
-					CBullet::TEX_TYPE_ENEMY_NORMAL);
-			}
-		}
-
-		// カウントが100以上の場合
-		if (m_nAttackCount2 >= 100)
-		{
-			// 3あまり0の時
-			if (m_nAttackCount2 % 3 == 0)
-			{
-				// 回転弾生成
-				CEnemy_Normal_Bullet::Create(D3DXVECTOR3(m_Rightpos.x + BOSS_LEFT_SIZE.x / 2, m_Rightpos.y + BOSS_LEFT_SIZE.y / 2, m_Rightpos.z),
-					D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)),
-					ENEMY_NORMAL_BULLET_SIZE,
-					D3DXVECTOR3(cosf(D3DXToRadian(m_nAttackCount2 / 3 * (360 / 20)))*BULLET_SPINING_MOVE_VALUE.x, sinf(D3DXToRadian(m_nAttackCount2 / 3 * (360 / 20)))*BULLET_SPINING_MOVE_VALUE.y, 0.0f),
-					D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
-					CBullet::TEX_TYPE_ENEMY_NORMAL);
-
-				// 回転弾生成
-				CEnemy_Normal_Bullet::Create(D3DXVECTOR3(m_Leftpos.x + BOSS_LEFT_SIZE.x / 2, m_Leftpos.y + BOSS_LEFT_SIZE.y / 2, m_Leftpos.z),
-					D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)),
-					ENEMY_NORMAL_BULLET_SIZE,
-					D3DXVECTOR3(cosf(D3DXToRadian(m_nAttackCount2 / 3 * (360 / 20)))* -BULLET_SPINING_MOVE_VALUE.x, sinf(D3DXToRadian(m_nAttackCount2 / 3 * (360 / 20)))* -BULLET_SPINING_MOVE_VALUE.y, 0.0f),
-					D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
-					CBullet::TEX_TYPE_ENEMY_NORMAL);
-
+				for (int nCount = INIT_INT; nCount < BULLET_TRAKING_TIMES2; nCount++)
+				{
+					// 狙い撃ち弾生成
+					CEnemy_Traking_Bullet::Create(D3DXVECTOR3(pos.x, pos.y, pos.z),
+						BULLET_ROT,
+						ENEMY_TRAKING_BULLET_SIZE,
+						D3DXVECTOR3(BULLET_TRAKING_MOVE_VALUE.x + nCount, BULLET_TRAKING_MOVE_VALUE.y + nCount, BULLET_TRAKING_MOVE_VALUE.z),
+						BULLET_COLOR,
+						CBullet::TEX_TYPE_ENEMY_NORMAL);
+				}
 			}
 		}
 	}
@@ -336,18 +300,24 @@ void CBoss::Attack(void)
 //******************************************************************************
 void CBoss::State(void)
 {
-	//最初の移動
+	// 位置座標取得
+	D3DXVECTOR3 pos = GetPosition();
+
+	// 最初の移動
 	if (m_State == STATE_MOVE)
 	{
-		m_move.y = 2.0f;
-		if (m_pos.y == 200.0f)
+		// 移動量を2.0fに
+		m_move.y = STATE_MOVE_VALUE;
+
+		// 位置座標が200.0fになった場合
+		if (pos.y >= STATE_POS_VALUE)
 		{
-			m_move.y = 0;
+			m_move.y = STATE_MOVE_VALUE_MIN;
 			m_State = STATE_NORMAL;
 		}
 	}
-	//ボスが移動しきったら
-	if (m_State != STATE_MOVE)
+	// ボスが移動しきったら
+	if (m_State == STATE_NORMAL || m_State == STATE_DAMAGE)
 	{
 		// 移動処理
 		Move();
@@ -358,60 +328,54 @@ void CBoss::State(void)
 	// Stateがノーマルの場合
 	if (m_State == STATE_NORMAL)
 	{
-		//カラーを通常にする
-		m_apScene2D[TYPE_MAIN]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-		m_apScene2D[TYPE_RIGHT]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-		m_apScene2D[TYPE_LEFT]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		// カラーを通常にする
+		SetRGBA(COLOR);
 	}
-	//StateがDamageの場合
+	// StateがDamageの場合
 	if (m_State == STATE_DAMAGE)
 	{
-		//ダメージカウントのインクリメント
+		// ダメージカウントのインクリメント
 		m_nDamageCount++;
 
 		// 赤くする
-		m_apScene2D[TYPE_MAIN]->SetRGBA(D3DCOLOR_RGBA(255, 0, 0, 255));
-		m_apScene2D[TYPE_RIGHT]->SetRGBA(D3DCOLOR_RGBA(255, 0, 0, 255));
-		m_apScene2D[TYPE_LEFT]->SetRGBA(D3DCOLOR_RGBA(255, 0, 0, 255));
+		SetRGBA(RED_COLOR);
 
-		//カウントが2あまり0の時
-		if (m_nDamageCount % 2 == 0)
+		// カウントが2あまり0の時
+		if (m_nDamageCount % DIVIDE_VALUE == REMAINDER_VALUE)
 		{
-			//カラーを通常に戻す
-			m_apScene2D[TYPE_MAIN]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-			m_apScene2D[TYPE_RIGHT]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-			m_apScene2D[TYPE_LEFT]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			// カラーを通常に戻す
+			SetRGBA(COLOR);
 		}
-
 		// カウントが10になったら
-		if (m_nDamageCount == 10)
+		if (m_nDamageCount == DAMAGE_COUNT)
 		{
 			// Stateをノーマルに
 			m_State = STATE_NORMAL;
 			// カウントが0になったら
-			m_nDamageCount = 0;
+			m_nDamageCount = DAMAGE_COUNT_MIN;
 		}
 	}
-	// ライフが0になった場合
-	if (m_nLife <= 0)
+	// 死亡演出状態の場合
+	if (m_State == STATE_DEATH_EFFECT)
 	{
-		// 爆発生成
-		CExplosion::Create(m_pos, BOSS_MAIN_SIZE);
-		CExplosion::Create(m_Rightpos, BOSS_LEFT_SIZE);
-		CExplosion::Create(m_Leftpos, BOSS_RIGHT_SIZE);
+		m_move = INIT_MOVE;
+	}
+	// ライフが0になった場合
+	if (m_nLife <= LIFE_MIN)
+	{
+		// 死亡エフェクト生成状態
+		m_State = STATE_DEATH_EFFECT;
 
-		// 死亡状態に
-		m_State = STATE_DEAD;
-
-		// 死亡状態の場合
-		if (m_State == STATE_DEAD)
-		{
-			// フェード開始
-			CSceneManager::StartFade(CSceneManager::MODE_RESULT);
-			// 終了
-			Uninit();
-			return;
-		}
+		Death();
+	}
+	// 死亡状態の場合
+	if (m_State == STATE_DEATH)
+	{
+		// フェード開始
+		CFade::Create(FADE_POS, FADE_SIZE, CSceneManager::MODE_RESULT);
+		// 終了
+		Uninit();
+		return;
 	}
 }
 //******************************************************************************
@@ -419,21 +383,64 @@ void CBoss::State(void)
 //******************************************************************************
 void CBoss::Move(void)
 {
-	// falseの場合
-	if (m_bMove == false)
+	// 位置座標取得
+	D3DXVECTOR3 pos = GetPosition();
+	
+	if (m_State != STATE_MOVE ||  m_State != STATE_DEATH_EFFECT || m_State != STATE_DEATH )
 	{
-		m_move.x = 3.0f;
+		// falseの場合
+		if (m_bMove == false)
+		{
+			m_move.x = MOVE_VALUE;
+		}
+		// 左移動
+		if (pos.x + BOSS_RIGHT_SIZE.x + BOSS_RIGHT_SIZE.x / DIVIDE_VALUE >= MAX_GAME_WIDTH)
+		{
+			m_move.x = -MOVE_VALUE;
+			m_bMove = true;
+		}
+		// 右移動
+		if (pos.x - BOSS_LEFT_SIZE.x - BOSS_LEFT_SIZE.x / DIVIDE_VALUE <= MIN_GAME_WIDTH)
+		{
+			m_move.x = MOVE_VALUE;
+			m_bMove = true;
+		}
+		// 座標設定
+		SetPosition(pos);
 	}
-	//左移動
-	if (m_Rightpos.x + BOSS_RIGHT_SIZE.x / 2 >= MAX_GAME_WIDTH)
+}
+//******************************************************************************
+// 死亡処理
+//******************************************************************************
+void CBoss::Death(void)
+{
+	// 位置座標
+	D3DXVECTOR3 pos = GetPosition();
+
+	// サイズランダムに
+	float fSize = float(rand() % RANDUM_SIZE_VALUE_MIN + RANDUM_SIZE_VALUE_MAX);
+	// 位置をランダムに
+	float fPosX = float(rand() % RANDUM_POSX_VALUE - RANDUM_POSX_VALUE2);
+	float fPosY = float(rand() % RANDUM_POSY_VALUE - RANDUM_POSY_VALUE2);
+
+	// サイズ
+	D3DXVECTOR3 size = D3DXVECTOR3(fSize, fSize, 0.0f);
+
+	// 位置
+	D3DXVECTOR3 Explosion_Pos = D3DXVECTOR3(pos.x + fPosX, pos.y + fPosY, 0.0f);
+
+	// インクリメント
+	m_nDeathCount++;
+
+	// 3あまり0
+	if (m_nDeathCount % EXPLOSION_COUNT == REMAINDER_VALUE)
 	{
-		m_move.x = -3.0f;
-		m_bMove = true;
+		// 爆発生成
+		CParticle_Explosion::CreateExplosionEffect(Explosion_Pos,size,CParticle_Explosion::TYPE_ENEMY);
 	}
-	// 右移動
-	if (m_Leftpos.x - BOSS_LEFT_SIZE.x / 2 <= MIN_GAME_WIDTH)
+	// m_nDeathCountが60になった場合
+	if (m_nDeathCount == DEATH_COUNT)
 	{
-		m_move.x = 3.0f;
-		m_bMove = true;
+		m_State = STATE_DEATH;
 	}
 }

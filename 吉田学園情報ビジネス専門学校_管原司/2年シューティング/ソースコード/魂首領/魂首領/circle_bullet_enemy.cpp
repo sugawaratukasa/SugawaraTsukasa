@@ -2,10 +2,7 @@
 // 円形の弾を出す敵 [circle_bullet_enemy.cpp]
 // Author : 管原　司
 //******************************************************************************
-//******************************************************************************
-// マクロ定義
-//******************************************************************************
-#define BULLET_MOVE_VALUE (D3DXVECTOR3(5.0f,5.0f,0.0f))
+
 //******************************************************************************
 // インクルードファイル
 //******************************************************************************
@@ -17,17 +14,26 @@
 #include "player.h"
 #include "bullet.h"
 #include "enemy_normal_bullet.h"
-#include "explosion.h"
 #include "enemy.h"
 #include "game.h"
 #include "item.h"
 #include "circle_bullet_enemy.h"
 //******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define BULLET_MOVE_VALUE	(D3DXVECTOR3(5.0f,5.0f,0.0f))		// 弾の移動量
+#define MOVE_VALUE			(D3DXVECTOR3(0.0f,2.0f,0.0f))		// 移動量
+#define BULLET_ROT			(D3DXVECTOR3(0.0f,0.0f,0.0f))		// 弾の向き
+#define BULLET_COLOR		(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))	// 弾の色
+#define ATTACK_COUNT		(100)								// 攻撃カウント
+#define BULLET_NUMBER		(20)								// 弾数
+#define BULLET_RADIAN		(360)								// 角度
+//******************************************************************************
 // コンストラクタ
 //******************************************************************************
 CCirecle_Bullet_Enemy::CCirecle_Bullet_Enemy(int nPriority) : CEnemy(nPriority)
 {
-	m_nAttackCount = 0;
+	m_nAttackCount = INIT_INT;
 }
 //******************************************************************************
 // デストラクタ
@@ -88,7 +94,7 @@ void CCirecle_Bullet_Enemy::Update(void)
 	D3DXVECTOR3 pos = GetPosition();
 
 	// 移動量
-	D3DXVECTOR3 move = D3DXVECTOR3(0.0f, 2.0f, 0.0f);
+	D3DXVECTOR3 move = MOVE_VALUE;
 
 	// 状態取得
 	int nState = CEnemy::GetState();
@@ -138,20 +144,18 @@ void CCirecle_Bullet_Enemy::Attack(void)
 	// インクリメント
 	m_nAttackCount++;
 
-	// インクリメント
-	m_nAttackCount++;
-
 	// カウント数が100の場合
-	if (m_nAttackCount == 100)
+	if (m_nAttackCount == ATTACK_COUNT)
 	{
 		// 20回繰り返す
-		for (int nCount = 0; nCount < 20; nCount++)
+		for (int nCount = INIT_INT; nCount < BULLET_NUMBER; nCount++)
 		{
+			// 弾生成
 			CEnemy_Normal_Bullet::Create(D3DXVECTOR3(pos.x, pos.y, pos.z),
-				D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)),
+				BULLET_ROT,
 				ENEMY_NORMAL_BULLET_SIZE,
-				D3DXVECTOR3(cosf(D3DXToRadian(nCount * (360 / 20)))*BULLET_MOVE_VALUE.x, sinf(D3DXToRadian(nCount * (360 / 20)))*BULLET_MOVE_VALUE.y, 0.0f),
-				D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
+				D3DXVECTOR3(cosf(D3DXToRadian(nCount * (BULLET_RADIAN / BULLET_NUMBER)))*BULLET_MOVE_VALUE.x, sinf(D3DXToRadian(nCount * (BULLET_RADIAN / BULLET_NUMBER)))*BULLET_MOVE_VALUE.y, 0.0f),
+				BULLET_COLOR,
 				CBullet::TEX_TYPE_ENEMY_NORMAL);
 		}
 		// カウント数を0にする

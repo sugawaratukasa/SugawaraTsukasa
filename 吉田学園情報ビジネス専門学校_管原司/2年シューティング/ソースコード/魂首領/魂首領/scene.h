@@ -5,6 +5,14 @@
 #ifndef _SCENE_H_
 #define _SCENE_H_
 //******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define INIT_INT			(0)									// int型初期化
+#define INIT_FLOAT			(0.0f)								// float型初期化
+#define INIT_D3DXVECTOR3	(D3DXVECTOR3(0.0f,0.0f,0.0f))		// D3DXVECTOR3初期化
+#define INIT_COLOR			(D3DXCOLOR(0.0f,0.0f,0.0f,0.0f))	// D3DXCOLOR初期化
+#define RHW_VALUE		(1.0f)								// rhw値
+//******************************************************************************
 // インクルードファイル
 //******************************************************************************
 #include "main.h"
@@ -19,18 +27,18 @@ public:
 	{
 		OBJTYPE_NONE = -1,
 		OBJTYPE_BG,
-		OBJTYPE_SHIP_WEPON,
-		OBJTYPE_EXPLOSION,
 		OBJTYPE_SHIP,
 		OBJTYPE_ENEMY,
 		OBJTYPE_PLAYER,
 		OBJTYPE_PLAYER_BULLET,
 		OBJTYPE_PLAYER_WEPON,
 		OBJTYPE_ENEMY_BULLET,
+		OBJTYPE_PARTICLE,
 		OBJTYPE_BOSS,
 		OBJTYPE_BOSS_RIGHT,
 		OBJTYPE_BOSS_LEFT,
 		OBJTYPE_ITEM,
+		OBJTYPE_EXPLOSION,
 		OBJTYPE_UI,
 		OBJTYPE_FADE,
 		OBJTYPE_MAX

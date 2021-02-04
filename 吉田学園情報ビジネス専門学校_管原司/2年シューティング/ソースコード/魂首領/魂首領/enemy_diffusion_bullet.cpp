@@ -2,8 +2,9 @@
 // 拡散弾 [enemy_diffudion_bullet.cpp]
 // Author : 管原　司
 //******************************************************************************
+
 //******************************************************************************
-// ファイルインクルード
+// インクルードファイル
 //******************************************************************************
 #include "main.h"
 #include "manager.h"
@@ -15,11 +16,21 @@
 #include "enemy_normal_bullet.h"
 #include "enemy_diffusion_bullet.h"
 //******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define BULLET_ROT				(D3DXVECTOR3(0.0f,0.0f,0.0f))		// 弾の向き
+#define BULLET_COLOR			(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))	// 弾の色
+#define DIFF_BULLET_COUNT		(80)								// 拡散弾カウント
+#define BULLET_NUMBER			(20)								// 弾の数
+#define BULLET_SPEED			(5.0f)								// 弾のスピード
+#define BULLET_RADIAN			(360)								// 弧度
+#define BULLET_RADIAN_DEVIDE	(20)								// 弧度の除算値
+//******************************************************************************
 // コンストラクタ
 //******************************************************************************
 CEnemy_Diffusion_Bullet::CEnemy_Diffusion_Bullet(int nPriority) : CBullet(nPriority)
 {
-	m_nDifCount = 0;
+	m_nDifCount = INIT_INT;
 }
 //******************************************************************************
 // デストラクタ
@@ -83,17 +94,19 @@ void CEnemy_Diffusion_Bullet::Update(void)
 	m_nDifCount++;
 
 	// カウント80以上の場合
-	if (m_nDifCount >= 80)
+	if (m_nDifCount >= DIFF_BULLET_COUNT)
 	{
 		// 20回繰り返す
-		for (int nCount = 0; nCount < 20; nCount++)
+		for (int nCount = INIT_INT; nCount < BULLET_NUMBER; nCount++)
 		{
 			// 円形弾生成
 			CEnemy_Normal_Bullet::Create(D3DXVECTOR3(pos.x, pos.y, pos.z),
-				D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)),
+				BULLET_ROT,
 				ENEMY_NORMAL_BULLET_SIZE,
-				D3DXVECTOR3(cosf(D3DXToRadian(nCount * (360 / 20)))*5.0f, sinf(D3DXToRadian(nCount * (360 / 20)))*5.0f, 0.0f),
-				D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
+				D3DXVECTOR3(cosf(D3DXToRadian(nCount * (BULLET_RADIAN / BULLET_RADIAN_DEVIDE)))*BULLET_SPEED,
+					sinf(D3DXToRadian(nCount * (BULLET_RADIAN / BULLET_RADIAN_DEVIDE)))*BULLET_SPEED, 
+					0.0f),
+				BULLET_COLOR,
 				CBullet::TEX_TYPE_ENEMY_NORMAL);
 		}
 

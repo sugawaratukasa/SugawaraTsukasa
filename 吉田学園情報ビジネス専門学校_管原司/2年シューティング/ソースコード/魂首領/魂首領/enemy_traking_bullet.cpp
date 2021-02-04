@@ -1,5 +1,5 @@
 //******************************************************************************
-// 狙い撃ち弾 [enemy_traking_bullet.h]
+// 狙い撃ち弾 [enemy_traking_bullet.cpp]
 // Author : 管原　司
 //******************************************************************************
 
@@ -21,8 +21,8 @@
 //******************************************************************************
 CEnemy_Traking_Bullet::CEnemy_Traking_Bullet(int nPriority) : CBullet(nPriority)
 {
-	m_move		= D3DXVECTOR3(0.0f,0.0f,0.0f);
-	m_fAngle	= 0.0f;
+	m_move		= INIT_D3DXVECTOR3;
+	m_fAngle	= INIT_FLOAT;
 }
 //******************************************************************************
 // デストラクタ
@@ -61,10 +61,7 @@ HRESULT CEnemy_Traking_Bullet::Init(void)
 	// 初期化
 	CBullet::Init();
 
-	//ゲーム取得
-	CGame * pGame = CSceneManager::GetGame();
-
-	//プレイヤーの取得
+	// プレイヤーの取得
 	CPlayer * pPlayer = CGame::GetPlayer();
 	
 	// プレイヤーの位置座標取得
@@ -73,6 +70,7 @@ HRESULT CEnemy_Traking_Bullet::Init(void)
 	// 位置座標取得
 	D3DXVECTOR3 pos = GetPosition();
 
+	// 角度算出
 	m_fAngle = atan2f(PlayerPos.y - pos.y, PlayerPos.x - pos.x);
 
 	return S_OK;
@@ -131,26 +129,33 @@ void CEnemy_Traking_Bullet::HitPlayer(void)
 	// サイズ取得
 	D3DXVECTOR3 size = GetSize();
 
-	//ゲーム取得
-	CGame * pGame = CSceneManager::GetGame();
+	// CSceneクラスのポインタ
+	CScene * pScene = NULL;
 
-	//プレイヤーの取得
-	CPlayer * pPlayer = CGame::GetPlayer();
-
-	// プレイヤーの位置座標取得
-	D3DXVECTOR3 PlayerPos = pPlayer->GetPosition();
-
-	// プレイヤーのサイズ取得
-	D3DXVECTOR3 PlayerSize = pPlayer->GetCollisionSize();
-
-	// 当たり判定
-	if (Collision(pos, PlayerPos, size, PlayerSize) == true)
+	// 敵の当たり判定
+	do
 	{
-		// プレイヤーにダメージを与える
-		pPlayer->HitPlayer();
+		// オブジェタイプが敵の場合
+		pScene = GetScene(OBJTYPE_PLAYER);
+		if (pScene != NULL)
+		{
+			OBJTYPE objType = pScene->GetObjType();
+			if (objType == OBJTYPE_PLAYER)
+			{
+				// 座標とサイズ取得
+				D3DXVECTOR3 PlayerPos = ((CPlayer*)pScene)->GetPosition();
+				D3DXVECTOR3 PlayerSize = ((CPlayer*)pScene)->GetCollisionSize();
 
-		// 弾を消す
-		Uninit();
-		return;
-	}
+				// 当たり判定
+				if (Collision(pos, PlayerPos, size, PlayerSize) == true)
+				{
+					// 敵にダメージを与える
+					((CPlayer*)pScene)->HitPlayer();
+					// 弾を消す
+					Uninit();
+					return;
+				}
+			}
+		}
+	} while (pScene != NULL);
 }

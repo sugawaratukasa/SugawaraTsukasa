@@ -20,14 +20,21 @@
 //******************************************************************************
 // マクロ定義
 //******************************************************************************
-#define BULLET_MOVE_VALUE (D3DXVECTOR3(5.0f,5.0f,0.0f))
+#define BULLET_MOVE_VALUE	(D3DXVECTOR3(5.0f,5.0f,0.0f))	// 弾スピード
+#define BULLET_COLOR_VALUE	(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))// 弾の色
+#define BULLET_ROT_VALUE	(D3DXVECTOR3(0.0f,0.0f,0.0f))	// 向きの値
+#define BULLET_SHOT_COUNT	(4)								// 発射数
+#define ATTACK_COUNT		(100)							// 攻撃カウント
+#define HALF_DEVIDE			(2)								// 割る2
+#define COUNT_REMAINDER		(0)								// 余り
+#define RADIAN				(90.0f)							// 角度
 //******************************************************************************
 // コンストラクタ
 //******************************************************************************
 CShip_Battery::CShip_Battery(int nPriority) : CEnemy(nPriority)
 {
-	m_pos			= D3DXVECTOR3(0.0f,0.0f,0.0f);
-	m_nAttackCount	= 0;
+	m_pos			= INIT_D3DXVECTOR3;
+	m_nAttackCount	= INIT_INT;
 }
 //******************************************************************************
 // デストラクタ
@@ -121,7 +128,7 @@ void CShip_Battery::Attack(void)
 	PlayerPos = pPlayer->GetPosition();
 
 	// プレイヤーの情報取得
-	int nPlayerState = 0;
+	int nPlayerState = INIT_INT;
 	nPlayerState = pPlayer->GetPlayerState();
 
 	if (nPlayerState == CPlayer::STATE_NORMAL || nPlayerState == CPlayer::STATE_DAMAGE)
@@ -130,20 +137,20 @@ void CShip_Battery::Attack(void)
 		float fAngle = atan2f(PlayerPos.x - pos.x, PlayerPos.y - pos.y);
 
 		// 銃口への半径
-		float fLength = SHIP_BATTERY_SIZE.y / 2;
+		float fLength = SHIP_BATTERY_SIZE.y / HALF_DEVIDE;
 
 		// 銃口のpos
-		D3DXVECTOR3 Battery_Muzle_Pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		D3DXVECTOR3 Battery_Muzle_Pos = INIT_D3DXVECTOR3;
 
 		// 向き
-		D3DXVECTOR3 rot = D3DXVECTOR3(0.0f,0.0f,0.0f);
+		D3DXVECTOR3 rot = INIT_D3DXVECTOR3;
 
 		// 攻撃カウントインクリメント
 		m_nAttackCount++;
 
 		//座標を求める
-		Battery_Muzle_Pos.x = pos.x - cosf(fAngle + D3DXToRadian(90.0f)) * fLength;
-		Battery_Muzle_Pos.y = pos.y + sinf(fAngle + D3DXToRadian(90.0f)) * fLength;
+		Battery_Muzle_Pos.x = pos.x - cosf(fAngle + D3DXToRadian(RADIAN)) * fLength;
+		Battery_Muzle_Pos.y = pos.y + sinf(fAngle + D3DXToRadian(RADIAN)) * fLength;
 
 		//rotに角度を代入
 		rot.z = fAngle;
@@ -152,16 +159,16 @@ void CShip_Battery::Attack(void)
 		SetRot(rot);
 
 		//攻撃処理
-		if (m_nAttackCount % 100 == 0)
+		if (m_nAttackCount % ATTACK_COUNT == COUNT_REMAINDER)
 		{
-			for (int nCount = 0; nCount < 4; nCount++)
+			for (int nCount = 0; nCount < BULLET_SHOT_COUNT; nCount++)
 			{
 				// 4発狙い撃ち弾発射
-				CEnemy_Traking_Bullet::Create(D3DXVECTOR3(Battery_Muzle_Pos.x, Battery_Muzle_Pos.y, Battery_Muzle_Pos.z)
-					, D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(180.0f)),
+				CEnemy_Traking_Bullet::Create(D3DXVECTOR3(Battery_Muzle_Pos.x, Battery_Muzle_Pos.y, Battery_Muzle_Pos.z),
+					BULLET_ROT_VALUE,
 					ENEMY_TRAKING_BULLET_SIZE,
 					D3DXVECTOR3(BULLET_MOVE_VALUE.x + nCount, BULLET_MOVE_VALUE.y + nCount, 0.0f),
-					D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
+					BULLET_COLOR_VALUE,
 					CBullet::TEX_TYPE_ENEMY_NORMAL);
 			}
 		}

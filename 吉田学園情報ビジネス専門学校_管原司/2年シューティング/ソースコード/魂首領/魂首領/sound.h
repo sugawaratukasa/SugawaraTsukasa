@@ -14,8 +14,6 @@
 class CSound
 {
 public:
-	CSound();
-	~CSound();
 	typedef enum
 	{
 		SOUND_LABEL_BGM000 = 0,		// BGM0
@@ -25,12 +23,20 @@ public:
 		SOUND_LABEL_SE_BOM,			// ƒ{ƒ€‰¹
 		SOUND_LABEL_MAX,
 	} SOUND_LABEL;
-
+	typedef enum
+	{
+		TYPE_LOOP = -1,
+		TYPE_SE,
+		TYPE_MAX
+	}TYPE;
+	CSound();
+	~CSound();
 	HRESULT Init(HWND hWnd);
 	void Uninit(void);
 	HRESULT PlaySound(SOUND_LABEL label);
 	void StopSound(SOUND_LABEL label);
 	void StopSound(void);
+
 private:
 	typedef struct
 	{

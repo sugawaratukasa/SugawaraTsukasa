@@ -4,7 +4,7 @@
 //******************************************************************************
 
 //******************************************************************************
-// ファイルインクルード
+// インクルードファイル
 //******************************************************************************
 #include "main.h"
 #include "manager.h"
@@ -20,7 +20,16 @@
 #include "bom.h"
 #include "boss_bom.h"
 #include "boss.h"
+#include "boss_left.h"
+#include "boss_right.h"
 #include "score.h"
+//******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define COLOR				(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))	// 色
+#define ADD_SCORE			(100)								// 加算スコア
+#define BOSS_MAIN_DAMAGE	(20)								// ボスに中心に与えるダメージ
+#define BOSS_DAMAGE			(10)								// ボスに与えるダメージ
 //******************************************************************************
 // 静的メンバ変数
 //******************************************************************************
@@ -30,7 +39,7 @@ bool CBoss_Bom::m_bUseBoss_Bom = true;
 //******************************************************************************
 CBoss_Bom::CBoss_Bom(int nPriority) : CBullet(nPriority)
 {
-	m_move			= D3DXVECTOR3(0.0f,0.0f,0.0f);
+	m_move			= INIT_D3DXVECTOR3;
 	m_bUseBoss_Bom	= true;
 }
 //******************************************************************************
@@ -51,7 +60,7 @@ CBoss_Bom * CBoss_Bom::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 size
 	pBoss_Bom = new CBoss_Bom;
 
 	// 弾の情報設定
-	pBoss_Bom->SetBullet(pos, rot, size, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), textype, CScene::OBJTYPE_PLAYER_BULLET);
+	pBoss_Bom->SetBullet(pos, rot, size, COLOR, textype, CScene::OBJTYPE_PLAYER_BULLET);
 
 	// 移動量代入
 	pBoss_Bom->m_move = move;
@@ -87,9 +96,6 @@ void CBoss_Bom::Update(void)
 {
 	// 更新
 	CBullet::Update();;
-
-	//ゲーム取得
-	CGame * pGame = CSceneManager::GetGame();
 
 	//プレイヤーの取得
 	CPlayer * pPlayer = CGame::GetPlayer();
@@ -127,8 +133,17 @@ void CBoss_Bom::Update(void)
 //******************************************************************************
 void CBoss_Bom::Draw(void)
 {
+	// レンダラー取得
+	LPDIRECT3DDEVICE9 pDevice = CSceneManager::GetRenderer()->GetDevice();
+
+	// 加算合成の設定
+	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+
 	// 描画
 	CBullet::Draw();
+
+	// 元に戻す
+	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 }
 //******************************************************************************
 // 使用状態設定
@@ -142,9 +157,6 @@ void CBoss_Bom::SetUseBoss_Bom(bool bUseBoss_Bom)
 //******************************************************************************
 void CBoss_Bom::HitBoss(void)
 {
-	//ゲーム取得
-	CGame * pGame = CSceneManager::GetGame();
-
 	//プレイヤーの取得
 	CPlayer * pPlayer = CGame::GetPlayer();
 
@@ -191,22 +203,101 @@ void CBoss_Bom::HitBoss(void)
 					// 敵にダメージを与える
 					((CBullet*)pScene)->Uninit();
 					//スコア加算
-					pScore->AddScore(100);
+					pScore->AddScore(ADD_SCORE);
 				}
 			}
 		}
 	} while (pScene != NULL);
 
-	// 当たり判定
-	if (Collision(pos, BossPos, size, BossPos) == true)
+	// ボスの当たり判定
+	do
 	{
-		// ボスにダメージを与える
-		pBoss->HitBoss(40);
-		//スコア加算
-		pScore->AddScore(100);
-		// 弾を消す
-		Uninit();
-		return;
-	}
+		// オブジェタイプが敵の場合
+		pScene = GetScene(OBJTYPE_BOSS);
+		if (pScene != NULL)
+		{
+			OBJTYPE objType = pScene->GetObjType();
+			if (objType == OBJTYPE_BOSS)
+			{
+				// 座標とサイズ取得
+				D3DXVECTOR3 BossPos = ((CBoss*)pScene)->GetPosition();
+				D3DXVECTOR3 BossSize = ((CBoss*)pScene)->GetSize();
+
+				// 当たり判定
+				if (Collision(pos, BossPos, size, BossSize) == true)
+				{
+					// 敵にダメージを与える
+					((CBoss*)pScene)->HitBoss(BOSS_MAIN_DAMAGE);
+					// スコア加算
+					pScore->AddScore(ADD_SCORE);
+					// 弾を消す
+					Uninit();
+					return;
+				}
+			}
+		}
+	} while (pScene != NULL);
+
+	// ボスの当たり判定
+	do
+	{
+		// オブジェタイプが敵の場合
+		pScene = GetScene(OBJTYPE_BOSS_RIGHT);
+		if (pScene != NULL)
+		{
+			OBJTYPE objType = pScene->GetObjType();
+			if (objType == OBJTYPE_BOSS_RIGHT)
+			{
+				// 座標とサイズ取得
+				D3DXVECTOR3 BossRightPos = ((CBoss_Right*)pScene)->GetPosition();
+				D3DXVECTOR3 BossRightSize = ((CBoss_Right*)pScene)->GetSize();
+
+				// 当たり判定
+				if (Collision(pos, BossRightPos, size, BossRightSize) == true)
+				{
+					// 敵にダメージを与える
+					((CBoss_Right*)pScene)->Hit(BOSS_DAMAGE);
+
+					// スコア加算
+					pScore->AddScore(ADD_SCORE);
+
+					// 弾を消す
+					Uninit();
+					return;
+				}
+			}
+		}
+	} while (pScene != NULL);
+
+	// ボスの当たり判定
+	do
+	{
+		// オブジェタイプが敵の場合
+		pScene = GetScene(OBJTYPE_BOSS_LEFT);
+		if (pScene != NULL)
+		{
+			OBJTYPE objType = pScene->GetObjType();
+			if (objType == OBJTYPE_BOSS_LEFT)
+			{
+				// 座標とサイズ取得
+				D3DXVECTOR3 BossLeftPos = ((CBoss_Left*)pScene)->GetPosition();
+				D3DXVECTOR3 BossLeftSize = ((CBoss_Left*)pScene)->GetSize();
+
+				// 当たり判定
+				if (Collision(pos, BossLeftPos, size, BossLeftSize) == true)
+				{
+					// 敵にダメージを与える
+					((CBoss_Left*)pScene)->Hit(BOSS_DAMAGE);
+
+					// スコア加算
+					pScore->AddScore(ADD_SCORE);
+
+					// 弾を消す
+					Uninit();
+					return;
+				}
+			}
+		}
+	} while (pScene != NULL);
 
 }

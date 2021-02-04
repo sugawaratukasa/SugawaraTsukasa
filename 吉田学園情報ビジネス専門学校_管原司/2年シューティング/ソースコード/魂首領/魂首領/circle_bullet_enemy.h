@@ -36,7 +36,8 @@ public:
 	void Draw(void);
 private:
 	void Attack(void);
-	DROP_ITEM m_DropItem;	// アイテムの種類
+
+	DROP_ITEM m_DropItem;	// 落とすアイテム
 	int m_nAttackCount;		// 攻撃カウント
 };
 #endif

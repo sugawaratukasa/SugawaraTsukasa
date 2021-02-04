@@ -2,8 +2,9 @@
 // ボム [bom.h]
 // Author : 管原　司
 //******************************************************************************
+
 //******************************************************************************
-// ファイルインクルード
+// インクルードファイル
 //******************************************************************************
 #include "main.h"
 #include "manager.h"
@@ -16,12 +17,27 @@
 #include "bom.h"
 #include "score.h"
 //******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define ANIM_COUNT				(4)		// アニメーションカウント
+#define INIT_ANIM_COUNT			(0)		// アニメーションカウント初期化
+#define PATTERN_COUNT			(4)		// パターンカウント
+#define PATTERN_COUNT2			(5)		// パターンカウント2
+#define PATTERN_COUNT_MAX		(10)	// パターンカウント最大値
+#define INIT_TEX				(0.0f)	// テクスチャ初期
+#define TEX_X					(0.2f)	// テクスチャX
+#define TEX_X2					(0.5f)	// テクスチャX2
+#define TEX_Y					(0.5f)	// テクスチャY
+#define TEX_Y2					(1.0f)	// テクスチャY2
+#define ENEMY_DAMAGE			(100)	// 敵に与えるダメージ
+#define ADD_SCORE				(100)	// 加算スコア
+//******************************************************************************
 // コンストラクタ
 //******************************************************************************
 CBom::CBom(int nPriority) : CBullet(nPriority)
 {
-	m_nPatternCount = 0;
-	m_nAnimCount	= 0;
+	m_nPatternCount = INIT_INT;
+	m_nAnimCount	= INIT_INT;
 }
 //******************************************************************************
 // デストラクタ
@@ -85,31 +101,29 @@ void CBom::Update(void)
 	m_nAnimCount++;
 
 	//カウントが4以上になったら
-	if (m_nAnimCount > 4)
+	if (m_nAnimCount > ANIM_COUNT)
 	{
 		// カウントを0に
-		m_nAnimCount = 0;
+		m_nAnimCount = INIT_ANIM_COUNT;
 
 		// パターンが4以下の場合
-		if (m_nPatternCount <= 4)
+		if (m_nPatternCount <= PATTERN_COUNT)
 		{
 			// テクスチャ設定
-			SetTexture(m_nPatternCount * 0.2f, 0.0, 0.2f, 0.5f);
+			SetTexture(m_nPatternCount * TEX_X, INIT_TEX, TEX_X, TEX_Y);
 		}
 		// パターンが5以上の場合
-		if (m_nPatternCount >= 5)
+		if (m_nPatternCount >= PATTERN_COUNT2)
 		{
 			// テクスチャの設定
-			SetTexture(m_nPatternCount * 0.2f, 0.5, 0.2f, 1.0f);
+			SetTexture(m_nPatternCount * TEX_X, TEX_X2, TEX_X, TEX_Y2);
 
 		}
 		// パターンのインクリメント
 		m_nPatternCount++;
 	}
-
-
 	// パターンが10以上になったら
-	if (m_nPatternCount >= 10)
+	if (m_nPatternCount >= PATTERN_COUNT_MAX)
 	{
 		// 終了処理
 		Uninit();
@@ -163,9 +177,9 @@ void CBom::HitEnemy(void)
 				if (Collision(pos, EnemyPos, size, EnemySize) == true)
 				{
 					// 敵にダメージを与える
-					((CEnemy*)pScene)->HitEnemy(100);
+					((CEnemy*)pScene)->HitEnemy(ENEMY_DAMAGE);
 					// スコア加算
-					pScore->AddScore(100);
+					pScore->AddScore(ADD_SCORE);
 				}
 			}
 		}
@@ -196,7 +210,7 @@ void CBom::HitEnemy(void)
 					// 敵にダメージを与える
 					((CBullet*)pScene)->Uninit();
 					// スコア加算
-					pScore->AddScore(100);
+					pScore->AddScore(ADD_SCORE);
 				}
 			}
 		}

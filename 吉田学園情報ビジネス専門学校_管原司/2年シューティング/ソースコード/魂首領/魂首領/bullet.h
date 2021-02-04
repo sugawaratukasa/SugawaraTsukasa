@@ -36,8 +36,8 @@ public:
 	void SetBullet(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 size, D3DXCOLOR col, TEX_TYPE textype, OBJTYPE objtype);
 	bool Collision(D3DXVECTOR3 pos1, D3DXVECTOR3 pos2, D3DXVECTOR3 size1, D3DXVECTOR3 size2);
 private:
-	static LPDIRECT3DTEXTURE9 m_apTexture[TEX_TYPE_MAX];	// テクスチャの情報
-	D3DXVECTOR3 m_rot;										// 向き
-	TEX_TYPE m_Textype;										// テクスチャのタイプ
+	static LPDIRECT3DTEXTURE9 m_apTexture[TEX_TYPE_MAX];	//textureの情報
+	D3DXVECTOR3 m_rot;			//向き
+	TEX_TYPE m_Textype;			//テクスチャのタイプ
 };
 #endif

@@ -11,9 +11,7 @@ class CRenderer;
 class CInputKeyboard;
 class CInputJoystick;
 class CSound;
-class CTitle;
-class CGame;
-class CResult;
+class CMode;
 class CFade;
 class CTutrial;
 //*****************************************************************************
@@ -45,24 +43,16 @@ public:
 	static CInputKeyboard * GetInputKeyboard(void) { return m_pInputKeyboard; }
 	static CInputJoystick * GetInputJoystick(void) { return m_pInputJoystick; }
 	static CSound * GetSound(void) { return m_pSound; }
-	static CFade * GetFade(void) { return m_pFade; }
-	static CGame *GetGame(void) { return m_pGame; }
-	static void StartFade(MODE mode);
-	static void StopFade(void);
 
+	//static void CreateFade(MODE mode);
 	void LoadAll(void);
 	void UnloadAll(void);
 private:
 	static MODE m_mode;							// モード 
-	static CTitle * m_pTitle;					// タイトルの情報
-	static CTutrial * m_pTutrial;				// チュートリアル
-	static CGame * m_pGame;						// ゲームの情報
-	static CResult * m_pResult;					// Resultの情報
+	static CMode *m_pMode;						// モード情報
 	static CRenderer * m_pRenderer;				// レンダラー情報
 	static CInputKeyboard * m_pInputKeyboard;	// キーボード情報
 	static CInputJoystick * m_pInputJoystick;	// ジョイスティックの情報
 	static CSound * m_pSound;					// サウンドの情報
-	static CFade * m_pFade;						// フェードの情報
-	static bool m_bUseFade;						// フェードの使用
 };
 #endif

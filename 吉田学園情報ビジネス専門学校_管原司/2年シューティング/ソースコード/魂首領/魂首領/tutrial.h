@@ -4,16 +4,14 @@
 //******************************************************************************
 #ifndef _TUTRIAL_H_
 #define _TUTRIAL_H_
+#include "mode.h"
 //******************************************************************************
 // ƒNƒ‰ƒX
 //******************************************************************************
-class CTutrial : public CScene2d
+class CTutrial : public CMode
 {
 public:
-	static CTutrial * Create(D3DXVECTOR3 pos, D3DXVECTOR3 size);
-	static HRESULT Load(void);
-	static void Unload(void);
-	CTutrial(int nPriority = 10);
+	CTutrial();
 	~CTutrial();
 	HRESULT Init(void);
 	void Uninit(void);

@@ -4,7 +4,7 @@
 //******************************************************************************
 
 //******************************************************************************
-// ファイルインクルード
+// インクルードファイル
 //******************************************************************************
 #include "main.h"
 #include "renderer.h"
@@ -13,7 +13,12 @@
 #include "manager.h"
 #include "input.h"
 #include "inputkeyboard.h"
-
+//******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define SCALE_VALUE			(1.0f)								// 拡大率値
+#define TEXTURE_ANIM_VALUE	(1.0f)								// テクスチャ値
+#define DEVIDE_VALUE		(2)									// 除算値
 //******************************************************************************
 // コンストラクタ
 //******************************************************************************
@@ -21,17 +26,17 @@ CScene2d::CScene2d(int nPriority) : CScene(nPriority)
 {
 	m_pTexture	= NULL;
 	m_pVtxBuff	= NULL;
-	m_pos		= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_rot		= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_size		= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_col		= D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
-	m_fAngle	= 0.0f;
-	m_fLength	= 0.0f;
-	m_fTexX		= 0.0f;
-	m_fTexY		= 0.0f;
-	m_fTexAnimX = 1.0f;
-	m_fTexAnimY = 1.0f;
-	m_fScale	= 0.0f;
+	m_pos		= INIT_D3DXVECTOR3;
+	m_rot		= INIT_D3DXVECTOR3;
+	m_size		= INIT_D3DXVECTOR3;
+	m_col		= INIT_COLOR;
+	m_fAngle	= INIT_FLOAT;
+	m_fLength	= INIT_FLOAT;
+	m_fTexX		= INIT_FLOAT;
+	m_fTexY		= INIT_FLOAT;
+	m_fTexAnimX = INIT_FLOAT;
+	m_fTexAnimY = INIT_FLOAT;
+	m_fScale	= INIT_FLOAT;
 }
 //******************************************************************************
 // デストラクタ
@@ -40,18 +45,40 @@ CScene2d::~CScene2d()
 {
 }
 //******************************************************************************
+// 生成関数
+//******************************************************************************
+CScene2d * CScene2d::Create()
+{
+	// CScene2dクラスポインタ
+	CScene2d * pScene2D;
+
+	// メモリ確保
+	pScene2D = new CScene2d;
+
+	// 初期化
+	pScene2D->Init();
+
+	// ポインタを返す
+	return pScene2D;
+
+}
+//******************************************************************************
 // 初期化関数
 //******************************************************************************
 HRESULT CScene2d::Init()
 {
+
+	m_fTexAnimX = TEXTURE_ANIM_VALUE;
+	m_fTexAnimY = TEXTURE_ANIM_VALUE;
+
 	// 角度計算
-	m_fAngle = atan2f((m_size.y / 2), (m_size.x / 2));
+	m_fAngle = atan2f((m_size.y / DEVIDE_VALUE), (m_size.x / DEVIDE_VALUE));
 
 	// 半径計算
-	m_fLength = sqrtf((float)(((m_size.x / 2) * (m_size.x / 2)) + ((m_size.y / 2) * (m_size.y / 2))));
+	m_fLength = sqrtf((float)(((m_size.x / DEVIDE_VALUE) * (m_size.x / DEVIDE_VALUE)) + ((m_size.y / DEVIDE_VALUE) * (m_size.y / DEVIDE_VALUE))));
 
 	// 拡大率を1.0fに設定
-	m_fScale = 1.0f;
+	m_fScale = SCALE_VALUE;
 
 	//レンダラー取得
 	LPDIRECT3DDEVICE9 pDevice = CSceneManager::GetRenderer()->GetDevice();
@@ -82,10 +109,10 @@ HRESULT CScene2d::Init()
 	pVtx[3].pos.y = m_pos.y + sinf(m_fAngle - m_rot.z) * m_fLength * m_fScale;
 	pVtx[3].pos.z = 0.0f;
 
-	pVtx[0].rhw = 1.0f;
-	pVtx[1].rhw = 1.0f;
-	pVtx[2].rhw = 1.0f;
-	pVtx[3].rhw = 1.0f;
+	pVtx[0].rhw = RHW_VALUE;
+	pVtx[1].rhw = RHW_VALUE;
+	pVtx[2].rhw = RHW_VALUE;
+	pVtx[3].rhw = RHW_VALUE;
 
 	// 頂点カラー
 	pVtx[0].col = m_col;
@@ -146,10 +173,10 @@ void CScene2d::Update(void)
 	pVtx[3].pos.y = m_pos.y + sinf(m_fAngle - m_rot.z) * m_fLength * m_fScale;
 	pVtx[3].pos.z = 0.0f;
 
-	pVtx[0].rhw = 1.0f;
-	pVtx[1].rhw = 1.0f;
-	pVtx[2].rhw = 1.0f;
-	pVtx[3].rhw = 1.0f;
+	pVtx[0].rhw = RHW_VALUE;
+	pVtx[1].rhw = RHW_VALUE;
+	pVtx[2].rhw = RHW_VALUE;
+	pVtx[3].rhw = RHW_VALUE;
 
 	// 頂点カラーの設定
 	pVtx[0].col = m_col;
@@ -173,12 +200,16 @@ void CScene2d::Draw(void)
 {
 	// レンダラー取得
 	LPDIRECT3DDEVICE9 pDevice = CSceneManager::GetRenderer()->GetDevice();
+
 	// 頂点バッファをデータストリームに設定
 	pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_2D));
+
 	// 頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
+
 	// テクスチャの設定
 	pDevice->SetTexture(0, m_pTexture);
+
 	// ポリゴンの描画
 	pDevice->DrawPrimitive(
 		D3DPT_TRIANGLESTRIP,
@@ -228,7 +259,7 @@ void CScene2d::SetSize(D3DXVECTOR3 size)
 //******************************************************************************
 void CScene2d::SetScale(float fScale)
 {
-	m_fScale += fScale;
+	m_fScale = fScale;
 }
 //******************************************************************************
 // テクスチャ割り当て関数

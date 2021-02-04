@@ -13,10 +13,26 @@
 #include "scene2d.h"
 #include "player.h"
 #include "bullet.h"
-#include "explosion.h"
 #include "enemy.h"
 #include "game.h"
 #include "item.h"
+#include "particle.h"
+#include "particle_explosion.h"
+//******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define NORMAL_ENEMY_TEXTURE	("data/Texture/Enemy/enemy1.png")	// 通常の敵
+#define ENEMY_BLUE_TEXTURE		("data/Texture/Enemy/enemy2.png")	// 青色の敵
+#define ENEMY_RED_TEXTURE		("data/Texture/Enemy/enemy3.png")	// 赤色の敵
+#define BATTERY_TEXTURE			("data/Texture/Enemy/Wepon1.png")	// 固定砲台
+#define EXPLOSION_SIZE			(D3DXVECTOR3(3.0f,3.0f,0.0f))		// 爆発サイズ
+#define COLOR					(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))	// 色
+#define DAMAGE_COLOR			(D3DXCOLOR(1.0f,0.0f,0.0f,1.0f))	// ダメージ状態の色
+#define DAMAGE_COUNT			(10)								// ダメージ状態のカウント
+#define INIT_DAMAGE_COUNT		(0)									// ダメージカウントを0
+#define DAMAGE_COUNT_DEVIDE		(2)									// 割る数
+#define DAMAGE_COUNT_REMAINDER	(0)									// 余り
+#define LIFE_MIN				(0)									// ライフ最小値
 //******************************************************************************
 // 静的メンバ変数
 //******************************************************************************
@@ -28,8 +44,8 @@ CEnemy::CEnemy(int nPriority) : CScene2d(nPriority)
 {
 	m_TexType		= TEX_TYPE_NONE;
 	m_state			= STATE_NONE;
-	m_nLife			= 0;
-	m_nDamageCount	= 0;
+	m_nLife			= INIT_INT;
+	m_nDamageCount	= INIT_INT;
 }
 //******************************************************************************
 // デストラクタ
@@ -44,10 +60,10 @@ HRESULT CEnemy::Load(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = CSceneManager::GetRenderer()->GetDevice();
 	//テクスチャ読み込み
-	D3DXCreateTextureFromFile(pDevice, "data/Texture/enemy1.png", &m_apTexture[TEX_TYPE_NORMAL]);
-	D3DXCreateTextureFromFile(pDevice, "data/Texture/enemy2.png", &m_apTexture[TEX_TYPE_BLUE]);
-	D3DXCreateTextureFromFile(pDevice, "data/Texture/enemy3.png", &m_apTexture[TEX_TYPE_RED]);
-	D3DXCreateTextureFromFile(pDevice, "data/Texture/Wepon1.png", &m_apTexture[TEX_TYPE_SHIP_BATTERY]);
+	D3DXCreateTextureFromFile(pDevice, NORMAL_ENEMY_TEXTURE, &m_apTexture[TEX_TYPE_NORMAL]);
+	D3DXCreateTextureFromFile(pDevice, ENEMY_BLUE_TEXTURE, &m_apTexture[TEX_TYPE_BLUE]);
+	D3DXCreateTextureFromFile(pDevice, ENEMY_RED_TEXTURE, &m_apTexture[TEX_TYPE_RED]);
+	D3DXCreateTextureFromFile(pDevice, BATTERY_TEXTURE, &m_apTexture[TEX_TYPE_SHIP_BATTERY]);
 	return S_OK;
 }
 //******************************************************************************
@@ -55,7 +71,7 @@ HRESULT CEnemy::Load(void)
 //******************************************************************************
 void CEnemy::Unload(void)
 {
-	for (int nCnt = 0; nCnt < TEX_TYPE_MAX; nCnt++)
+	for (int nCnt = INIT_INT; nCnt < TEX_TYPE_MAX; nCnt++)
 	{
 		// テクスチャの破棄
 		if (m_apTexture[nCnt] != NULL)
@@ -87,6 +103,9 @@ CEnemy * CEnemy::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 size, int 
 //******************************************************************************
 HRESULT CEnemy::Init(void)
 {
+	// 通常状態に
+	m_state = STATE_NORMAL;
+
 	//初期化
 	CScene2d::Init();
 
@@ -115,7 +134,7 @@ void CEnemy::Update(void)
 	if (m_state == STATE_NORMAL)
 	{
 		// カラー設定
-		SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		SetRGBA(COLOR);
 	}
 	// ダメージ状態の場合
 	if (m_state == STATE_DAMAGE)
@@ -124,30 +143,35 @@ void CEnemy::Update(void)
 		m_nDamageCount++;
 
 		// カラー設定赤にする
-		SetRGBA(D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+		SetRGBA(DAMAGE_COLOR);
 
 		// 2あまり0の時
-		if (m_nDamageCount % 2 == 0)
+		if (m_nDamageCount % DAMAGE_COUNT_DEVIDE == DAMAGE_COUNT_REMAINDER)
 		{
 			// カラー設定
-			SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			SetRGBA(COLOR);
 		}
 
 		// カウントが10の場合
-		if (m_nDamageCount == 10)
+		if (m_nDamageCount == DAMAGE_COUNT)
 		{
 			// 状態をNORMALにする
 			m_state = STATE_NORMAL;
-			m_nDamageCount = 0;
+
+			// 0に
+			m_nDamageCount = INIT_DAMAGE_COUNT;
 		}
 	}
 
 	// ライフが0以下になった場合
-	if (m_nLife <= 0)
+	if (m_nLife <= LIFE_MIN)
 	{
 		// 爆発の生成
-		CExplosion::Create(pos, EXPLOSION_SIZE);
+		CParticle_Explosion::CreateExplosionEffect(pos, EXPLOSION_SIZE,CParticle_Explosion::TYPE_ENEMY);
+
+		// 死亡状態に設定
 		m_state = STATE_DEATH;
+
 		// 終了
 		Uninit();
 		return;
@@ -168,6 +192,7 @@ void CEnemy::HitEnemy(int nDamage)
 {
 	// ダメージ減算
 	m_nLife -= nDamage;
+
 	// stateをダメージに
 	m_state = STATE_DAMAGE;
 }
@@ -186,7 +211,7 @@ void CEnemy::SetEnemy(D3DXVECTOR3 pos, D3DXVECTOR3 rot, D3DXVECTOR3 size, int nL
 	SetSize(size);
 
 	// カラー設定
-	SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	SetRGBA(COLOR);
 
 	// ライフ設定
 	m_nLife = nLife;

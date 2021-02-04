@@ -4,7 +4,7 @@
 //******************************************************************************
 
 //******************************************************************************
-// ファイルインクルード
+// インクルードファイル
 //******************************************************************************
 #include "main.h"
 #include "manager.h"
@@ -17,7 +17,6 @@
 #include "player.h"
 #include "bullet.h"
 #include "bg.h"
-#include "explosion.h"
 #include "sound.h"
 #include "enemy.h"
 #include "normal_enemy.h"
@@ -34,24 +33,53 @@
 #include "boss.h"
 #include "warning.h"
 #include "ship_battery.h"
+#include "particle.h"
+#include "particle_explosion.h"
+#include "black_polygon.h"
+#include "mode.h"
+//******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define PLAYER_POS				(D3DXVECTOR3(SCREEN_WIDTH / 2,SCREEN_HEIGHT / 2, 0.0))	// プレイヤーの位置
+#define PLAYER_SIZE				(D3DXVECTOR3(50.0f,50.0f,0.0f))							// プレイヤーサイズ
+#define BOSS_POS				(D3DXVECTOR3(SCREEN_WIDTH / 2, -200.0f, 0.0f))			// ボスの位置
+#define BOSS_MAIN_SIZE			(D3DXVECTOR3(150.0f,150.0f,0.0f))						// ボスの中央のサイズ
+#define BG_POS					(D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f))// 背景位置
+#define SCORE_POS				(D3DXVECTOR3(940.0f, 50.0f, 0.0f))						// スコア位置
+#define LIFE_POS				(D3DXVECTOR3(350.0f, 50.0f, 0.0f))						// ライフ位置
+#define BOM_UI_POS				(D3DXVECTOR3(340.0f, 700.0f, 0.0f))						// ボムのUI位置
+#define ENEMY_ROT				(D3DXVECTOR3(0.0f,0.0f,0.0f))							// 敵の向き
+#define ENEMY_RESPWAN_POS_1		(D3DXVECTOR3(900.0f, -300.0f, 0.0f))					// 敵の生成位置1
+#define ENEMY_RESPWAN_POS_2		(D3DXVECTOR3(540.0f, -150.0f, 0.0f))					// 敵の生成位置2
+#define ENEMY_RESPAWN_POS_3		(D3DXVECTOR3(480.0f, -100.0f, 0.0f))					// 敵の生成位置3
+#define ENEMY_RESPWAN_POS_4		(D3DXVECTOR3(840.0f, -100.0f, 0.0f))					// 敵の生成位置4
+#define ENEMY_RESPWAN_POS_5		(D3DXVECTOR3(740.0f, -50.0f, 0.0f))						// 敵の生成位置5
+#define ENEMY_RESPWAN_POS_6		(D3DXVECTOR3(600.0f, -100.0f, 0.0f))					// 敵の生成位置6
+#define SHIP_RESPAWN_POS		(D3DXVECTOR3(SCREEN_WIDTH / 2, -1000.0f, 0.0f))			// 船生成位置
+#define RESPAWN_COUNT_DEVIDE	(150)													// 敵生成カウント
+#define RESPAWN_COUNT_DEVIDE2	(300)													// 敵生成カウント2
+#define RESPAWN_COUNT_DEVIDE3	(400)													// 敵生成カウント3
+#define RESPAWN_COUNT_DEVIDE4	(500)													// 敵生成カウント4
+#define SHIP_RESPAWN			(1500)													// 船生成カウント
+#define ENEMY_NO_RESPAWN_COUNT	(3300)													// 敵の生成を止めるカウント
+#define RESPAWN_COUNT_REMAINDER	(0)														// 余り
+#define INIT_SCORE				(0)														// 初期スコア
 //******************************************************************************
 // 静的メンバ変数
 //******************************************************************************
-CScore * CGame::m_pScore = NULL;
-CLife * CGame::m_pLife = NULL;
-CPlayer * CGame::m_pPlayer = NULL;
-CBomUI * CGame::m_pBom = NULL;
-CShip * CGame::m_pShip = NULL;
-CBoss * CGame::m_pBoss = NULL;
+CScore * CGame::m_pScore	= NULL;
+CLife * CGame::m_pLife		= NULL;
+CPlayer * CGame::m_pPlayer	= NULL;
+CBomUI * CGame::m_pBom		= NULL;
+CShip * CGame::m_pShip		= NULL;
+CBoss * CGame::m_pBoss		= NULL;
 //******************************************************************************
 // コンストラクタ
 //******************************************************************************
-CGame::CGame(int nPriority) : CScene(nPriority)
+CGame::CGame()
 {
-	m_pos				= D3DXVECTOR3(0.0f,0.0f,0.0f);
-	m_size				= D3DXVECTOR3(0.0f,0.0f,0.0f);
-	m_nCount			= 0;
-	m_nRespawn_Count	= 0;
+	m_nCount			= INIT_INT;
+	m_nRespawn_Count	= INIT_INT;
 	m_bfade				= false;
 	m_bUseBoss			= false;
 }
@@ -62,29 +90,6 @@ CGame::~CGame()
 {
 }
 //******************************************************************************
-// 生成関数
-//******************************************************************************
-CGame * CGame::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
-{
-	// CGameクラスのポインタ
-	CGame * pGame;
-
-	// メモリ確保
-	pGame = new CGame;
-
-	// 位置座標代入
-	pGame->m_pos = pos;
-
-	// サイズ代入
-	pGame->m_size = size;
-
-	// 初期化
-	pGame->Init();
-
-	// ポインタを返す
-	return pGame;
-}
-//******************************************************************************
 // 初期化関数
 //******************************************************************************
 HRESULT CGame::Init(void)
@@ -93,22 +98,27 @@ HRESULT CGame::Init(void)
 	CSound * pSound = CSceneManager::GetSound();
 	CSound::SOUND_LABEL type;
 	type = CSound::SOUND_LABEL_SE_SHOT;
+	// サウンド再生
 	pSound->PlaySound(CSound::SOUND_LABEL_BGM000);
-	CPolygon::Create(POLYGON_RIGHT_POS, POLYGON_SIZE);
-	CPolygon::Create(POLYGON_LEFT_POS, POLYGON_SIZE);
+	CBlack_Polygon::Create(POLYGON_RIGHT_POS, POLYGON_SIZE, BLACK_POLYGON_COLOR,CPolygon::TEX_TYPE_MAX);
+	CBlack_Polygon::Create(POLYGON_LEFT_POS, POLYGON_SIZE, BLACK_POLYGON_COLOR, CPolygon::TEX_TYPE_MAX);
 	//背景
-	CBg::Create(D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f), BG_SIZE);
-	//ボス
-	m_pBoss = CBoss::Create(D3DXVECTOR3(SCREEN_WIDTH / 2, -200.0f, 0.0f), BOSS_MAIN_SIZE);
+	CBg::Create(BG_POS, BG_SIZE);
+
 	//自機
-	m_pPlayer = CPlayer::Create(D3DXVECTOR3(640.0f, 800, 0.0f), PLAYER_SIZE);
+	m_pPlayer = CPlayer::Create(PLAYER_POS, PLAYER_SIZE);
+
 	//スコア
-	m_pScore = CScore::Create(D3DXVECTOR3(940.0f, 50.0f, 0.0f), SCORE_SIZE);
-	m_pScore->SetScore(0);
+	m_pScore = CScore::Create(SCORE_POS, SCORE_SIZE);
+
+	// スコア設定
+	m_pScore->SetScore(INIT_SCORE);
+
 	//ライフ
-	m_pLife = CLife::Create(D3DXVECTOR3(350.0f, 50.0f, 0.0f), LIFE_SIZE);
+	m_pLife = CLife::Create(LIFE_POS, LIFE_SIZE);
+
 	//ボムUI
-	m_pBom = CBomUI::Create(D3DXVECTOR3(340.0f, 700.0f, 0.0f), BOM_UI_SIZE);
+	m_pBom = CBomUI::Create(BOM_UI_POS, BOM_UI_SIZE);
 
 	return S_OK;
 }
@@ -117,19 +127,24 @@ HRESULT CGame::Init(void)
 //******************************************************************************
 void CGame::Uninit(void)
 {
-	//終了
-	Release();
+	//サウンドの停止
+	CSceneManager::GetSound()->StopSound();
+
+	// フェード以外破棄
+	CScene::DesignationReleaseAll(CScene::OBJTYPE_FADE);
 }
 //******************************************************************************
 // 更新関数
 //******************************************************************************
 void CGame::Update(void)
 {
-	//プレイヤー取得
+	// プレイヤー取得
 	CPlayer * pPlayer = GetPlayer();
-	//State
-	int nPlayerState = 0;
-	//State取得
+
+	// State
+	int nPlayerState = INIT_INT;
+
+	// State取得
 	nPlayerState = pPlayer->GetPlayerState();
 
 	// プレイヤーが死亡状態でない場合
@@ -138,86 +153,8 @@ void CGame::Update(void)
 		// falseの場合
 		if (m_bUseBoss == false)
 		{
-			// インクリメント
-			m_nRespawn_Count++;
-
-			// 150あまり0のとき
-			if (m_nRespawn_Count % 150 == 0)
-			{
-				// 敵生成
-				CNormal_Enemy::Create(D3DXVECTOR3(900.0f, -300.0f, 0.0f),
-					D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(0.0f)),
-					NORMAL_ENEMY_SIZE,
-					NORMAL_ENEMY_LIFE,
-					CEnemy::TEX_TYPE_NORMAL);
-
-				CNormal_Enemy::Create(D3DXVECTOR3(540.0f, -150.0f, 0.0f),
-					D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(0.0f)),
-					NORMAL_ENEMY_SIZE,
-					NORMAL_ENEMY_LIFE,
-					CEnemy::TEX_TYPE_NORMAL);
-
-				CNormal_Enemy::Create(D3DXVECTOR3(440.0f, -200.0f, 0.0f),
-					D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(0.0f)),
-					NORMAL_ENEMY_SIZE,
-					NORMAL_ENEMY_LIFE,
-					CEnemy::TEX_TYPE_NORMAL);
-			}
-			// 400あまり0のとき
-			if (m_nRespawn_Count % 400 == 0)
-			{
-				CNormal_Enemy::Create(D3DXVECTOR3(840.0f, -100.0f, 0.0f),
-					D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(0.0f)),
-					NORMAL_ENEMY_SIZE,
-					NORMAL_ENEMY_LIFE,
-					CEnemy::TEX_TYPE_NORMAL);
-
-				CNormal_Enemy::Create(D3DXVECTOR3(740.0f, -50.0f, 0.0f),
-					D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(0.0f)),
-					NORMAL_ENEMY_SIZE,
-					NORMAL_ENEMY_LIFE,
-					CEnemy::TEX_TYPE_NORMAL);
-
-				CNormal_Enemy::Create(D3DXVECTOR3(640.0f, -100.0f, 0.0f),
-					D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(0.0f)),
-					NORMAL_ENEMY_SIZE,
-					NORMAL_ENEMY_LIFE,
-					CEnemy::TEX_TYPE_NORMAL);
-
-			}
-			// 300あまり0のとき
-			if (m_nRespawn_Count % 300 == 0)
-			{
-				// 敵生成
-				CCirecle_Bullet_Enemy::Create(D3DXVECTOR3(480.0f, -100.0f, 0.0f),
-					D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(0.0f)),
-					CIRCLE_BULLET_ENEMY_SIZE,
-					CIRCLE_BULLET_ENEMY_LIFE,
-					CEnemy::TEX_TYPE_BLUE,
-					CCirecle_Bullet_Enemy::DROP_ITEM_BOM);
-			}
-			// 500あまり0のとき
-			if (m_nRespawn_Count % 500 == 0)
-			{
-				// 敵生成
-				CCirecle_Bullet_Enemy::Create(D3DXVECTOR3(600.0f, -100.0f, 0.0f),
-					D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(0.0f)),
-					CIRCLE_BULLET_ENEMY_SIZE,
-					CIRCLE_BULLET_ENEMY_LIFE,
-					CEnemy::TEX_TYPE_RED,
-					CCirecle_Bullet_Enemy::DROP_ITEM_POWERUP);
-			}
-			// 1500カウント
-			if (m_nRespawn_Count == 1500)
-			{
-				// 船生成
-				m_pShip = CShip::Create(D3DXVECTOR3(SCREEN_WIDTH / 2, -1000.0f, 0.0f), SHIP_SIZE);
-			}
-			//カウントが
-			if (m_nRespawn_Count == 3300)
-			{
-				m_bUseBoss = true;
-			}
+			// 敵生成関数
+			Enemy_Respawn();
 		}
 	}
 }
@@ -226,4 +163,88 @@ void CGame::Update(void)
 //******************************************************************************
 void CGame::Draw(void)
 {
+}
+//******************************************************************************
+// ボス生成
+//******************************************************************************
+void CGame::CreateBoss(void)
+{
+	// ボス生成
+	m_pBoss = CBoss::Create(BOSS_POS, BOSS_MAIN_SIZE);
+}
+//******************************************************************************
+// 敵生成処理関数
+//******************************************************************************
+void CGame::Enemy_Respawn(void)
+{
+	// インクリメント
+	m_nRespawn_Count++;
+
+	// 150あまり0のとき
+	if (m_nRespawn_Count % RESPAWN_COUNT_DEVIDE == RESPAWN_COUNT_REMAINDER)
+	{
+		// 敵生成
+		CNormal_Enemy::Create(ENEMY_RESPWAN_POS_1,
+			ENEMY_ROT,
+			NORMAL_ENEMY_SIZE,
+			NORMAL_ENEMY_LIFE,
+			CEnemy::TEX_TYPE_NORMAL);
+
+		CNormal_Enemy::Create(ENEMY_RESPWAN_POS_2,
+			ENEMY_ROT,
+			NORMAL_ENEMY_SIZE,
+			NORMAL_ENEMY_LIFE,
+			CEnemy::TEX_TYPE_NORMAL);
+	}
+	// 300あまり0のとき
+	if (m_nRespawn_Count % RESPAWN_COUNT_DEVIDE2 == RESPAWN_COUNT_REMAINDER)
+	{
+		// 敵生成
+		CCirecle_Bullet_Enemy::Create(ENEMY_RESPAWN_POS_3,
+			D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(0.0f)),
+			CIRCLE_BULLET_ENEMY_SIZE,
+			CIRCLE_BULLET_ENEMY_LIFE,
+			CEnemy::TEX_TYPE_BLUE,
+			CCirecle_Bullet_Enemy::DROP_ITEM_BOM);
+	}
+	// 400あまり0のとき
+	if (m_nRespawn_Count % RESPAWN_COUNT_DEVIDE3 == RESPAWN_COUNT_REMAINDER)
+	{
+		// 敵生成
+		CNormal_Enemy::Create(ENEMY_RESPWAN_POS_4,
+			ENEMY_ROT,
+			NORMAL_ENEMY_SIZE,
+			NORMAL_ENEMY_LIFE,
+			CEnemy::TEX_TYPE_NORMAL);
+
+		CNormal_Enemy::Create(ENEMY_RESPWAN_POS_5,
+			ENEMY_ROT,
+			NORMAL_ENEMY_SIZE,
+			NORMAL_ENEMY_LIFE,
+			CEnemy::TEX_TYPE_NORMAL);
+
+	}
+	// 500あまり0のとき
+	if (m_nRespawn_Count % RESPAWN_COUNT_DEVIDE4 == RESPAWN_COUNT_REMAINDER)
+	{
+		// 敵生成
+		CCirecle_Bullet_Enemy::Create(ENEMY_RESPWAN_POS_6,
+			ENEMY_ROT,
+			CIRCLE_BULLET_ENEMY_SIZE,
+			CIRCLE_BULLET_ENEMY_LIFE,
+			CEnemy::TEX_TYPE_RED,
+			CCirecle_Bullet_Enemy::DROP_ITEM_POWERUP);
+	}
+	// 1500カウント
+	if (m_nRespawn_Count == SHIP_RESPAWN)
+	{
+		// 船生成
+		m_pShip = CShip::Create(SHIP_RESPAWN_POS, SHIP_SIZE);
+	}
+	// 3300になった場合
+	if (m_nRespawn_Count == ENEMY_NO_RESPAWN_COUNT)
+	{
+		// trueに
+		m_bUseBoss = true;
+	}
 }

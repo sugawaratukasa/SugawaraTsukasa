@@ -32,8 +32,8 @@ public:
 	LPDIRECT3DDEVICE9 GetDevice(void) { return m_pD3Decvice; }
 private:
 	void DrawFPS(void);
-	LPDIRECT3D9 m_pD3D;				// LPDIRECT3D9
-	LPDIRECT3DDEVICE9 m_pD3Decvice;	// デバイス
-	LPD3DXFONT m_pFont;				// フォント
+	LPDIRECT3D9 m_pD3D;				//LPDIRECT3D9
+	LPDIRECT3DDEVICE9 m_pD3Decvice;	//デバイス
+	LPD3DXFONT m_pFont;				//フォント
 };
 #endif

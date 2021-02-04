@@ -14,6 +14,17 @@
 #include "player.h"
 #include "life.h"
 //******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define LIFE_TEXTURE		("data/Texture/UI/PlayerLife.png")	// テクスチャ
+#define COLOR_VALUE			(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))	// 色の値
+#define DAMAGE_COLOR_VALUE	(D3DXCOLOR(0.3f,0.3f,0.3f,1.0f))	// ライフが減っている時の色の値
+#define INTERVAL_VALUE		(50.0f)								// ライフの間隔の値
+#define LIFE_VALUE_MAX		(3)									// ライフの最大値
+#define LIFE_VALUE_2		(2)									// ライフの数値2
+#define LIFE_VALUE_1		(1)									// ライフの数値1
+#define LIFE_VALUE_MIN		(0)									// ライフの最小値
+//******************************************************************************
 // 静的メンバ変数
 //******************************************************************************
 LPDIRECT3DTEXTURE9 CLife::m_pTexture = NULL;
@@ -25,7 +36,7 @@ HRESULT CLife::Load(void)
 	// デバイス取得
 	LPDIRECT3DDEVICE9 pDevice = CSceneManager::GetRenderer()->GetDevice();
 	// テクスチャ読み込み
-	D3DXCreateTextureFromFile(pDevice, "data/Texture/PlayerLife.png", &m_pTexture);
+	D3DXCreateTextureFromFile(pDevice, LIFE_TEXTURE, &m_pTexture);
 	return S_OK;
 }
 //******************************************************************************
@@ -43,9 +54,9 @@ void CLife::Unload(void)
 CLife::CLife(int nPriority) : CScene(nPriority)
 {
 	memset(m_apScene2D, 0, sizeof(m_apScene2D));
-	m_pos		= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_size		= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_nNumLife	= 0;
+	m_pos		= INIT_D3DXVECTOR3;
+	m_size		= INIT_D3DXVECTOR3;
+	m_nNumLife	= INIT_INT;
 }
 //******************************************************************************
 // デストラクタ
@@ -82,22 +93,23 @@ CLife * CLife::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 HRESULT CLife::Init()
 {
 	// ライフ数を3に
-	m_nNumLife = PLAYER_LIFE;
+	m_nNumLife = LIFE_VALUE_MAX;
+
 	// 最大数分繰り返す
 
-	for (int nCnt = 0; nCnt < MAX_LIFE; nCnt++)
+	for (int nCnt = INIT_INT; nCnt < MAX_LIFE; nCnt++)
 	{
 		//　メモリ確保
-		m_apScene2D[nCnt] = new CScene2d;
+		m_apScene2D[nCnt] = new CScene2d(OBJTYPE_UI);
 
 		// 位置座標設定
-		m_apScene2D[nCnt]->SetPosition(D3DXVECTOR3((m_pos.x + 50 * nCnt), m_pos.y, m_pos.z));
+		m_apScene2D[nCnt]->SetPosition(D3DXVECTOR3((m_pos.x + INTERVAL_VALUE * nCnt), m_pos.y, m_pos.z));
 
 		// サイズ設定
 		m_apScene2D[nCnt]->SetSize(D3DXVECTOR3(m_size));
 
 		// カラー設定
-		m_apScene2D[nCnt]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		m_apScene2D[nCnt]->SetRGBA(COLOR_VALUE);
 
 		// テクスチャ受け渡し
 		m_apScene2D[nCnt]->BindTexture(m_pTexture);
@@ -155,25 +167,25 @@ void CLife::HitDamage(int Damage)
 void CLife::SetLife(void)
 {
 	// ライフが3の場合
-	if (m_nNumLife == 3)
+	if (m_nNumLife == LIFE_VALUE_MAX)
 	{
-		m_apScene2D[0]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-		m_apScene2D[1]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-		m_apScene2D[2]->SetRGBA(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		m_apScene2D[0]->SetRGBA(COLOR_VALUE);
+		m_apScene2D[1]->SetRGBA(COLOR_VALUE);
+		m_apScene2D[2]->SetRGBA(COLOR_VALUE);
 	}
 	// ライフが2の場合
-	if (m_nNumLife == 2)
+	if (m_nNumLife == LIFE_VALUE_2)
 	{
-		m_apScene2D[2]->SetRGBA(D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f));
+		m_apScene2D[2]->SetRGBA(DAMAGE_COLOR_VALUE);
 	}
 	// ライフが1の場合
-	if (m_nNumLife == 1)
+	if (m_nNumLife == LIFE_VALUE_1)
 	{
-		m_apScene2D[1]->SetRGBA(D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f));
+		m_apScene2D[1]->SetRGBA(DAMAGE_COLOR_VALUE);
 	}
 	// ライフが0の場合
-	if (m_nNumLife == 0)
+	if (m_nNumLife == LIFE_VALUE_MIN)
 	{
-		m_apScene2D[0]->SetRGBA(D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f));
+		m_apScene2D[0]->SetRGBA(DAMAGE_COLOR_VALUE);
 	}
 }

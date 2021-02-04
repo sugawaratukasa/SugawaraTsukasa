@@ -4,7 +4,7 @@
 //******************************************************************************
 
 //******************************************************************************
-// ファイルインクルード
+// インクルードファイル
 //******************************************************************************
 #define	_CRT_SECURE_NO_WARNINGS	//scanfエラー
 #include "sound.h"
@@ -25,13 +25,14 @@
 //******************************************************************************
 // マクロ定義
 //******************************************************************************
-#define RANKING_SCORE_SIZE	(D3DXVECTOR3(30.0f,30.0f,0.0f))
-#define RANKING_POS			(D3DXVECTOR3(50.0f,100.0f,0.0f))
-#define RANKING_SCORE_POS1	(D3DXVECTOR3(0.0f,200.0f,0.0f))	
-#define RANKING_SCORE_POS2	(D3DXVECTOR3(0.0f,280.0f,0.0f))	
-#define RANKING_SCORE_POS3	(D3DXVECTOR3(0.0f,350.0f,0.0f))	
-#define RANKING_SCORE_POS4	(D3DXVECTOR3(0.0f,440.0f,0.0f))	
-#define RANKING_SCORE_POS5	(D3DXVECTOR3(0.0f,530.0f,0.0f))	
+#define RANKING_SCORE_SIZE	(D3DXVECTOR3(30.0f,30.0f,0.0f))		// スコアのサイズ
+#define RANKING_POS			(D3DXVECTOR3(50.0f,100.0f,0.0f))	// ランキングの位置
+#define RANKING_SCORE_POS1	(D3DXVECTOR3(0.0f,200.0f,0.0f))		// スコア位置
+#define RANKING_SCORE_POS2	(D3DXVECTOR3(0.0f,280.0f,0.0f))		// スコア位置
+#define RANKING_SCORE_POS3	(D3DXVECTOR3(0.0f,350.0f,0.0f))		// スコア位置
+#define RANKING_SCORE_POS4	(D3DXVECTOR3(0.0f,440.0f,0.0f))		// スコア位置
+#define RANKING_SCORE_POS5	(D3DXVECTOR3(0.0f,530.0f,0.0f))		// スコア位置
+#define RANKING_MOVE_VALUE	(-1)								// ランキング入れ替え
 //******************************************************************************
 // コンストラクタ
 //******************************************************************************
@@ -39,7 +40,7 @@ CRanking::CRanking(int nPriority) : CScene(nPriority)
 {
 	memset(m_apScore, 0, sizeof(m_apScore));
 	memset(m_anScore, 0, sizeof(m_anScore));
-	m_nPlayerScore = 0;
+	m_nPlayerScore = INIT_INT;
 }
 //******************************************************************************
 // デストラクタ
@@ -94,16 +95,16 @@ HRESULT CRanking::Init()
 	ReadFile();
 
 	// スコア生成
-	m_apScore[0] = CScore::Create(D3DXVECTOR3(m_pos.x, RANKING_SCORE_POS1.y, m_pos.z), RANKING_SCORE_SIZE);
-	m_apScore[0]->SetScore(m_anScore[0]);
-	m_apScore[1] = CScore::Create(D3DXVECTOR3(m_pos.x, RANKING_SCORE_POS2.y, m_pos.z), RANKING_SCORE_SIZE);
-	m_apScore[1]->SetScore(m_anScore[1]);
-	m_apScore[2] = CScore::Create(D3DXVECTOR3(m_pos.x, RANKING_SCORE_POS3.y, m_pos.z), RANKING_SCORE_SIZE);
-	m_apScore[2]->SetScore(m_anScore[2]);
-	m_apScore[3] = CScore::Create(D3DXVECTOR3(m_pos.x, RANKING_SCORE_POS4.y, m_pos.z), RANKING_SCORE_SIZE);
-	m_apScore[3]->SetScore(m_anScore[3]);
-	m_apScore[4] = CScore::Create(D3DXVECTOR3(m_pos.x, RANKING_SCORE_POS5.y, m_pos.z), RANKING_SCORE_SIZE);
-	m_apScore[4]->SetScore(m_anScore[4]);
+	m_apScore[SCORE_1Th] = CScore::Create(D3DXVECTOR3(m_pos.x, RANKING_SCORE_POS1.y, m_pos.z), RANKING_SCORE_SIZE);
+	m_apScore[SCORE_1Th]->SetScore(m_anScore[SCORE_1Th]);
+	m_apScore[SCORE_2Th] = CScore::Create(D3DXVECTOR3(m_pos.x, RANKING_SCORE_POS2.y, m_pos.z), RANKING_SCORE_SIZE);
+	m_apScore[SCORE_2Th]->SetScore(m_anScore[SCORE_2Th]);
+	m_apScore[SCORE_3Th] = CScore::Create(D3DXVECTOR3(m_pos.x, RANKING_SCORE_POS3.y, m_pos.z), RANKING_SCORE_SIZE);
+	m_apScore[SCORE_3Th]->SetScore(m_anScore[SCORE_3Th]);
+	m_apScore[SCORE_4Th] = CScore::Create(D3DXVECTOR3(m_pos.x, RANKING_SCORE_POS4.y, m_pos.z), RANKING_SCORE_SIZE);
+	m_apScore[SCORE_4Th]->SetScore(m_anScore[SCORE_4Th]);
+	m_apScore[SCORE_5Th] = CScore::Create(D3DXVECTOR3(m_pos.x, RANKING_SCORE_POS5.y, m_pos.z), RANKING_SCORE_SIZE);
+	m_apScore[SCORE_5Th]->SetScore(m_anScore[SCORE_5Th]);
 	return S_OK;
 }
 //******************************************************************************
@@ -138,7 +139,7 @@ void CRanking::ReadFile(void)
 	if (pFile != NULL)
 	{
 		// 読み込み
-		for (int nCnt = 0; nCnt < MAX_RANKING; nCnt++)
+		for (int nCnt = INIT_INT; nCnt < SCORE_MAX; nCnt++)
 		{
 			fscanf(pFile, "%d\n", &m_anScore[nCnt]);
 		}
@@ -176,7 +177,7 @@ void CRanking::WriteFile(void)
 	if (pFile != NULL)
 	{
 		// 書き込み
-		for (int nCnt = 0; nCnt < MAX_RANKING; nCnt++)
+		for (int nCnt = INIT_INT; nCnt < SCORE_MAX; nCnt++)
 		{
 			fprintf(pFile, "%d\n", m_anScore[nCnt]);
 		}
@@ -189,15 +190,15 @@ void CRanking::WriteFile(void)
 //******************************************************************************
 void CRanking::SetRanking(int nScore)
 {
-	for (int nCount = 0; nCount < MAX_RANKING; nCount++)
+	for (int nCount = INIT_INT; nCount < SCORE_MAX; nCount++)
 	{
 		// ランキングを更新する場所判定
-		if (m_anScore[nCount] == 0 || nScore > m_anScore[nCount])
+		if (m_anScore[nCount] == INIT_INT || nScore > m_anScore[nCount])
 		{
 			// 以降のランキングデータを後ろに移動
-			for (int nCntMove = MAX_RANKING - 1; nCntMove > nCount; nCntMove--)
+			for (int nCntMove = SCORE_MAX + RANKING_MOVE_VALUE; nCntMove > nCount; nCntMove--)
 			{
-				m_anScore[nCntMove] = m_anScore[nCntMove - 1];
+				m_anScore[nCntMove] = m_anScore[nCntMove + RANKING_MOVE_VALUE];
 			}
 			m_anScore[nCount] = nScore;
 			break;

@@ -11,18 +11,21 @@
 #include "renderer.h"
 #include "scene.h"
 #include "scene2d.h"
+#include "polygon.h"
 #include "fade.h"
+//******************************************************************************
+// マクロ定義
+//******************************************************************************
+#define COLOR_RATE	(0.05f)								// a加算減算値
+#define COLOR_MIN	(D3DXCOLOR(0.0f,0.0f,0.0f,0.0f))	// 色の最小値
+#define	COLOR_MAX	(D3DXCOLOR(0.0f,0.0f,0.0f,1.0f))	// 色の最大値
 //******************************************************************************
 // コンストラクタ
 //******************************************************************************
-CFade::CFade()
+CFade::CFade(int nPriority) : CPolygon(nPriority)
 {
-	m_pVtxBuff		= NULL;
-	m_pos			= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_size			= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_fade			= FADE_NONE;
-	m_ModeNext		= CSceneManager::MODE_NONE;
-	m_colorFade		= D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+	m_fade		= FADE_NONE;
+	m_ModeNext	= CSceneManager::MODE_NONE;
 }
 //******************************************************************************
 // デストラクタ
@@ -41,16 +44,16 @@ CFade * CFade::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, CSceneManager::MODE mod
 	//メモリ確保
 	pFade = new CFade;
 
-	// 位置座標代入
-	pFade->m_pos = pos;
-
-	// サイズ代入
-	pFade->m_size = size;
-
 	// モード代入
 	pFade->m_ModeNext = mode;
 
-	//初期化
+	// 情報設定
+	pFade->SetPolygon(pos, size, COLOR_MIN, TEX_TYPE_MAX);
+
+	// オブジェクト設定
+	pFade->SetObjType(OBJTYPE_FADE);
+
+	// 初期化
 	pFade->Init();
 
 	// ポインタを返す
@@ -63,35 +66,10 @@ HRESULT CFade::Init(void)
 {
 	// フェードイン状態に
 	m_fade = FADE_IN;
-	//初期化
-	LPDIRECT3DDEVICE9 pDevice = CSceneManager::GetRenderer()->GetDevice();
-	// 頂点バッファの生成
-	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4, D3DUSAGE_WRITEONLY, FVF_VERTEX_2D, D3DPOOL_MANAGED, &m_pVtxBuff, NULL);
-	//頂点情報を設定
-	VERTEX_2D *pVtx;
 
-	//頂点バッファをロック
-	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+	// 初期化
+	CPolygon::Init();
 
-	//頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(m_pos.x + (-m_size.x / 2), m_pos.y + (-m_size.y / 2), 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(m_pos.x + (m_size.x / 2), m_pos.y + (-m_size.y / 2), 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(m_pos.x + (-m_size.x / 2), m_pos.y + (m_size.y / 2), 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(m_pos.x + (m_size.x / 2), m_pos.y + (m_size.y / 2), 0.0f);
-
-	pVtx[0].rhw = 1.0f;
-	pVtx[1].rhw = 1.0f;
-	pVtx[2].rhw = 1.0f;
-	pVtx[3].rhw = 1.0f;
-
-	//頂点カラーの設定 
-	pVtx[0].col = m_colorFade;
-	pVtx[1].col = m_colorFade;
-	pVtx[2].col = m_colorFade;
-	pVtx[3].col = m_colorFade;
-
-	//頂点バッファのアンロック
-	m_pVtxBuff->Unlock();
 	return S_OK;
 }
 //******************************************************************************
@@ -100,22 +78,19 @@ HRESULT CFade::Init(void)
 void CFade::Uninit(void)
 {
 	//終了
-	// 頂点バッファの破棄
-	if (m_pVtxBuff != NULL)
-	{
-		m_pVtxBuff->Release();
-		m_pVtxBuff = NULL;
-	}
+	CPolygon::Uninit();
 }
 //******************************************************************************
 // 更新関数
 //******************************************************************************
 void CFade::Update(void)
 {
-	//頂点情報を設定
-	VERTEX_2D *pVtx;
-	//モード
-	m_ModeNext = CSceneManager::GetMode();
+	// 更新
+	CPolygon::Update();
+
+	// カラー取得
+	D3DXCOLOR col = GetRGBA();
+
 	//更新
 	if (m_fade != FADE_NONE)
 	{
@@ -123,14 +98,18 @@ void CFade::Update(void)
 		if (m_fade == FADE_IN)
 		{
 			//a値を加算
-			m_colorFade.a += FADE_RATE;	
+			col.a += COLOR_RATE;
+
 			//画面が黒くなったら
-			if (m_colorFade.a >= 1.0f)
+			if (col.a >= COLOR_MAX.a)
 			{
 				//遷移
 				CSceneManager::SetMode(m_ModeNext);
+
 				//フェード終了処理
-				m_colorFade.a = 1.0f;
+				col.a = COLOR_MAX.a;
+
+				// フェードアウトに設定
 				m_fade = FADE_OUT;
 			}
 		}
@@ -138,26 +117,21 @@ void CFade::Update(void)
 		if (m_fade == FADE_OUT)
 		{
 			//α値を減算
-			m_colorFade.a -= FADE_RATE;
+			col.a -= COLOR_RATE;
+
 			//画面の透過
-			if (m_colorFade.a <= 0.0f)
+			if (col.a <= COLOR_MIN.a)
 			{
 				//フェード処理切り替え
-				m_colorFade.a = 0.0f;
-				//モード設定
-				m_fade = FADE_IN;
-				CSceneManager::StopFade();
+				col.a = COLOR_MIN.a;
+
+				// 終了
+				Uninit();
+				return;
 			}
 		}
-		//頂点バッファをロック
-		m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
-		//頂点カラーの設定 
-		pVtx[0].col = m_colorFade;
-		pVtx[1].col = m_colorFade;
-		pVtx[2].col = m_colorFade;
-		pVtx[3].col = m_colorFade;
-		//頂点バッファのアンロック
-		m_pVtxBuff->Unlock();
+		// カラー設定
+		SetRGBA(col);
 	}
 }
 //******************************************************************************
@@ -165,17 +139,6 @@ void CFade::Update(void)
 //******************************************************************************
 void CFade::Draw(void)
 {
-	//描画
-	LPDIRECT3DDEVICE9 pDevice = CSceneManager::GetRenderer()->GetDevice();
-	// 頂点バッファをデータストリームに設定
-	pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_2D));
-	// 頂点フォーマットの設定
-	pDevice->SetFVF(FVF_VERTEX_2D);
-	// テクスチャの設定
-	pDevice->SetTexture(0, NULL);
-	// ポリゴンの描画
-	pDevice->DrawPrimitive(
-		D3DPT_TRIANGLESTRIP,
-		0,
-		NUM_POLYGON);
+	// 描画
+	CPolygon::Draw();
 }
