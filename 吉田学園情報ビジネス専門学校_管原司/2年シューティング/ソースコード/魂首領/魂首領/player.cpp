@@ -94,12 +94,13 @@
 #define INIT_CONTINUE_COUNT				(0)														// コンティニューカウント初期化
 #define MIN_LIFE_VALUE					(0)														// ライフの最小値
 #define CONTINUE_BOM_POSSETION			(3)														// コンティニュー時のボムの所持数
-#define RATE_MOVE_BASE					(0.0f)														// 慣性の引かれる数字
-#define RATE_MOVE						(0.4f)														// 慣性の移動量
-#define TEX_1							(0.2f)														// テクスチャUV値1
-#define TEX_2							(0.0f)														// テクスチャUV値2
-#define TEX_3							(0.2f)														// テクスチャUV値3
-#define TEX_4							(1.0f)														// テクスチャUV値4
+#define SHOT_BOM						(-1)													// ボムの消費量
+#define RATE_MOVE_BASE					(0.0f)													// 慣性の引かれる数字
+#define RATE_MOVE						(0.4f)													// 慣性の移動量
+#define TEX_1							(0.2f)													// テクスチャUV値1
+#define TEX_2							(0.0f)													// テクスチャUV値2
+#define TEX_3							(0.2f)													// テクスチャUV値3
+#define TEX_4							(1.0f)													// テクスチャUV値4
 //******************************************************************************
 // 静的メンバ変数
 //******************************************************************************
@@ -298,6 +299,17 @@ void CPlayer::GetBom(int nBom)
 	{
 		// ボムの所持数加算
 		m_nBom_possession_count += nBom;
+
+		// ボムの所持数設定
+		pBom->SetBomUI(m_nBom_possession_count);
+
+	}
+	// ボムの数が5より多くなった場合
+	if (m_nBom_possession_count > MAX_BOM_POSSESION)
+	{
+		// ボムの数を5に設定
+		m_nBom_possession_count = MAX_BOM_POSSESION;
+
 		// ボムの所持数設定
 		pBom->SetBomUI(m_nBom_possession_count);
 	}
@@ -637,6 +649,7 @@ void CPlayer::Shot(void)
 		{
 			// カウントインクリメント
 			m_AttackCount++;
+
 			//カウントが2あまり0の時
 			if (m_AttackCount % BEAM_SHOT_COUNT == REMAINDER_VALUE)
 			{
@@ -677,7 +690,6 @@ void CPlayer::Shot(void)
 				}
 			}
 		}
-
 		// キーボードのBまたはコントローラのBボタンを押した場合
 		if (g_lpDIDevice != NULL &&pInputJoystick->GetJoystickTrigger(JS_B) || pInputKeyboard->GetKeyboardTrigger(DIK_B))
 		{
@@ -686,15 +698,14 @@ void CPlayer::Shot(void)
 			{
 				// ボムboolをtrueに
 				m_bUseBom = true;
+				// ボムの所持数減算
+				GetBom(SHOT_BOM);
 			}
 		}
 	}
 	// ボムが使用中の場合
 	if (m_bUseBom == true)
 	{
-		// ボムの所持数減算
-		GetBom(-1);
-
 		// ボス戦でない時
 		if (m_bBoss == false)
 		{
