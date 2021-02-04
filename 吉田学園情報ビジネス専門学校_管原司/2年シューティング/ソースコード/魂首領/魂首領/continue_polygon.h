@@ -10,7 +10,7 @@
 class CContinue_Polygon : public CPolygon
 {
 public:
-	CContinue_Polygon(int nPriority = 10);
+	CContinue_Polygon(int nPriority = OBJTYPE::OBJTYPE_UI);
 	~CContinue_Polygon();
 	static CContinue_Polygon *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, D3DXCOLOR col, TEX_TYPE textype);
 	HRESULT Init();

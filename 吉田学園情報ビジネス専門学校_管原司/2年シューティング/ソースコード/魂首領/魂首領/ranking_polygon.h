@@ -10,7 +10,7 @@
 class CRanking_Polygon : public CPolygon
 {
 public:
-	CRanking_Polygon(int nPriority = 10);
+	CRanking_Polygon(int nPriority = OBJTYPE::OBJTYPE_UI);
 	~CRanking_Polygon();
 	static CRanking_Polygon *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, D3DXCOLOR col, TEX_TYPE textype);
 	HRESULT Init();

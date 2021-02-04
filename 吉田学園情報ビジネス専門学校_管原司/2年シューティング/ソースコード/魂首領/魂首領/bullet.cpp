@@ -13,6 +13,8 @@
 #include "scene2d.h"
 #include "game.h"
 #include "bullet.h"
+#include "particle.h"
+#include "particle_circle.h"
 //******************************************************************************
 // マクロ定義
 //******************************************************************************
@@ -20,10 +22,12 @@
 #define PLAYER_BEAM_TEXTURE		("data/Texture/Bullet/PlayerBeam001.png")		// 自機のビームのテクスチャ
 #define BOM_TEXTURE				("data/Texture/Bullet/bom.png")					// ボムのテクスチャ
 #define ENEMY_BULLET_TEXTURE	("data/Texture/Bullet/EnemyBullet.png")			// 敵の弾のテクスチャ
+#define PARTICLE_SIZE			(D3DXVECTOR3(150.0f,150.0f,0.0f))					// サイズ
 //******************************************************************************
 // 静的メンバ変数
 //******************************************************************************
 LPDIRECT3DTEXTURE9 CBullet::m_apTexture[TEX_TYPE_MAX] = {};
+bool CBullet::m_bUseBullet = true;
 //******************************************************************************
 // テクスチャ読み込み関数
 //******************************************************************************
@@ -45,7 +49,7 @@ HRESULT CBullet::Load(void)
 void CBullet::Unload(void)
 {
 	// テクスチャの破棄
-	for (int nCnt = 0; nCnt < TEX_TYPE_MAX; nCnt++)
+	for (int nCnt = INIT_INT; nCnt < TEX_TYPE_MAX; nCnt++)
 	{
 		if (m_apTexture[nCnt] != NULL)
 		{
@@ -59,8 +63,9 @@ void CBullet::Unload(void)
 //******************************************************************************
 CBullet::CBullet(int nPriority) : CScene2d(nPriority)
 {
-	m_rot		= INIT_D3DXVECTOR3;
-	m_Textype	= TEX_TYPE_NONE;
+	m_rot			= INIT_D3DXVECTOR3;
+	m_Textype		= TEX_TYPE_NONE;
+	m_bUseBullet	= true;
 }
 //******************************************************************************
 // デストラクタ
@@ -107,6 +112,20 @@ void CBullet::Update(void)
 		//終了
 		Uninit();
 		return;
+	}
+	OBJTYPE objtype = GetObjType();
+	if (objtype == OBJTYPE_ENEMY_BULLET)
+	{
+		// falseの場合
+		if (m_bUseBullet == false)
+		{
+			// パーティクルエフェクト
+			CParticle_Circle::CreateParticleEffect(pos, PARTICLE_SIZE);
+
+			// 終了
+			Uninit();
+			return;
+		}
 	}
 }
 //******************************************************************************
@@ -164,4 +183,12 @@ bool CBullet::Collision(D3DXVECTOR3 pos1, D3DXVECTOR3 pos2, D3DXVECTOR3 size1, D
 	}
 
 	return bHit;    //当たったかどうかを返す
+}
+//******************************************************************************
+// 生成されている弾を全て破棄
+//******************************************************************************
+void CBullet::AllReleaseBullet(void)
+{
+	// falseに
+	m_bUseBullet = false;
 }

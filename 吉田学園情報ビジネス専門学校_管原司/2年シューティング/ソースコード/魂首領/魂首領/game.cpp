@@ -109,8 +109,11 @@ HRESULT CGame::Init(void)
 	type = CSound::SOUND_LABEL_SE_SHOT;
 	// ÉTÉEÉìÉhçƒê∂
 	pSound->PlaySound(CSound::SOUND_LABEL_BGM000);
+
+	// çïÉ|ÉäÉSÉìê∂ê¨
 	CBlack_Polygon::Create(POLYGON_RIGHT_POS, POLYGON_SIZE, BLACK_POLYGON_COLOR,CPolygon::TEX_TYPE_MAX);
 	CBlack_Polygon::Create(POLYGON_LEFT_POS, POLYGON_SIZE, BLACK_POLYGON_COLOR, CPolygon::TEX_TYPE_MAX);
+
 	//îwåi
 	CBg::Create(BG_POS, BG_SIZE);
 
@@ -210,7 +213,7 @@ void CGame::Enemy_Respawn(void)
 	{
 		// ìGê∂ê¨
 		CCirecle_Bullet_Enemy::Create(ENEMY_RESPAWN_POS_3,
-			D3DXVECTOR3(0.0f, 0.0f, D3DXToRadian(0.0f)),
+			ENEMY_ROT,
 			CIRCLE_BULLET_ENEMY_SIZE,
 			CIRCLE_BULLET_ENEMY_LIFE,
 			CEnemy::TEX_TYPE_BLUE,

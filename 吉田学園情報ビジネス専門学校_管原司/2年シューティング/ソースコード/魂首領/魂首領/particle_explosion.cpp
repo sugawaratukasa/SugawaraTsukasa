@@ -16,16 +16,26 @@
 //******************************************************************************
 // マクロ定義
 //******************************************************************************
-#define EXPLOSION_SIZE			(D3DXVECTOR3(3.0f,3.0f,0.0f))		// サイズ
-#define ENEMY_EXPLOSION_COLOR	(D3DCOLOR_RGBA(255, 50, 0, 255))	// カラー(赤)
-#define ENEMY_EXPLOSION_COLOR2	(D3DCOLOR_RGBA(255, 200, 0, 255))	// カラー(黄色)
-#define PLAYER_EXPLOSION_COLOR	(D3DCOLOR_RGBA(0, 255, 0, 255))		// カラー(青)
-#define PLAYER_EXPLOSION_COLOR2	(D3DCOLOR_RGBA(255, 255, 255, 255))	// カラー(白)
-#define SCALE_MIN_VALUE			(0.0f)								// 拡大率最小値
-#define ADD_SCALE_VALUE			(1.5f)								// 拡大率加算量
-#define SUBTRACT_COLOR_VALUE	(0.04f)								// カラー減算量
-#define COLOR_MIN_VALUE			(0.0f)								// カラー最小値
-#define MAX_EXPLOSION			(10)								// 爆発最大数
+#define EFFECT_ROT				(D3DXVECTOR3(0.0f,0.0f,sinf(fAngle)))							// 向き
+#define EFFECT_MOVE				(D3DXVECTOR3(fSpeed, sinf(D3DXToRadian(fAngle))*fSpeed, 0.0f))	// 移動量
+#define EXPLOSION_SIZE			(D3DXVECTOR3(3.0f,3.0f,0.0f))									// サイズ
+#define ENEMY_EXPLOSION_COLOR	(D3DCOLOR_RGBA(255, 50, 0, 255))								// カラー(赤)
+#define ENEMY_EXPLOSION_COLOR2	(D3DCOLOR_RGBA(255, 200, 0, 255))								// カラー(黄色)
+#define PLAYER_EXPLOSION_COLOR	(D3DCOLOR_RGBA(0, 255, 0, 255))									// カラー(青)
+#define PLAYER_EXPLOSION_COLOR2	(D3DCOLOR_RGBA(255, 255, 255, 255))								// カラー(白)
+#define RANDUM_ANGLE_MAX		(360)															// 弧度最大値
+#define RANDUM_ANGLE_MIN		(180)															// 弧度最小値
+#define RANDUM_SPEED_MAX		(200)															// 移動量の最大値
+#define RANDUM_SPEED_MIN		(100)															// 移動量の最小値
+#define SPEED_DIVIDE			(100)															// 移動量除算値
+#define SCALE_MIN_VALUE			(0.0f)															// 拡大率最小値
+#define ADD_SCALE_VALUE			(1.5f)															// 拡大率加算量
+#define SUBTRACT_COLOR_VALUE	(0.04f)															// カラー減算量
+#define COLOR_MIN_VALUE			(0.0f)															// カラー最小値
+#define MAX_EXPLOSION			(10)															// 爆発最大数
+
+#define RANDUM_ANGLE	(RANDUM_ANGLE_MAX - RANDUM_ANGLE_MIN)									// 弧度ランダム
+#define RANDUM_SPEED	(RANDUM_SPEED_MAX - RANDUM_SPEED_MIN)									// 移動量ランダム
 //******************************************************************************
 // コンストラクタ
 //******************************************************************************
@@ -168,25 +178,25 @@ void CParticle_Explosion::CreateExplosionEffect(D3DXVECTOR3 pos, D3DXVECTOR3 siz
 		for (int nCount = INIT_INT; nCount < MAX_EXPLOSION; nCount++)
 		{
 			// 角度を360度ランダムに
-			float fAngle = float(rand() % 360 - 180);
+			float fAngle = float(rand() % RANDUM_ANGLE);
 			// スピードを10から-10でランダムに
-			float fSpeed = float(rand() % 200 - 100);
-			fSpeed = fSpeed / 100;
+			float fSpeed = float(rand() % RANDUM_SPEED);
+			fSpeed = fSpeed / SPEED_DIVIDE;
 
 			// 生成
 			Create(pos,
 				size,
-				D3DXVECTOR3(0.0f, 0.0f, sinf(fAngle)),
+				EFFECT_ROT,
 				ENEMY_EXPLOSION_COLOR,
-				D3DXVECTOR3(fSpeed, sinf(D3DXToRadian(fAngle))*fSpeed, 0.0f),
+				EFFECT_MOVE,
 				CParticle::TEX_TYPE_EXPLOSION);
 
 			// 生成
 			Create(pos,
 				size,
-				D3DXVECTOR3(0.0f, 0.0f, sinf(fAngle)),
+				EFFECT_ROT,
 				ENEMY_EXPLOSION_COLOR2,
-				D3DXVECTOR3(fSpeed, sinf(D3DXToRadian(fAngle))*fSpeed, 0.0f),
+				EFFECT_MOVE,
 				CParticle::TEX_TYPE_EXPLOSION);
 		}
 		break;
@@ -196,25 +206,25 @@ void CParticle_Explosion::CreateExplosionEffect(D3DXVECTOR3 pos, D3DXVECTOR3 siz
 		for (int nCount = INIT_INT; nCount < MAX_EXPLOSION; nCount++)
 		{
 			// 角度を360度ランダムに
-			float fAngle = float(rand() % 360 - 180);
+			float fAngle = float(rand() % RANDUM_ANGLE);
 			// スピードを10から-10でランダムに
-			float fSpeed = float(rand() % 200 - 100);
-			fSpeed = fSpeed / 100;
+			float fSpeed = float(rand() % RANDUM_SPEED);
+			fSpeed = fSpeed / SPEED_DIVIDE;
 
 			// 生成
 			Create(pos,
 				size,
-				D3DXVECTOR3(0.0f, 0.0f, sinf(fAngle)),
+				EFFECT_ROT,
 				PLAYER_EXPLOSION_COLOR,
-				D3DXVECTOR3(fSpeed, sinf(D3DXToRadian(fAngle))*fSpeed, 0.0f),
+				EFFECT_MOVE,
 				CParticle::TEX_TYPE_EXPLOSION);
 
 			// 生成
 			Create(pos,
 				size,
-				D3DXVECTOR3(0.0f, 0.0f, sinf(fAngle)),
+				EFFECT_ROT,
 				PLAYER_EXPLOSION_COLOR2,
-				D3DXVECTOR3(fSpeed, sinf(D3DXToRadian(fAngle))*fSpeed, 0.0f),
+				EFFECT_MOVE,
 				CParticle::TEX_TYPE_EXPLOSION);
 		}
 		break;

@@ -81,7 +81,7 @@ CScene * CScene::GetScene(int nPriority)
 	CScene *pScene = m_pTop[nPriority];
 
 	// m_nNextの分だけ回す
-	for (int nCount = 0; nCount < m_nNext; nCount++)
+	for (int nCount = INIT_INT; nCount < m_nNext; nCount++)
 	{
 		// NULLチェック
 		if (pScene != NULL)
@@ -112,7 +112,7 @@ CScene * CScene::GetScene(int nPriority)
 void CScene::ReleaseAll(void)
 {
 	// オブジェクトタイプの最大数分繰り返す
-	for (int nCount = 0; nCount < OBJTYPE_MAX; nCount++)
+	for (int nCount = INIT_INT; nCount < OBJTYPE_MAX; nCount++)
 	{
 		// pSceneにm_pTopを代入
 		CScene *pScene = m_pTop[nCount];
@@ -129,7 +129,7 @@ void CScene::ReleaseAll(void)
 		}
 	}
 	// オブジェクトタイプの最大数分繰り返す
-	for (int nCount = 0; nCount < OBJTYPE_MAX; nCount++)
+	for (int nCount = INIT_INT; nCount < OBJTYPE_MAX; nCount++)
 	{
 		// pSceneにm_pTopを代入
 		CScene *pScene = m_pTop[nCount];
@@ -183,7 +183,7 @@ void CScene::ReleaseAll(void)
 void CScene::DesignationReleaseAll(OBJTYPE type)
 {
 	// オブジェクトタイプ最大数分繰り返す
-	for (int nCount = 0; nCount < OBJTYPE_MAX; nCount++)
+	for (int nCount = INIT_INT; nCount < OBJTYPE_MAX; nCount++)
 	{
 		// 指定したタイプ出ない場合
 		if (nCount != type)
@@ -203,7 +203,7 @@ void CScene::DesignationReleaseAll(OBJTYPE type)
 	}
 
 	// オブジェクトタイプ最大数分繰り返す
-	for (int nCount = 0; nCount < OBJTYPE_MAX; nCount++)
+	for (int nCount = INIT_INT; nCount < OBJTYPE_MAX; nCount++)
 	{
 		// pSceneにm_pTopを代入
 		CScene *pScene = m_pTop[nCount];
@@ -267,7 +267,7 @@ void CScene::UpdateAll(void)
 	if (m_bUpdateStop == false)
 	{
 		// オブジェクトタイプの最大数分繰り返す
-		for (int nCount = 0; nCount < OBJTYPE_MAX; nCount++)
+		for (int nCount = INIT_INT; nCount < OBJTYPE_MAX; nCount++)
 		{
 			// pSceneにm_pTopを代入
 			CScene *pScene = m_pTop[nCount];
@@ -311,7 +311,7 @@ void CScene::UpdateAll(void)
 		}
 	}
 	// オブジェクトタイプの最大数分繰り返す
-	for (int nCount = 0; nCount < OBJTYPE_MAX; nCount++)
+	for (int nCount = INIT_INT; nCount < OBJTYPE_MAX; nCount++)
 	{
 		// pSceneにm_pTopを代入
 		CScene *pScene = m_pTop[nCount];
@@ -365,7 +365,7 @@ void CScene::UpdateAll(void)
 void CScene::DrawAll(void)
 {
 	// オブジェクトタイプの最大数分繰り返す
-	for (int nCountpriority = 0; nCountpriority < OBJTYPE_MAX; nCountpriority++)
+	for (int nCountpriority = INIT_INT; nCountpriority < OBJTYPE_MAX; nCountpriority++)
 	{
 		// pSceneにm_pTopを代入
 		CScene*pScene = m_pTop[nCountpriority];
@@ -376,8 +376,10 @@ void CScene::DrawAll(void)
 		{
 			// pSceneNextにpSceneのm_pNextを代入
 			pSceneNext = pScene->m_pNext;
+
 			// 描画
 			pScene->Draw();
+
 			// pSceneにpSceneNextを代入
 			pScene = pSceneNext;
 		}

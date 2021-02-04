@@ -10,7 +10,7 @@
 class CPress_Enter_Polygon : public CPolygon
 {
 public:
-	CPress_Enter_Polygon(int nPriority = 10);
+	CPress_Enter_Polygon(int nPriority = OBJTYPE::OBJTYPE_UI);
 	~CPress_Enter_Polygon();
 	static CPress_Enter_Polygon *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, D3DXCOLOR col, TEX_TYPE textype);
 	HRESULT Init();

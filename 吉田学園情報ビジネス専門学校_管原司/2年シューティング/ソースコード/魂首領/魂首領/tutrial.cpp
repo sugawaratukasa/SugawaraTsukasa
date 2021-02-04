@@ -69,27 +69,29 @@ void CTutrial::Update(void)
 	CSound * pSound = CSceneManager::GetSound();
 	CSound::SOUND_LABEL type;
 	type = CSound::SOUND_LABEL_SE_SHOT;
+
 	//キーボード取得
 	CInputKeyboard * pInputKeyboard = CSceneManager::GetInputKeyboard();
+
 	//コントローラー取得
 	DIJOYSTATE js;
 	CInputJoystick * pInputJoystick = CSceneManager::GetInputJoystick();
 	LPDIRECTINPUTDEVICE8 g_lpDIDevice = CInputJoystick::GetDevice();
+
 	if (g_lpDIDevice != NULL)
 	{
 		g_lpDIDevice->Poll();
 		g_lpDIDevice->GetDeviceState(sizeof(DIJOYSTATE), &js);
 	}
+	// コントローラーAボタンまたはENTER
+	if (g_lpDIDevice != NULL &&pInputJoystick->GetJoystickTrigger(JS_A) || pInputKeyboard->GetKeyboardTrigger(DIK_RETURN))
+	{
+		// サウンド再生
+		pSound->PlaySound(CSound::SOUND_LABEL_SE_SELECT);
 
-		// コントローラーAボタンまたはENTER
-		if (g_lpDIDevice != NULL &&pInputJoystick->GetJoystickTrigger(JS_A) || pInputKeyboard->GetKeyboardTrigger(DIK_RETURN))
-		{
-			// サウンド再生
-			pSound->PlaySound(CSound::SOUND_LABEL_SE_SELECT);
-
-			// フェード生成
-			CFade::Create(FADE_POS, FADE_SIZE, CSceneManager::MODE_GAME);
-		}
+		// フェード生成
+		CFade::Create(FADE_POS, FADE_SIZE, CSceneManager::MODE_GAME);
+	}
 }
 //******************************************************************************
 // 描画関数

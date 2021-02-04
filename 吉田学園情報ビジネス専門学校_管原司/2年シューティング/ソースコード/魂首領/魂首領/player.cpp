@@ -29,6 +29,7 @@
 #include "boss_bom.h"
 #include "particle.h"
 #include "particle_explosion.h"
+#include "boss.h"
 #include <stdio.h>
 //******************************************************************************
 // マクロ定義
@@ -153,6 +154,7 @@ CPlayer::CPlayer(int nPriority) : CScene2d(nPriority)
 	m_bUseBom				= false;
 	m_bBossBom				= false;
 	m_bBoss					= false;
+	m_bBossDeath			= false;
 	m_bContinue				= false;
 }
 //******************************************************************************
@@ -395,14 +397,12 @@ void CPlayer::Move(void)
 		g_lpDIDevice->Poll();
 		g_lpDIDevice->GetDeviceState(sizeof(DIJOYSTATE), &js);
 	}
-
 	//左右移動してない時
 	if (m_bMove == false)
 	{
 		//アニメーションパターンを2にする
 		m_nPatternAnim = NORMAL_ANIM_PATTERN_COUNT;
 	}
-
 	// 上
 	if (g_lpDIDevice != NULL &&js.lY <= -JOYSTICK_DICISION || pInputKeyboard->GetKeyboardPress(DIK_W))
 	{
@@ -468,7 +468,6 @@ void CPlayer::Move(void)
 	{
 		m_bMove = false;
 	}
-
 	//右
 	if (g_lpDIDevice != NULL &&js.lX >= JOYSTICK_DICISION || pInputKeyboard->GetKeyboardPress(DIK_D))
 	{
@@ -539,7 +538,6 @@ void CPlayer::Move(void)
 //******************************************************************************
 void CPlayer::Shot(void)
 {
-
 	// 位置座標取得
 	D3DXVECTOR3 pos = GetPosition();
 
@@ -555,11 +553,12 @@ void CPlayer::Shot(void)
 	CSound::SOUND_LABEL type;
 	type = CSound::SOUND_LABEL_SE_SHOT;
 
+
+
 	//*****************************************************************
 	// ノーマル弾の処理
 	//*****************************************************************
-
-	// ボムを使用してない場合
+		// ボムを使用してない場合
 	if (m_bUseBom == false)
 	{
 		// ビームを使用してない場合
@@ -580,7 +579,7 @@ void CPlayer::Shot(void)
 					// 弾の生成
 					CNormal_Bullet::Create(D3DXVECTOR3(pos),
 						BULLET_ROT,
-						BULLET_LEVEL1_SIZE, 
+						BULLET_LEVEL1_SIZE,
 						D3DXVECTOR3(BULLET_NORMAL_MOVE_VALUE.x, -BULLET_NORMAL_MOVE_VALUE.y, BULLET_NORMAL_MOVE_VALUE.z),
 						BULLET_COLOR
 						, CBullet::TEX_TYPE_NORMAL);
@@ -591,7 +590,7 @@ void CPlayer::Shot(void)
 					// 弾の生成
 					CNormal_Bullet::Create(D3DXVECTOR3(pos),
 						BULLET_ROT,
-						BULLET_LEVEL2_SIZE, 
+						BULLET_LEVEL2_SIZE,
 						D3DXVECTOR3(BULLET_NORMAL_MOVE_VALUE.x, -BULLET_NORMAL_MOVE_VALUE.y, BULLET_NORMAL_MOVE_VALUE.z),
 						BULLET_COLOR,
 						CBullet::TEX_TYPE_NORMAL);
@@ -639,8 +638,10 @@ void CPlayer::Shot(void)
 		{
 			// カウントを0に
 			m_nBeamCount = INIT_BEAM_COUNT;
+
 			// ビームboolをfalseに
 			m_bUseBeam = false;
+
 			// ビームの使用状態を設定
 			CPlayer_Beam::SetUseBeam(m_bUseBeam);
 		}
@@ -698,6 +699,7 @@ void CPlayer::Shot(void)
 			{
 				// ボムboolをtrueに
 				m_bUseBom = true;
+
 				// ボムの所持数減算
 				GetBom(SHOT_BOM);
 			}
@@ -711,8 +713,11 @@ void CPlayer::Shot(void)
 		{
 			// 爆発音生成
 			pSound->PlaySound(CSound::SOUND_LABEL_SE_BOM);
+
 			// ボム生成
-			CBom::Create(BOM_POS, BOM_ROT, BOM_SIZE,CBullet::TEX_TYPE_BOM);
+			CBom::Create(BOM_POS, BOM_ROT, BOM_SIZE, CBullet::TEX_TYPE_BOM);
+
+			// falseに
 			m_bUseBom = false;
 		}
 		// ボス戦の時
@@ -724,6 +729,18 @@ void CPlayer::Shot(void)
 			// ボス専用のボムを使用状態に
 			m_bBossBom = true;
 
+			// ボスのが死亡状態
+			if (m_bBossDeath == true)
+			{
+				// ボムの使用状態をfalseに
+				m_bUseBom = false;
+
+				// ボムの使用状態を設定
+				CBoss_Bom::SetUseBoss_Bom(m_bUseBom);
+
+				// ボムのカウントが0に
+				m_nBomCount = INIT_BOM_COUNT;
+			}
 			// 2あまり0の時
 			if (m_nBomCount % BEAM_SHOT_COUNT == REMAINDER_VALUE)
 			{
@@ -742,8 +759,10 @@ void CPlayer::Shot(void)
 			{
 				// ボムの使用状態をfalseに
 				m_bUseBom = false;
+
 				// ボムの使用状態を設定
 				CBoss_Bom::SetUseBoss_Bom(m_bUseBom);
+
 				// ボムのカウントが0に
 				m_nBomCount = INIT_BOM_COUNT;
 			}
@@ -792,6 +811,7 @@ void CPlayer::PlayerState(void)
 		{
 			//カウントインクリメント
 			m_nRespawnCount++;
+
 			//カウントが30になったとき
 			if (m_nRespawnCount == DAMAGE_RESPAWN_COUNT)
 			{
@@ -851,8 +871,29 @@ void CPlayer::PlayerState(void)
 		{
 			// 死亡状態に
 			m_nPlayerState = STATE_DEAD;
+
 			// コンティニュー生成 
 			CContinue::Create(CONTINUE_POS, CONTINUE_SIZE);
+		}
+		// ボスがいる場合
+		if (m_bBoss == true)
+		{
+			// プレイヤーの取得
+			CBoss * pBoss = CGame::GetBoss();
+
+			// NULLチェック
+			if (pBoss != NULL)
+			{
+				// 状態取得
+				int BossState = pBoss->GetState();
+
+				// ボスが死亡状態の場合
+				if (BossState == CBoss::STATE_DEATH_EFFECT || BossState == CBoss::STATE_DEATH)
+				{
+					// trueに
+					m_bBossDeath = true;
+				}
+			}
 		}
 	}
 	// 死亡状態の場合
@@ -866,21 +907,23 @@ void CPlayer::PlayerState(void)
 		{
 			// スコア取得
 			CScore * pScore = CGame::GetScore();
+
+			// スコア加算
 			pScore->AddScore(CONTINUE_SUB_SCORE);
 
 			// ライフの取得
 			CLife * pLife = CGame::GetLife();
 
-			//ライフを3に
+			// ライフを3に
 			m_nLife = PLAYER_LIFE;
 
-			//ライフを設定
+			// ライフを設定
 			pLife->AddLife(m_nLife);
 
-			//ボムの所持数を3に
+			// ボムの所持数を3に
 			GetBom(CONTINUE_BOM_POSSETION);
 
-			//コンティニュー状態をfalseに
+			// コンティニュー状態をfalseに
 			m_bContinue = false;
 
 			// コンティニューのカウントを0に

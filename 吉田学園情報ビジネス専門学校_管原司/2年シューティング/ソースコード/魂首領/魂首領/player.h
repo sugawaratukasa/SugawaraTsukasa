@@ -87,6 +87,7 @@ private:
 	bool m_bUseBom;											// ボムの使用状態
 	bool m_bBossBom;										// ボス専用のボムの使用状態	
 	bool m_bBoss;											// ボス
+	bool m_bBossDeath;										// ボスが死亡したか
 	bool m_bContinue;										// コンティニュー
 };
 #endif

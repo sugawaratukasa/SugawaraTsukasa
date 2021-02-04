@@ -53,7 +53,7 @@
 #define DAMAGE_COUNT				(10)								// ダメージカウント
 #define LIFE_MIN					(0)									// ライフ最小値
 #define DEATH_COUNT					(90)								// 死亡カウント
-#define EXPLOSION_COUNT				(3)									// 爆発カウント
+#define EXPLOSION_COUNT				(4)									// 爆発カウント
 #define RANDUM_POSX_VALUE			(600)								// 位置座標Xランダム数値
 #define RANDUM_POSX_VALUE2			(300)								// 位置座標Xランダム数値2
 #define RANDUM_POSY_VALUE			(200)								// 位置座標Yランダム数値
@@ -208,6 +208,7 @@ void CBoss::Draw(void)
 //******************************************************************************
 void CBoss::HitBoss(int nDamage)
 {
+	// 移動状態でない場合
 	if (m_State != STATE_MOVE)
 	{
 		// 体力減算
@@ -231,7 +232,7 @@ void CBoss::Attack(void)
 	// プレイヤーのbomをボス専用に変更
 	pPlayer->SetBossBom(true);
 
-	if (m_State != STATE_DEATH || m_State != STATE_DEATH_EFFECT)
+	if (m_State == STATE_NORMAL|| m_State == STATE_DAMAGE)
 	{
 		// ライフが半分以上の場合
 		if (m_bLifeHalf == false)
@@ -246,7 +247,7 @@ void CBoss::Attack(void)
 				for (int nCount = INIT_INT; nCount < BULLET_TRAKING_TIMES; nCount++)
 				{
 					// 狙い撃ち弾生成
-					CEnemy_Traking_Bullet::Create(D3DXVECTOR3(pos.x, pos.y, pos.z),
+					CEnemy_Traking_Bullet::Create(pos,
 						BULLET_ROT,
 						ENEMY_TRAKING_BULLET_SIZE,
 						D3DXVECTOR3(BULLET_TRAKING_MOVE_VALUE.x + nCount, BULLET_TRAKING_MOVE_VALUE.y + nCount, BULLET_TRAKING_MOVE_VALUE.z),
@@ -258,7 +259,7 @@ void CBoss::Attack(void)
 			if (m_nAttackCount % ATTACK_COUNT3 == REMAINDER_VALUE)
 			{
 				// 拡散弾生成
-				CEnemy_Diffusion_Bullet::Create(D3DXVECTOR3(pos.x, pos.y, pos.z),
+				CEnemy_Diffusion_Bullet::Create(pos,
 					BULLET_ROT,
 					FIFFUSION_BULLET_SIZE,
 					D3DXVECTOR3(BULLET_DIFFUSION_MOVE_VALUE.x, BULLET_DIFFUSION_MOVE_VALUE.y, BULLET_DIFFUSION_MOVE_VALUE.z),
@@ -286,7 +287,7 @@ void CBoss::Attack(void)
 				for (int nCount = INIT_INT; nCount < BULLET_TRAKING_TIMES2; nCount++)
 				{
 					// 狙い撃ち弾生成
-					CEnemy_Traking_Bullet::Create(D3DXVECTOR3(pos.x, pos.y, pos.z),
+					CEnemy_Traking_Bullet::Create(pos,
 						BULLET_ROT,
 						ENEMY_TRAKING_BULLET_SIZE,
 						D3DXVECTOR3(BULLET_TRAKING_MOVE_VALUE.x + nCount, BULLET_TRAKING_MOVE_VALUE.y + nCount, BULLET_TRAKING_MOVE_VALUE.z),
@@ -353,6 +354,7 @@ void CBoss::State(void)
 		{
 			// Stateをノーマルに
 			m_State = STATE_NORMAL;
+
 			// カウントが0になったら
 			m_nDamageCount = DAMAGE_COUNT_MIN;
 		}
@@ -360,7 +362,11 @@ void CBoss::State(void)
 	// 死亡演出状態の場合
 	if (m_State == STATE_DEATH_EFFECT)
 	{
+		// 移動量を0に
 		m_move = INIT_MOVE;
+
+		// 弾全破棄
+		CBullet::AllReleaseBullet();
 	}
 	// ライフが0になった場合
 	if (m_nLife <= LIFE_MIN)
@@ -368,6 +374,7 @@ void CBoss::State(void)
 		// 死亡エフェクト生成状態
 		m_State = STATE_DEATH_EFFECT;
 
+		// 死亡処理
 		Death();
 	}
 	// 死亡状態の場合
@@ -375,6 +382,7 @@ void CBoss::State(void)
 	{
 		// フェード開始
 		CFade::Create(FADE_POS, FADE_SIZE, CSceneManager::MODE_RESULT);
+
 		// 終了
 		Uninit();
 		return;

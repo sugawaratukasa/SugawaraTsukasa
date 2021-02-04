@@ -31,10 +31,10 @@ public:
 private:
 	static LPDIRECT3DTEXTURE9 m_apTexture[TYPE_MAX];	// テクスチャ情報
 	CScene2d * m_apScene2D[TYPE_MAX];					// BGの情報
-	TYPE m_type;									// タイプ
-	D3DXVECTOR3 m_pos;								// 位置
-	D3DXVECTOR3 m_size;								// サイズ
-	float m_fSlowMove;								// 遅い
-	float m_fmove;									// 移動
+	TYPE m_type;										// タイプ
+	D3DXVECTOR3 m_pos;									// 位置
+	D3DXVECTOR3 m_size;									// サイズ
+	float m_fSlowMove;									// 遅い
+	float m_fmove;										// 移動
 };													   
 #endif

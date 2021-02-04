@@ -125,7 +125,7 @@ void CNormal_Enemy::Attack(void)
 	if (m_nAttackCount == ATTACK_COUNT)
 	{
 		// ìÒî≠ê∂ê¨
-		for (int nCount = 0; nCount < BULLET_NUMDER; nCount++)
+		for (int nCount = INIT_INT; nCount < BULLET_NUMDER; nCount++)
 		{
 			CEnemy_Traking_Bullet::Create(D3DXVECTOR3(pos.x, pos.y, pos.z),
 				BULLET_ROT,
