@@ -40,39 +40,39 @@
 //******************************************************************************
 // マクロ定義
 //******************************************************************************
-#define PLAYER_POS					(D3DXVECTOR3(SCREEN_WIDTH / 2,SCREEN_HEIGHT / 2, 0.0))	// プレイヤーの位置
-#define PLAYER_SIZE					(D3DXVECTOR3(50.0f,50.0f,0.0f))							// プレイヤーサイズ
-#define BOSS_POS					(D3DXVECTOR3(SCREEN_WIDTH / 2, -200.0f, 0.0f))			// ボスの位置
-#define BOSS_MAIN_SIZE				(D3DXVECTOR3(150.0f,150.0f,0.0f))						// ボスの中央のサイズ
-#define BG_POS						(D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f))// 背景位置
-#define SCORE_POS					(D3DXVECTOR3(940.0f, 50.0f, 0.0f))						// スコア位置
-#define LIFE_POS					(D3DXVECTOR3(350.0f, 50.0f, 0.0f))						// ライフ位置
-#define BOM_UI_POS					(D3DXVECTOR3(340.0f, 700.0f, 0.0f))						// ボムのUI位置
-#define ENEMY_ROT					(D3DXVECTOR3(0.0f,0.0f,0.0f))							// 敵の向き
-#define ENEMY_RESPWAN_POS_1			(D3DXVECTOR3(900.0f, -300.0f, 0.0f))					// 敵の生成位置1
-#define ENEMY_RESPWAN_POS_2			(D3DXVECTOR3(540.0f, -150.0f, 0.0f))					// 敵の生成位置2
-#define ENEMY_RESPAWN_POS_3			(D3DXVECTOR3(480.0f, -100.0f, 0.0f))					// 敵の生成位置3
-#define ENEMY_RESPWAN_POS_4			(D3DXVECTOR3(840.0f, -100.0f, 0.0f))					// 敵の生成位置4
-#define ENEMY_RESPWAN_POS_5			(D3DXVECTOR3(740.0f, -50.0f, 0.0f))						// 敵の生成位置5
-#define ENEMY_RESPWAN_POS_6			(D3DXVECTOR3(600.0f, -100.0f, 0.0f))					// 敵の生成位置6
-#define SHIP_RESPAWN_POS			(D3DXVECTOR3(SCREEN_WIDTH / 2, -1000.0f, 0.0f))			// 船生成位置
-#define SHIP_SIZE					(D3DXVECTOR3(1000.0f,1800.0f,0.0f))						// 船のサイズ
-#define BG_SIZE						(D3DXVECTOR3(SCREEN_WIDTH / 2,SCREEN_HEIGHT,0.0f))		// 背景サイズ
-#define SCORE_SIZE					(D3DXVECTOR3 (30.0f,30.0f,0.0f))						// スコアサイズ
-#define LIFE_SIZE					(D3DXVECTOR3(30.0f,30.0f,0.0f))							// ライフサイズ
-#define BOM_UI_SIZE					(D3DXVECTOR3(40.0f,40.0f,0.0f))							// サイズ
-#define NORMAL_ENEMY_SIZE			(D3DXVECTOR3(50.0f,50.0f,0.0f))							// 通常の敵サイズ
-#define CIRCLE_BULLET_ENEMY_SIZE	(D3DXVECTOR3(50.0f,50.0f,0.0f))							// サイズ
-#define RESPAWN_COUNT_DEVIDE		(150)													// 敵生成カウント
-#define RESPAWN_COUNT_DEVIDE2		(300)													// 敵生成カウント2
-#define RESPAWN_COUNT_DEVIDE3		(400)													// 敵生成カウント3
-#define RESPAWN_COUNT_DEVIDE4		(500)													// 敵生成カウント4
-#define SHIP_RESPAWN				(1500)													// 船生成カウント
-#define ENEMY_NO_RESPAWN_COUNT		(3300)													// 敵の生成を止めるカウント
-#define NORMAL_ENEMY_LIFE			(20)													// 通常の敵のライフ
-#define CIRCLE_BULLET_ENEMY_LIFE	(50)													// ライフ
-#define RESPAWN_COUNT_REMAINDER		(0)														// 余り
-#define INIT_SCORE					(0)														// 初期スコア
+#define PLAYER_POS					(D3DXVECTOR3(SCREEN_WIDTH / 2,SCREEN_HEIGHT / 2 + 200, 0.0))	// プレイヤーの位置
+#define PLAYER_SIZE					(D3DXVECTOR3(50.0f,50.0f,0.0f))									// プレイヤーサイズ
+#define BOSS_POS					(D3DXVECTOR3(SCREEN_WIDTH / 2, -200.0f, 0.0f))					// ボスの位置
+#define BOSS_MAIN_SIZE				(D3DXVECTOR3(150.0f,150.0f,0.0f))								// ボスの中央のサイズ
+#define BG_POS						(D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f))		// 背景位置
+#define SCORE_POS					(D3DXVECTOR3(940.0f, 50.0f, 0.0f))								// スコア位置
+#define LIFE_POS					(D3DXVECTOR3(350.0f, 50.0f, 0.0f))								// ライフ位置
+#define BOM_UI_POS					(D3DXVECTOR3(340.0f, 700.0f, 0.0f))								// ボムのUI位置
+#define ENEMY_ROT					(D3DXVECTOR3(0.0f,0.0f,0.0f))									// 敵の向き
+#define ENEMY_RESPWAN_POS_1			(D3DXVECTOR3(900.0f, -300.0f, 0.0f))							// 敵の生成位置1
+#define ENEMY_RESPWAN_POS_2			(D3DXVECTOR3(540.0f, -150.0f, 0.0f))							// 敵の生成位置2
+#define ENEMY_RESPAWN_POS_3			(D3DXVECTOR3(480.0f, -100.0f, 0.0f))							// 敵の生成位置3
+#define ENEMY_RESPWAN_POS_4			(D3DXVECTOR3(840.0f, -100.0f, 0.0f))							// 敵の生成位置4
+#define ENEMY_RESPWAN_POS_5			(D3DXVECTOR3(740.0f, -50.0f, 0.0f))								// 敵の生成位置5
+#define ENEMY_RESPWAN_POS_6			(D3DXVECTOR3(600.0f, -100.0f, 0.0f))							// 敵の生成位置6
+#define SHIP_RESPAWN_POS			(D3DXVECTOR3(SCREEN_WIDTH / 2, -1000.0f, 0.0f))					// 船生成位置
+#define SHIP_SIZE					(D3DXVECTOR3(1000.0f,1800.0f,0.0f))								// 船のサイズ
+#define BG_SIZE						(D3DXVECTOR3(SCREEN_WIDTH / 2,SCREEN_HEIGHT,0.0f))				// 背景サイズ
+#define SCORE_SIZE					(D3DXVECTOR3 (30.0f,30.0f,0.0f))								// スコアサイズ
+#define LIFE_SIZE					(D3DXVECTOR3(30.0f,30.0f,0.0f))									// ライフサイズ
+#define BOM_UI_SIZE					(D3DXVECTOR3(40.0f,40.0f,0.0f))									// サイズ
+#define NORMAL_ENEMY_SIZE			(D3DXVECTOR3(50.0f,50.0f,0.0f))									// 通常の敵サイズ
+#define CIRCLE_BULLET_ENEMY_SIZE	(D3DXVECTOR3(50.0f,50.0f,0.0f))									// サイズ
+#define RESPAWN_COUNT_DEVIDE		(150)															// 敵生成カウント
+#define RESPAWN_COUNT_DEVIDE2		(300)															// 敵生成カウント2
+#define RESPAWN_COUNT_DEVIDE3		(400)															// 敵生成カウント3
+#define RESPAWN_COUNT_DEVIDE4		(500)															// 敵生成カウント4
+#define SHIP_RESPAWN				(1500)															// 船生成カウント
+#define ENEMY_NO_RESPAWN_COUNT		(3300)															// 敵の生成を止めるカウント
+#define NORMAL_ENEMY_LIFE			(20)															// 通常の敵のライフ
+#define CIRCLE_BULLET_ENEMY_LIFE	(50)															// ライフ
+#define RESPAWN_COUNT_REMAINDER		(0)																// 余り
+#define INIT_SCORE					(0)																// 初期スコア
 //******************************************************************************
 // 静的メンバ変数
 //******************************************************************************
