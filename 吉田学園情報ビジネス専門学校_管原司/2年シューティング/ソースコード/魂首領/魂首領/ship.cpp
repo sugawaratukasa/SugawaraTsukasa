@@ -17,17 +17,23 @@
 //******************************************************************************
 // マクロ定義
 //******************************************************************************
-#define SHIP_TEXTURE		("data/Texture/Enemy/Ship.png")					// 船のテクスチャ
-#define COLOR_VALUE			(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))				// 色の値
-#define ROT_VALUE			(D3DXVECTOR3(0.0f,0.0f, D3DXToRadian(180.0f)))	// 向きの値
-#define MOVE_VALUE			(D3DXVECTOR3(0.0f,1.0f,0.0f))					// 移動量
-#define SHIP_BATTERY_POS1	(D3DXVECTOR3(150.0f,400.0f,0.0f))				// 砲台の位置1
-#define SHIP_BATTERY_POS2	(D3DXVECTOR3(-150.0f,400.0f,0.0f))				// 砲台の位置2
-#define SHIP_BATTERY_POS3	(D3DXVECTOR3(280.0f,-20.0f,0.0f))				// 砲台の位置3
-#define SHIP_BATTERY_POS4	(D3DXVECTOR3(-280.0f,-20.0f,0.0f))				// 砲台の位置4
-#define SHIP_BATTERY_POS5	(D3DXVECTOR3(-280.0f,-550.0f,0.0f))				// 砲台の位置5
-#define SHIP_BATTERY_POS6	(D3DXVECTOR3(280.0f,-550.0f,0.0f))				// 砲台の位置6
-#define DEVIDE_VAlUE		(2)												// 除算値
+#define SHIP_TEXTURE		("data/Texture/Enemy/Ship.png")							// 船のテクスチャ
+#define COLOR_VALUE			(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))						// 色の値
+#define ROT_VALUE			(D3DXVECTOR3(0.0f,0.0f, D3DXToRadian(180.0f)))			// 向きの値
+#define MOVE_VALUE			(D3DXVECTOR3(0.0f,1.0f,0.0f))							// 移動量
+#define SHIP_SIZE			(D3DXVECTOR3(1000.0f,1800.0f,0.0f))						// 船のサイズ
+#define SHIP_BATTERY_POS1	(D3DXVECTOR3(150.0f,400.0f,0.0f))						// 砲台の位置1
+#define SHIP_BATTERY_POS2	(D3DXVECTOR3(-150.0f,400.0f,0.0f))						// 砲台の位置2
+#define SHIP_BATTERY_POS3	(D3DXVECTOR3(280.0f,-20.0f,0.0f))						// 砲台の位置3
+#define SHIP_BATTERY_POS4	(D3DXVECTOR3(-280.0f,-20.0f,0.0f))						// 砲台の位置4
+#define SHIP_BATTERY_POS5	(D3DXVECTOR3(-280.0f,-550.0f,0.0f))						// 砲台の位置5
+#define SHIP_BATTERY_POS6	(D3DXVECTOR3(280.0f,-550.0f,0.0f))						// 砲台の位置6
+#define SHIP_BATTERY_SIZE	(D3DXVECTOR3(100.0f,200.0f,0.0f))						// 船の砲台のサイズ
+#define SHIP_BATTERY_ROT	(D3DXVECTOR3(0.0f,0.0f,0.0f))							// 船の砲台の向き
+#define WARNING_POS			(D3DXVECTOR3(SCREEN_WIDTH / 2,SCREEN_HEIGHT / 2, 0.0f))	// 位置座標
+#define WARNING_SIZE		(D3DXVECTOR3(500.0f,300.0f,0.0f))						// サイズ
+#define SHIP_BATTERY_LIFE	(50)													// 船の砲台のライフ
+#define DEVIDE_VAlUE		(2)														// 除算値
 //******************************************************************************
 // 静的メンバ変数
 //******************************************************************************

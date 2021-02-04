@@ -22,8 +22,9 @@
 //******************************************************************************
 #define BOM_TEXTURE		( "data/Texture/UI/bom3.png")		// ボムテクスチャ
 #define POWERUP_TEXTURE	( "data/Texture/UI/Powerup.png")	// パワーアップテクスチャ
-#define MOVE_VALUE		(3.0f)								// 移動量
+#define ITEM_SIZE		(D3DXVECTOR3(40.0f,40.0f,0.0f))		// アイテムサイズ
 #define COLOR			(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))	// 色
+#define MOVE_VALUE		(3.0f)								// 移動量
 #define DEVIDE_VALUE	(2)									// 除算値
 #define GET_BOM_VALUE	(1)									// ボム取得数
 //******************************************************************************

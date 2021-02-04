@@ -20,14 +20,16 @@
 //******************************************************************************
 // マクロ定義
 //******************************************************************************
-#define BULLET_MOVE_VALUE	(D3DXVECTOR3(5.0f,5.0f,0.0f))	// 弾スピード
-#define BULLET_COLOR_VALUE	(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))// 弾の色
-#define BULLET_ROT_VALUE	(D3DXVECTOR3(0.0f,0.0f,0.0f))	// 向きの値
-#define BULLET_SHOT_COUNT	(4)								// 発射数
-#define ATTACK_COUNT		(100)							// 攻撃カウント
-#define HALF_DEVIDE			(2)								// 割る2
-#define COUNT_REMAINDER		(0)								// 余り
-#define RADIAN				(90.0f)							// 角度
+#define SHIP_BATTERY_SIZE			(D3DXVECTOR3(100.0f,200.0f,0.0f))	// 船の砲台のサイズ
+#define BULLET_MOVE_VALUE			(D3DXVECTOR3(5.0f,5.0f,0.0f))		// 弾スピード
+#define ENEMY_TRAKING_BULLET_SIZE	(D3DXVECTOR3(20.0f,20.0f,0.0f))		// レベル1の弾のサイズ
+#define BULLET_COLOR_VALUE			(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))	// 弾の色
+#define BULLET_ROT_VALUE			(D3DXVECTOR3(0.0f,0.0f,0.0f))		// 向きの値
+#define BULLET_SHOT_COUNT			(4)									// 発射数
+#define ATTACK_COUNT				(100)								// 攻撃カウント
+#define HALF_DEVIDE					(2)									// 割る2
+#define COUNT_REMAINDER				(0)									// 余り
+#define RADIAN						(90.0f)								// 角度
 //******************************************************************************
 // コンストラクタ
 //******************************************************************************

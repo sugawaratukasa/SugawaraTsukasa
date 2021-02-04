@@ -20,13 +20,14 @@
 //******************************************************************************
 // マクロ定義
 //******************************************************************************
-#define BULLET_MOVE_VALUE	(D3DXVECTOR3(5.0f,5.0f,0.0f))		// 弾の移動量
-#define MOVE_VALUE			(D3DXVECTOR3(0.0f,2.0f,0.0f))		// 移動量
-#define BULLET_ROT			(D3DXVECTOR3(0.0f,0.0f,0.0f))		// 弾の向き
-#define COLOR				(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))	// 色
-#define ATTACK_COUNT		(60)								// 攻撃カウント
-#define BULLET_NUMDER		(2)									// 弾の数
-#define INIT_ATTACK_COUNT	(0)									// 攻撃カウント初期化
+#define BULLET_MOVE_VALUE			(D3DXVECTOR3(5.0f,5.0f,0.0f))		// 弾の移動量
+#define MOVE_VALUE					(D3DXVECTOR3(0.0f,2.0f,0.0f))		// 移動量
+#define BULLET_ROT					(D3DXVECTOR3(0.0f,0.0f,0.0f))		// 弾の向き
+#define ENEMY_TRAKING_BULLET_SIZE	(D3DXVECTOR3(20.0f,20.0f,0.0f))		// レベル1の弾のサイズ
+#define COLOR						(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))	// 色
+#define ATTACK_COUNT				(60)								// 攻撃カウント
+#define BULLET_NUMDER				(2)									// 弾の数
+#define INIT_ATTACK_COUNT			(0)									// 攻撃カウント初期化
 //******************************************************************************
 // コンストラクタ
 //******************************************************************************

@@ -18,6 +18,7 @@
 #define BOM_UI_TEXTURE				( "data/Texture/UI/bom3.png")		// ボムUIテクスチャ
 #define NOT_POSESSION_COLOR_VALUE	(D3DXCOLOR(0.3f,0.3f,0.3f,1.0f))	// ボムを所持してない時の色
 #define POSESSION_COLOR_VALUE		(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))	//	ボムを所持しているときの色
+#define BOM_UI_SIZE					(D3DXVECTOR3(40.0f,40.0f,0.0f))		// サイズ
 //******************************************************************************
 // 静的メンバ変数
 //******************************************************************************

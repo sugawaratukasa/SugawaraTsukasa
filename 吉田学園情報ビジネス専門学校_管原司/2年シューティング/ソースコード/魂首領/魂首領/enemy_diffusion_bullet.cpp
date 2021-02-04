@@ -18,13 +18,14 @@
 //******************************************************************************
 // マクロ定義
 //******************************************************************************
-#define BULLET_ROT				(D3DXVECTOR3(0.0f,0.0f,0.0f))		// 弾の向き
-#define BULLET_COLOR			(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))	// 弾の色
-#define DIFF_BULLET_COUNT		(80)								// 拡散弾カウント
-#define BULLET_NUMBER			(20)								// 弾の数
-#define BULLET_SPEED			(5.0f)								// 弾のスピード
-#define BULLET_RADIAN			(360)								// 弧度
-#define BULLET_RADIAN_DEVIDE	(20)								// 弧度の除算値
+#define BULLET_ROT					(D3DXVECTOR3(0.0f,0.0f,0.0f))		// 弾の向き
+#define ENEMY_NORMAL_BULLET_SIZE	(D3DXVECTOR3(20.0f,20.0f,0.0f))		// 弾のサイズ
+#define BULLET_COLOR				(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))	// 弾の色
+#define DIFF_BULLET_COUNT			(80)								// 拡散弾カウント
+#define BULLET_NUMBER				(20)								// 弾の数
+#define BULLET_SPEED				(5.0f)								// 弾のスピード
+#define BULLET_RADIAN				(360)								// 弧度
+#define BULLET_RADIAN_DEVIDE		(20)								// 弧度の除算値
 //******************************************************************************
 // コンストラクタ
 //******************************************************************************

@@ -35,6 +35,8 @@
 #define BULLET_DIFFUSION_MOVE_VALUE	(D3DXVECTOR3(0.0f,2.0f,0.0f))		// 拡散弾の移動量
 #define INIT_MOVE					(D3DXVECTOR3(0.0f,0.0f,0.0f))		// 移動初期化
 #define BULLET_ROT					(D3DXVECTOR3(0.0f,0.0f,0.0f))		// 弾の向き
+#define ENEMY_TRAKING_BULLET_SIZE	(D3DXVECTOR3(20.0f,20.0f,0.0f))		// レベル1の弾のサイズ
+#define FIFFUSION_BULLET_SIZE		(D3DXVECTOR3(100.0f,100.0f,0.0f))	// 弾のサイズ
 #define COLOR						(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))	// 色
 #define RED_COLOR					(D3DXCOLOR(1.0f,0.0f,0.0f,1.0f))	// 赤色
 #define BULLET_COLOR				(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))	// 弾の色

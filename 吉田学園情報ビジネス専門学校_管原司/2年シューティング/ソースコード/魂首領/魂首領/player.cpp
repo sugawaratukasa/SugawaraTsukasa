@@ -47,6 +47,21 @@
 #define BEAM_POS						(D3DXVECTOR3(0.0f,-45.0f,0.0f))							// ビーム生成位置
 #define BULLET_ROT						(D3DXVECTOR3(0.0f,0.0f,0.0f))							// 弾の向き
 #define CONTINUE_POS					(D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f))// コンティニュー位置
+#define CONTINUE_SIZE					(D3DXVECTOR3(250.0f,250.0f,0.0f))						// サイズ
+#define PLAYER_WEPON_POS				(D3DXVECTOR3(40.0f,40.0f,0.0f))							// プレイヤー武器の位置
+#define PLAYER_BEAM_WEPON_POS			(D3DXVECTOR3(15.0f,40.0f,0.0f))							// プレイヤー武器の位置
+#define PLAYER_WEPON_SIZE				(D3DXVECTOR3(25.0f,25.0f,0.0f))							// プレイヤー武器サイズ
+#define BULLET_LEVEL1_BEAM_SIZE			(D3DXVECTOR3(40.0f,40.0f,0.0f))							//ビームのサイズ
+#define BULLET_LEVEL2_BEAM_SIZE			(D3DXVECTOR3(50.0f,50.0f,0.0f))							//ビームのサイズ
+#define BULLET_LEVEL3_BEAM_SIZE			(D3DXVECTOR3(60.0f,60.0f,0.0f))							//ビームのサイズ
+#define BULLET_LEVEL1_SIZE				(D3DXVECTOR3(40.0f,40.0f,0.0f))							// レベル1の弾のサイズ
+#define BULLET_LEVEL2_SIZE				(D3DXVECTOR3(50.0f,50.0f,0.0f))							// レベル2の弾のサイズ
+#define BULLET_LEVEL3_SIZE				(D3DXVECTOR3(50.0f,50.0f,0.0f))							// レベル3の弾のサイズ
+#define BOSS_BOM_SIZE					(D3DXVECTOR3(100.0f,100.0f,0.0f))						// サイズ
+#define BOSS_BOM_ROT					(D3DXVECTOR3(0.0f,0.0f,0.0f))							// ボムの向き
+#define BOM_POS							(D3DXVECTOR3(SCREEN_WIDTH / 2,SCREEN_HEIGHT / 2,0.0f))	// ボムの位置
+#define BOM_SIZE						(D3DXVECTOR3(800.0f,800.0f,0.0f))						// ボムのサイズ
+#define BOM_ROT							(D3DXVECTOR3(0.0f,0.0f,0.0f))							// ボムの向き
 #define COLOR							(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))						// カラー
 #define BULLET_COLOR					(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))						// 弾の色
 #define DAMAGE_COLOR					(D3DXCOLOR(1.0f,1.0f,1.0f,0.0f))						// ダメージ状態の時の色
