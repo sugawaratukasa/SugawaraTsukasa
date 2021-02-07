@@ -92,7 +92,7 @@ void CTitle::Update(void)
 	}
 
 	// AボタンまたはENTERを押したら
-	if (g_lpDIDevice != NULL &&pInputJoystick->GetJoystickTrigger(JS_A) || pInputKeyboard->GetKeyboardTrigger(DIK_RETURN))
+	if (g_lpDIDevice != NULL &&pInputJoystick->GetJoystickTrigger(CInputJoystick::JS_A) || pInputKeyboard->GetKeyboardTrigger(DIK_RETURN))
 	{
 		// サウンド再生
 		pSound->PlaySound(CSound::SOUND_LABEL_SE_SELECT);

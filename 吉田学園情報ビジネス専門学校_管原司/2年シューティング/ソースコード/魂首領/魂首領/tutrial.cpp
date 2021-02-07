@@ -84,7 +84,7 @@ void CTutrial::Update(void)
 		g_lpDIDevice->GetDeviceState(sizeof(DIJOYSTATE), &js);
 	}
 	// コントローラーAボタンまたはENTER
-	if (g_lpDIDevice != NULL &&pInputJoystick->GetJoystickTrigger(JS_A) || pInputKeyboard->GetKeyboardTrigger(DIK_RETURN))
+	if (g_lpDIDevice != NULL &&pInputJoystick->GetJoystickTrigger(CInputJoystick::JS_A) || pInputKeyboard->GetKeyboardTrigger(DIK_RETURN))
 	{
 		// サウンド再生
 		pSound->PlaySound(CSound::SOUND_LABEL_SE_SELECT);

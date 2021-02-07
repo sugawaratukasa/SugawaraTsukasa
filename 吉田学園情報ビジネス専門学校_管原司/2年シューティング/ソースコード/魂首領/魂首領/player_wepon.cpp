@@ -256,7 +256,7 @@ void CPlayer_Wepon::Shot(void)
 	int nPlayerLevel = pPlayer->GetLevel();
 
 	// プレイヤーが通常弾を使用中の場合
-	if (g_lpDIDevice != NULL &&pInputJoystick->GetJoystickTrigger(JS_A) || pInputKeyboard->GetKeyboardTrigger(DIK_SPACE))
+	if (g_lpDIDevice != NULL &&pInputJoystick->GetJoystickTrigger(CInputJoystick::JS_A) || pInputKeyboard->GetKeyboardTrigger(DIK_SPACE))
 	{
 		// レベルが1の場合
 		if (nPlayerLevel == CPlayer::LEVEL_1)

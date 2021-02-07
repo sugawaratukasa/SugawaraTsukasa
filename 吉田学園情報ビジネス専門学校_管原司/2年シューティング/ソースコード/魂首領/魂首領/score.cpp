@@ -80,7 +80,7 @@ HRESULT CScore::Init()
 void CScore::Uninit(void)
 {
 	// Å‘å”•ªŒJ‚è•Ô‚·
-	for (int nCnt = 0; nCnt < MAX_SCORE; nCnt++)
+	for (int nCnt = INIT_INT; nCnt < MAX_SCORE; nCnt++)
 	{
 		// I—¹
 		if (m_apNumber[nCnt] != NULL)
@@ -105,7 +105,7 @@ void CScore::Update(void)
 void CScore::Draw(void)
 {
 	// Å‘å”•ªŒJ‚è•Ô‚·
-	for (int nCnt = 0; nCnt < MAX_SCORE; nCnt++)
+	for (int nCnt = INIT_INT; nCnt < MAX_SCORE; nCnt++)
 	{
 		// •`‰æ
 		m_apNumber[nCnt]->Draw();

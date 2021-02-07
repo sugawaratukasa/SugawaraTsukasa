@@ -323,10 +323,10 @@ void CBoss::State(void)
 	if (m_State == STATE_NORMAL || m_State == STATE_DAMAGE)
 	{
 		// ˆÚ“®ˆ—
-		Move();
+		//Move();
 
 		// UŒ‚ˆ—
-		Attack();
+		//Attack();
 	}
 	// State‚ªƒm[ƒ}ƒ‹‚Ìê‡
 	if (m_State == STATE_NORMAL)

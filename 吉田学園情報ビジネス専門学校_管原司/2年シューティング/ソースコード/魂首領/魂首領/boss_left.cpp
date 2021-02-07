@@ -40,6 +40,8 @@
 #define BULLET_DEVIDE_BALUE			(3)									// íeî≠éÀä‘äu
 #define BULLET_RADIAN				(360)								// íeÇÃî≠éÀå ìx
 #define BULLET_RADIAN_DEVIDE		(20)								// å ìxÇÃèúéZíl
+// âÒì]íeÇÃà⁄ìÆ
+#define ROTATION_BULLET_MOVE		(D3DXVECTOR3(cosf(D3DXToRadian(m_nHalfLife_AttackCount / BULLET_DEVIDE_BALUE * (BULLET_RADIAN / BULLET_RADIAN_DEVIDE)))*BULLET_SPINING_MOVE_VALUE.x, sinf(D3DXToRadian(m_nHalfLife_AttackCount / BULLET_DEVIDE_BALUE * (BULLET_RADIAN / BULLET_RADIAN_DEVIDE)))*BULLET_SPINING_MOVE_VALUE.y,0.0f))
 //******************************************************************************
 // ê√ìIÉÅÉìÉoïœêî
 //******************************************************************************
@@ -276,9 +278,7 @@ void CBoss_Left::Attack(void)
 					CEnemy_Normal_Bullet::Create(D3DXVECTOR3(pos.x + BOSS_LEFT_SIZE.x / DEVIDE_VALUE, pos.y + BOSS_LEFT_SIZE.y / DEVIDE_VALUE, pos.z),
 						BULLET_ROT,
 						ENEMY_NORMAL_BULLET_SIZE,
-						D3DXVECTOR3(cosf(D3DXToRadian(m_nHalfLife_AttackCount / BULLET_DEVIDE_BALUE * (BULLET_RADIAN / BULLET_RADIAN_DEVIDE)))*BULLET_SPINING_MOVE_VALUE.x, 
-							sinf(D3DXToRadian(m_nHalfLife_AttackCount / BULLET_DEVIDE_BALUE * (BULLET_RADIAN / BULLET_RADIAN_DEVIDE)))*BULLET_SPINING_MOVE_VALUE.y, 
-							0.0f),
+						ROTATION_BULLET_MOVE,
 						COLOR,
 						CBullet::TEX_TYPE_ENEMY_NORMAL);
 				}

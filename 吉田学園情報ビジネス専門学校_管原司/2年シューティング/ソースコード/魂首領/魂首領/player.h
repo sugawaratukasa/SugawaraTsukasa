@@ -66,28 +66,28 @@ private:
 	void Shot(void);
 	void PlayerState(void);
 
-	static LPDIRECT3DTEXTURE9 m_pTexture;					// テクスチャ情報
-	D3DXVECTOR3 m_Collision_Size;							// 当たり判定サイズ
-	int m_nContinue;										// コンティニューカウント
-	int m_nLife;											// 体力
-	int m_nCountAnim;										// カウンター
-	int m_nPatternAnim;										// パターン
-	int m_AttackCount;										// 弾発射のカウント
-	int m_nBeamCount;										// ビームの溜め時間
-	int m_nDamageCount;										// ダメージカウント
-	int m_nRespawnCount;									// リスポーンカウント
-	int m_nBomCount;										// ボムの発射カウント
-	int m_nBom_possession_count;							// ボムの所持数
-	int m_nScore;											// スコア
-	int m_nPlayerState;										// プレイヤーのstate
-	int m_Level;											// プレイヤーのレベル
-	bool m_bMove;											// 移動の状態
-	bool m_bUseShot;										// 通常弾を発射したか 
-	bool m_bUseBeam;										// ビームの使用状態
-	bool m_bUseBom;											// ボムの使用状態
-	bool m_bBossBom;										// ボス専用のボムの使用状態	
-	bool m_bBoss;											// ボス
-	bool m_bBossDeath;										// ボスが死亡したか
-	bool m_bContinue;										// コンティニュー
+	static LPDIRECT3DTEXTURE9 m_pTexture;	// テクスチャ情報
+	D3DXVECTOR3 m_Collision_Size;			// 当たり判定サイズ
+	int m_nContinue;						// コンティニューカウント
+	int m_nLife;							// 体力
+	int m_nCountAnim;						// カウンター
+	int m_nPatternAnim;						// パターン
+	int m_AttackCount;						// 弾発射のカウント
+	int m_nBeamCount;						// ビームの溜め時間
+	int m_nDamageCount;						// ダメージカウント
+	int m_nRespawnCount;					// リスポーンカウント
+	int m_nBomCount;						// ボムの発射カウント
+	int m_nBom_possession_count;			// ボムの所持数
+	int m_nScore;							// スコア
+	int m_nPlayerState;						// プレイヤーのstate
+	int m_Level;							// プレイヤーのレベル
+	bool m_bMove;							// 移動の状態
+	bool m_bUseShot;						// 通常弾を発射したか 
+	bool m_bUseBeam;						// ビームの使用状態
+	bool m_bUseBom;							// ボムの使用状態
+	bool m_bBossBom;						// ボス専用のボムの使用状態	
+	bool m_bBoss;							// ボス
+	bool m_bBossDeath;						// ボスが死亡したか
+	bool m_bContinue;						// コンティニュー
 };
 #endif

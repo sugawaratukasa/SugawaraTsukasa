@@ -566,7 +566,7 @@ void CPlayer::Shot(void)
 		{
 			// ビーム
 			// SPACEまたはコントローラーAボタン
-			if (g_lpDIDevice != NULL &&pInputJoystick->GetJoystickTrigger(JS_A) || pInputKeyboard->GetKeyboardTrigger(DIK_SPACE))
+			if (g_lpDIDevice != NULL &&pInputJoystick->GetJoystickTrigger(CInputJoystick::JS_A) || pInputKeyboard->GetKeyboardTrigger(DIK_SPACE))
 			{
 				// ショットを使用状態に
 				m_bUseShot = true;
@@ -609,7 +609,7 @@ void CPlayer::Shot(void)
 
 			}
 			// コントローラーAボタンまたはキーボードSPACEを離した場合
-			if (g_lpDIDevice != NULL &&pInputJoystick->GetJoystickRelease(JS_A) || pInputKeyboard->GetKeyboardRelease(DIK_SPACE))
+			if (g_lpDIDevice != NULL &&pInputJoystick->GetJoystickRelease(CInputJoystick::JS_A) || pInputKeyboard->GetKeyboardRelease(DIK_SPACE))
 			{
 				// 通常弾の不使用状態に
 				m_bUseShot = false;
@@ -622,7 +622,7 @@ void CPlayer::Shot(void)
 
 		//ビーム
 		//SPACE長押しまたはコントローラーAボタン
-		if (g_lpDIDevice != NULL &&pInputJoystick->GetJoystickPress(JS_A) || pInputKeyboard->GetKeyboardPress(DIK_SPACE))
+		if (g_lpDIDevice != NULL &&pInputJoystick->GetJoystickPress(CInputJoystick::JS_A) || pInputKeyboard->GetKeyboardPress(DIK_SPACE))
 		{
 			//ビームカウントインクリメント
 			m_nBeamCount++;
@@ -634,7 +634,7 @@ void CPlayer::Shot(void)
 			}
 		}
 		// SPACEまたはコントローラAボタンを離したとき
-		if (g_lpDIDevice != NULL &&pInputJoystick->GetJoystickRelease(JS_A) || pInputKeyboard->GetKeyboardRelease(DIK_SPACE))
+		if (g_lpDIDevice != NULL &&pInputJoystick->GetJoystickRelease(CInputJoystick::JS_A) || pInputKeyboard->GetKeyboardRelease(DIK_SPACE))
 		{
 			// カウントを0に
 			m_nBeamCount = INIT_BEAM_COUNT;
@@ -692,7 +692,7 @@ void CPlayer::Shot(void)
 			}
 		}
 		// キーボードのBまたはコントローラのBボタンを押した場合
-		if (g_lpDIDevice != NULL &&pInputJoystick->GetJoystickTrigger(JS_B) || pInputKeyboard->GetKeyboardTrigger(DIK_B))
+		if (g_lpDIDevice != NULL &&pInputJoystick->GetJoystickTrigger(CInputJoystick::JS_B) || pInputKeyboard->GetKeyboardTrigger(DIK_B))
 		{
 			// ボム所持数が0より多い場合
 			if (m_nBom_possession_count > MIN_BOM_POSSESION)

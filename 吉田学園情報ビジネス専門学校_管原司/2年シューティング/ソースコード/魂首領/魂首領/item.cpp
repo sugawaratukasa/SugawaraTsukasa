@@ -48,7 +48,7 @@ HRESULT CItem::Load(void)
 void CItem::Unload(void)
 {
 	// テクスチャの破棄
-	for (int nCnt = 0; nCnt < TYPE_MAX; nCnt++)
+	for (int nCnt = INIT_INT; nCnt < TYPE_MAX; nCnt++)
 	{
 		if (m_apTexture[nCnt] != NULL)
 		{

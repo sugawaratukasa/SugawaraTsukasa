@@ -15,9 +15,10 @@
 //******************************************************************************
 // マクロ定義
 //******************************************************************************
-#define TEXTURE_X	(0.10f)	// テクスチャX値
-#define TEXTURE_Y	(0.0f)	// テクスチャY値
-#define TEXTURE_Y2	(1.0f)	// テクスチャY値
+#define TEXTURE_X		(0.10f)	// テクスチャX値
+#define TEXTURE_Y		(0.0f)	// テクスチャY値
+#define TEXTURE_Y2		(1.0f)	// テクスチャY値
+#define DEVIDE_VALUE	(2)		// 割る値
 //******************************************************************************
 // 静的メンバ変数
 //******************************************************************************
@@ -107,10 +108,10 @@ HRESULT CNumber::Init()
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	// 頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(m_pos.x + (-m_size.x/ 2), m_pos.y + (-m_size.y / 2), 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(m_pos.x + (m_size.x / 2), m_pos.y + (-m_size.y / 2), 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(m_pos.x + (-m_size.x / 2), m_pos.y + (m_size.y / 2), 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(m_pos.x + (m_size.x / 2), m_pos.y + (m_size.y / 2), 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(m_pos.x + (-m_size.x/ DEVIDE_VALUE), m_pos.y + (-m_size.y / DEVIDE_VALUE), 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(m_pos.x + (m_size.x / DEVIDE_VALUE), m_pos.y + (-m_size.y / DEVIDE_VALUE), 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(m_pos.x + (-m_size.x / DEVIDE_VALUE), m_pos.y + (m_size.y / DEVIDE_VALUE), 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(m_pos.x + (m_size.x / DEVIDE_VALUE), m_pos.y + (m_size.y / DEVIDE_VALUE), 0.0f);
 
 	// rhw
 	pVtx[0].rhw = RHW_VALUE;
@@ -160,10 +161,10 @@ void CNumber::Update(void)
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	// 頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(m_pos.x + (-m_size.x / 2), m_pos.y + (-m_size.y / 2), 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(m_pos.x + (m_size.x / 2), m_pos.y + (-m_size.y / 2), 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(m_pos.x + (-m_size.x / 2), m_pos.y + (m_size.y / 2), 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(m_pos.x + (m_size.x / 2), m_pos.y + (m_size.y / 2), 0.0f);
+	pVtx[0].pos = D3DXVECTOR3(m_pos.x + (-m_size.x / DEVIDE_VALUE), m_pos.y + (-m_size.y / DEVIDE_VALUE), 0.0f);
+	pVtx[1].pos = D3DXVECTOR3(m_pos.x + (m_size.x / DEVIDE_VALUE), m_pos.y + (-m_size.y / DEVIDE_VALUE), 0.0f);
+	pVtx[2].pos = D3DXVECTOR3(m_pos.x + (-m_size.x / DEVIDE_VALUE), m_pos.y + (m_size.y / DEVIDE_VALUE), 0.0f);
+	pVtx[3].pos = D3DXVECTOR3(m_pos.x + (m_size.x / DEVIDE_VALUE), m_pos.y + (m_size.y / DEVIDE_VALUE), 0.0f);
 
 	// rhw
 	pVtx[0].rhw = RHW_VALUE;

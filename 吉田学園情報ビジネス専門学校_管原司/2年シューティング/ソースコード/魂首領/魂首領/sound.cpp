@@ -8,6 +8,7 @@
 //******************************************************************************
 #include "sound.h"
 #include "main.h"
+#include "scene.h"
 //******************************************************************************
 // 初期化
 //******************************************************************************
@@ -81,8 +82,8 @@ HRESULT CSound::Init(HWND hWnd)
 	for (int nCntSound = 0; nCntSound < SOUND_LABEL_MAX; nCntSound++)
 	{
 		HANDLE hFile;
-		DWORD dwChunkSize = 0;
-		DWORD dwChunkPosition = 0;
+		DWORD dwChunkSize = INIT_INT;
+		DWORD dwChunkPosition = INIT_INT;
 		DWORD dwFiletype;
 		WAVEFORMATEXTENSIBLE wfx;
 		XAUDIO2_BUFFER buffer;
@@ -294,10 +295,10 @@ HRESULT CSound::CheckChunk(HANDLE hFile, DWORD format, DWORD *pChunkSize, DWORD 
 	DWORD dwRead;
 	DWORD dwChunkType;
 	DWORD dwChunkDataSize;
-	DWORD dwRIFFDataSize = 0;
+	DWORD dwRIFFDataSize = INIT_INT;
 	DWORD dwFileType;
-	DWORD dwBytesRead = 0;
-	DWORD dwOffset = 0;
+	DWORD dwBytesRead = INIT_INT;
+	DWORD dwOffset = INIT_INT;
 
 	if (SetFilePointer(hFile, 0, NULL, FILE_BEGIN) == INVALID_SET_FILE_POINTER)
 	{// ファイルポインタを先頭に移動

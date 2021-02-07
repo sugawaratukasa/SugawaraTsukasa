@@ -20,7 +20,6 @@
 //******************************************************************************
 // マクロ定義
 //******************************************************************************
-#define SHIP_BATTERY_SIZE			(D3DXVECTOR3(100.0f,200.0f,0.0f))	// 船の砲台のサイズ
 #define BULLET_MOVE_VALUE			(D3DXVECTOR3(5.0f,5.0f,0.0f))		// 弾スピード
 #define ENEMY_TRAKING_BULLET_SIZE	(D3DXVECTOR3(20.0f,20.0f,0.0f))		// レベル1の弾のサイズ
 #define BULLET_COLOR_VALUE			(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))	// 弾の色
@@ -129,6 +128,9 @@ void CShip_Battery::Attack(void)
 	D3DXVECTOR3 PlayerPos;
 	PlayerPos = pPlayer->GetPosition();
 
+	// サイズ取得
+	D3DXVECTOR3 size = GetSize();
+
 	// プレイヤーの情報取得
 	int nPlayerState = INIT_INT;
 	nPlayerState = pPlayer->GetPlayerState();
@@ -139,7 +141,7 @@ void CShip_Battery::Attack(void)
 		float fAngle = atan2f(PlayerPos.x - pos.x, PlayerPos.y - pos.y);
 
 		// 銃口への半径
-		float fLength = SHIP_BATTERY_SIZE.y / HALF_DEVIDE;
+		float fLength = size.y / HALF_DEVIDE;
 
 		// 銃口のpos
 		D3DXVECTOR3 Battery_Muzle_Pos = INIT_D3DXVECTOR3;
@@ -163,7 +165,7 @@ void CShip_Battery::Attack(void)
 		//攻撃処理
 		if (m_nAttackCount % ATTACK_COUNT == COUNT_REMAINDER)
 		{
-			for (int nCount = 0; nCount < BULLET_SHOT_COUNT; nCount++)
+			for (int nCount = INIT_INT; nCount < BULLET_SHOT_COUNT; nCount++)
 			{
 				// 4発狙い撃ち弾発射
 				CEnemy_Traking_Bullet::Create(D3DXVECTOR3(Battery_Muzle_Pos.x, Battery_Muzle_Pos.y, Battery_Muzle_Pos.z),

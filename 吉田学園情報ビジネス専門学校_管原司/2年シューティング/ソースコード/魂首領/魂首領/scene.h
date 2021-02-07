@@ -11,7 +11,7 @@
 #define INIT_FLOAT			(0.0f)								// float型初期化
 #define INIT_D3DXVECTOR3	(D3DXVECTOR3(0.0f,0.0f,0.0f))		// D3DXVECTOR3初期化
 #define INIT_COLOR			(D3DXCOLOR(0.0f,0.0f,0.0f,0.0f))	// D3DXCOLOR初期化
-#define RHW_VALUE		(1.0f)								// rhw値
+#define RHW_VALUE			(1.0f)								// rhw値
 //******************************************************************************
 // インクルードファイル
 //******************************************************************************

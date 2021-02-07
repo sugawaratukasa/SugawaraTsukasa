@@ -30,6 +30,9 @@
 #define ATTACK_COUNT				(100)								// 攻撃カウント
 #define BULLET_NUMBER				(20)								// 弾数
 #define BULLET_RADIAN				(360)								// 角度
+
+// 弾の移動
+#define BULLET_MOVE		(D3DXVECTOR3(cosf(D3DXToRadian(nCount * (BULLET_RADIAN / BULLET_NUMBER)))*BULLET_MOVE_VALUE.x, sinf(D3DXToRadian(nCount * (BULLET_RADIAN / BULLET_NUMBER)))*BULLET_MOVE_VALUE.y, 0.0f))
 //******************************************************************************
 // コンストラクタ
 //******************************************************************************
@@ -156,7 +159,7 @@ void CCirecle_Bullet_Enemy::Attack(void)
 			CEnemy_Normal_Bullet::Create(D3DXVECTOR3(pos.x, pos.y, pos.z),
 				BULLET_ROT,
 				ENEMY_NORMAL_BULLET_SIZE,
-				D3DXVECTOR3(cosf(D3DXToRadian(nCount * (BULLET_RADIAN / BULLET_NUMBER)))*BULLET_MOVE_VALUE.x, sinf(D3DXToRadian(nCount * (BULLET_RADIAN / BULLET_NUMBER)))*BULLET_MOVE_VALUE.y, 0.0f),
+				BULLET_MOVE,
 				BULLET_COLOR,
 				CBullet::TEX_TYPE_ENEMY_NORMAL);
 		}

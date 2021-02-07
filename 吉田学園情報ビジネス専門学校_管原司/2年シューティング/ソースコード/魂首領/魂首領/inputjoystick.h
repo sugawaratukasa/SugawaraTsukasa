@@ -8,10 +8,6 @@
 //******************************************************************************
 // マクロ定義
 //******************************************************************************
-#define JS_X 0
-#define JS_Y 1
-#define JS_A 2
-#define JS_B 3
 #define	NUM_JS_MAX (256)
 //******************************************************************************
 // クラス
@@ -19,6 +15,17 @@
 class CInputJoystick : public CInput
 {
 public:
+	// ボタンの列挙
+	typedef enum
+	{
+		JS_NONE = -1,
+		JS_X,
+		JS_Y,
+		JS_A,
+		JS_B,
+		JS_MAX
+	}JS;
+
 	CInputJoystick();
 	~CInputJoystick();
 	HRESULT Init(HINSTANCE hInstance, HWND hWnd);
