@@ -148,7 +148,7 @@ void CShip::Update(void)
 	D3DXVECTOR3 move = MOVE_VALUE;
 
 	// à⁄ìÆ
-	pos.y += move.y;
+	//pos.y += move.y;
 
 	// à íuç¿ïWê›íË
 	SetPosition(pos);

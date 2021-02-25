@@ -20,15 +20,17 @@
 //******************************************************************************
 // マクロ定義
 //******************************************************************************
-#define BULLET_MOVE_VALUE			(D3DXVECTOR3(5.0f,5.0f,0.0f))		// 弾スピード
-#define ENEMY_TRAKING_BULLET_SIZE	(D3DXVECTOR3(20.0f,20.0f,0.0f))		// レベル1の弾のサイズ
-#define BULLET_COLOR_VALUE			(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))	// 弾の色
-#define BULLET_ROT_VALUE			(D3DXVECTOR3(0.0f,0.0f,0.0f))		// 向きの値
-#define BULLET_SHOT_COUNT			(4)									// 発射数
-#define ATTACK_COUNT				(100)								// 攻撃カウント
-#define HALF_DEVIDE					(2)									// 割る2
-#define COUNT_REMAINDER				(0)									// 余り
-#define RADIAN						(90.0f)								// 角度
+#define BULLET_MOVE_VALUE			(D3DXVECTOR3(5.0f + nCount,5.0f + nCount,0.0f))		// 弾スピード
+#define ENEMY_TRAKING_BULLET_SIZE	(D3DXVECTOR3(20.0f,20.0f,0.0f))						// レベル1の弾のサイズ
+#define BULLET_COLOR_VALUE			(D3DXCOLOR(1.0f,1.0f,1.0f,1.0f))					// 弾の色
+#define BULLET_ROT_VALUE			(D3DXVECTOR3(0.0f,0.0f,0.0f))						// 向きの値
+#define BULLET_SHOT_COUNT			(4)													// 発射数
+#define ATTACK_COUNT				(100)												// 攻撃カウント
+#define HALF_DEVIDE					(2)													// 割る2
+#define COUNT_REMAINDER				(0)													// 余り
+#define RADIAN						(90.0f)												// 角度
+#define ROT_RATE_MOVE				(0.2f)												// 向き
+
 //******************************************************************************
 // コンストラクタ
 //******************************************************************************
@@ -125,8 +127,7 @@ void CShip_Battery::Attack(void)
 	CPlayer * pPlayer = CGame::GetPlayer();
 
 	// プレイヤーの座標取得
-	D3DXVECTOR3 PlayerPos;
-	PlayerPos = pPlayer->GetPosition();
+	D3DXVECTOR3 PlayerPos = pPlayer->GetPosition();
 
 	// サイズ取得
 	D3DXVECTOR3 size = GetSize();
@@ -147,7 +148,10 @@ void CShip_Battery::Attack(void)
 		D3DXVECTOR3 Battery_Muzle_Pos = INIT_D3DXVECTOR3;
 
 		// 向き
-		D3DXVECTOR3 rot = INIT_D3DXVECTOR3;
+		D3DXVECTOR3 rot = GetRot();
+
+		// 前の向き
+		D3DXVECTOR3 rotDest = INIT_D3DXVECTOR3;
 
 		// 攻撃カウントインクリメント
 		m_nAttackCount++;
@@ -156,11 +160,11 @@ void CShip_Battery::Attack(void)
 		Battery_Muzle_Pos.x = pos.x - cosf(fAngle + D3DXToRadian(RADIAN)) * fLength;
 		Battery_Muzle_Pos.y = pos.y + sinf(fAngle + D3DXToRadian(RADIAN)) * fLength;
 
-		//rotに角度を代入
-		rot.z = fAngle;
+		// 向き
+		rotDest.z = fAngle;
 
-		//向きの設定
-		SetRot(rot);
+		// rotに角度を代入
+		rot.z += (rotDest.z - rot.z) * ROT_RATE_MOVE;
 
 		//攻撃処理
 		if (m_nAttackCount % ATTACK_COUNT == COUNT_REMAINDER)
@@ -171,10 +175,13 @@ void CShip_Battery::Attack(void)
 				CEnemy_Traking_Bullet::Create(D3DXVECTOR3(Battery_Muzle_Pos.x, Battery_Muzle_Pos.y, Battery_Muzle_Pos.z),
 					BULLET_ROT_VALUE,
 					ENEMY_TRAKING_BULLET_SIZE,
-					D3DXVECTOR3(BULLET_MOVE_VALUE.x + nCount, BULLET_MOVE_VALUE.y + nCount, 0.0f),
+					BULLET_MOVE_VALUE,
 					BULLET_COLOR_VALUE,
 					CBullet::TEX_TYPE_ENEMY_NORMAL);
 			}
 		}
+
+		// 向きの設定
+		SetRot(rot);
 	}
 }

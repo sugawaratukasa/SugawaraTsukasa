@@ -76,6 +76,9 @@ HRESULT CBom::Init(void)
 	// 初期化
 	CBullet::Init();
 
+	// テクスチャ設定
+	SetTexture(m_nPatternCount * TEX_X, INIT_TEX, TEX_X, TEX_Y);
+
 	return S_OK;
 }
 //******************************************************************************

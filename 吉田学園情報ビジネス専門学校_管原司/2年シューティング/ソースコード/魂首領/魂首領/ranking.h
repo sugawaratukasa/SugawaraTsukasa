@@ -36,7 +36,7 @@ public:
 	void WriteFile(void);
 	void SetRanking(int nScore);
 private:
-	CScore * m_apScore[SCORE_MAX];	// ランキング
+	CScore * m_apScore[SCORE_MAX];		// ランキング
 	CScore * m_pPlayerScore;			// プレイヤースコア
 	D3DXVECTOR3 m_pos;					// 位置座標
 	D3DXVECTOR3 m_size;					// サイズ
