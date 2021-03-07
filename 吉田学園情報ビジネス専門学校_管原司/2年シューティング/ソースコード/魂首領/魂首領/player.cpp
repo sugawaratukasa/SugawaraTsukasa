@@ -35,7 +35,7 @@
 // マクロ定義
 //******************************************************************************
 #define PLAYER_TEXTURE					("data/Texture/Player/Player003.png")					// テクスチャ
-#define BULLET_NORMAL_MOVE_VALUE		(D3DXVECTOR3(0.0f,15.0f,0.0f))							// 通常弾移動量
+#define BULLET_NORMAL_MOVE_VALUE		(D3DXVECTOR3(0.0f,-15.0f,0.0f))							// 通常弾移動量
 #define BEAM_BULLET_MOVE_VALUE			(D3DXVECTOR3(0.0f,-15.0f,0.0f))							// ビーム移動量
 #define EXPLOSION_SIZE					(D3DXVECTOR3(3.0f,3.0f,0.0f))							// 爆発サイズ
 #define PLAYER_SIZE						(D3DXVECTOR3(50.0f,50.0f,0.0f))							// プレイヤーサイズ
@@ -580,7 +580,7 @@ void CPlayer::Shot(void)
 					CNormal_Bullet::Create(D3DXVECTOR3(pos),
 						BULLET_ROT,
 						BULLET_LEVEL1_SIZE,
-						D3DXVECTOR3(BULLET_NORMAL_MOVE_VALUE.x, -BULLET_NORMAL_MOVE_VALUE.y, BULLET_NORMAL_MOVE_VALUE.z),
+						BULLET_NORMAL_MOVE_VALUE,
 						BULLET_COLOR
 						, CBullet::TEX_TYPE_NORMAL);
 				}
@@ -591,7 +591,7 @@ void CPlayer::Shot(void)
 					CNormal_Bullet::Create(D3DXVECTOR3(pos),
 						BULLET_ROT,
 						BULLET_LEVEL2_SIZE,
-						D3DXVECTOR3(BULLET_NORMAL_MOVE_VALUE.x, -BULLET_NORMAL_MOVE_VALUE.y, BULLET_NORMAL_MOVE_VALUE.z),
+						BULLET_NORMAL_MOVE_VALUE,
 						BULLET_COLOR,
 						CBullet::TEX_TYPE_NORMAL);
 				}
@@ -602,7 +602,7 @@ void CPlayer::Shot(void)
 					CNormal_Bullet::Create(D3DXVECTOR3(pos),
 						BULLET_ROT,
 						BULLET_LEVEL3_SIZE,
-						D3DXVECTOR3(BULLET_NORMAL_MOVE_VALUE.x, -BULLET_NORMAL_MOVE_VALUE.y, BULLET_NORMAL_MOVE_VALUE.z),
+						BULLET_NORMAL_MOVE_VALUE,
 						BULLET_COLOR,
 						CBullet::TEX_TYPE_NORMAL);
 				}
@@ -670,7 +670,7 @@ void CPlayer::Shot(void)
 					// 弾生成
 					CPlayer_Beam::Create(D3DXVECTOR3(pos.x, pos.y + BEAM_POS.y, pos.z), 
 						BULLET_ROT, 
-						BULLET_LEVEL2_BEAM_SIZE,
+						BULLET_LEVEL3_BEAM_SIZE,
 						BEAM_BULLET_MOVE_VALUE, 
 						BULLET_COLOR,
 						CBullet::TEX_TYPE_BEAM);
