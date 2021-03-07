@@ -32,7 +32,7 @@
 #define SHIP_BATTERY_ROT	(D3DXVECTOR3(0.0f,0.0f,0.0f))							// 船の砲台の向き
 #define WARNING_POS			(D3DXVECTOR3(SCREEN_WIDTH / 2,SCREEN_HEIGHT / 2, 0.0f))	// 位置座標
 #define WARNING_SIZE		(D3DXVECTOR3(500.0f,300.0f,0.0f))						// サイズ
-#define SHIP_BATTERY_LIFE	(50)													// 船の砲台のライフ
+#define SHIP_BATTERY_LIFE	(100)													// 船の砲台のライフ
 #define DEVIDE_VAlUE		(2)														// 除算値
 //******************************************************************************
 // 静的メンバ変数
@@ -148,7 +148,7 @@ void CShip::Update(void)
 	D3DXVECTOR3 move = MOVE_VALUE;
 
 	// 移動
-	//pos.y += move.y;
+	pos.y += move.y;
 
 	// 位置座標設定
 	SetPosition(pos);

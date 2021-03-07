@@ -64,6 +64,7 @@
 #define STATE_MOVE_VALUE_MIN		(0.0f)								// 移動量
 #define STATE_POS_VALUE				(200.0f)							// 位置量
 #define MOVE_VALUE					(3.0f)								// 移動量
+#define DEVIDE_SIZE					(3.0f)								// サイズの割る数
 //******************************************************************************
 // 静的メンバ変数
 //******************************************************************************
@@ -73,6 +74,7 @@ LPDIRECT3DTEXTURE9 CBoss::m_pTexture = NULL;
 //******************************************************************************
 CBoss::CBoss(int nPriority) : CScene2d(nPriority)
 {
+	m_Coliision_Size		= INIT_D3DXVECTOR3;
 	m_move					= INIT_D3DXVECTOR3;
 	m_nLife					= INIT_INT;
 	m_nAttackCount			= INIT_INT;
@@ -128,6 +130,9 @@ CBoss * CBoss::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 	// サイズ設定
 	pBoss->SetSize(size);
 
+	// 代入
+	pBoss->m_Coliision_Size = size;
+
 	// カラー設定
 	pBoss->SetRGBA(COLOR);
 
@@ -148,6 +153,9 @@ CBoss * CBoss::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 //******************************************************************************
 HRESULT CBoss::Init()
 {
+	// 当たり判定サイズ設定
+	m_Coliision_Size.y = m_Coliision_Size.y / DEVIDE_SIZE;
+
 	// 体力
 	m_nLife = BOSS_LIFE;
 
@@ -323,10 +331,10 @@ void CBoss::State(void)
 	if (m_State == STATE_NORMAL || m_State == STATE_DAMAGE)
 	{
 		// 移動処理
-		//Move();
+		Move();
 
 		// 攻撃処理
-		//Attack();
+		Attack();
 	}
 	// Stateがノーマルの場合
 	if (m_State == STATE_NORMAL)
