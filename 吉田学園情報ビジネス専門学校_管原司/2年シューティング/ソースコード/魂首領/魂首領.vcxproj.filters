@@ -1,0 +1,429 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode">
+      <UniqueIdentifier>{1533ac96-a604-422e-b2ef-90269bf8a4bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Mode">
+      <UniqueIdentifier>{0d6718fa-685f-4568-b7c3-c41760703b8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Bullet">
+      <UniqueIdentifier>{505c7ef9-3046-4fda-bb60-a1a2d9dff180}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Bullet">
+      <UniqueIdentifier>{f4aa9666-f13f-4bd3-be44-54f916dc0784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Enemy">
+      <UniqueIdentifier>{d61d871f-ac3e-4e90-9443-94edf5caeed0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Enemy">
+      <UniqueIdentifier>{65298eba-5b25-46df-84a1-f52657959eb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI">
+      <UniqueIdentifier>{b4a8e400-bb08-4f16-9034-9130cfa7bb40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\UI">
+      <UniqueIdentifier>{51ba23e5-2f6b-4386-807a-211ebe82c90f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Player">
+      <UniqueIdentifier>{f077f347-dd17-4b13-a60d-44d1125e6e0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Player">
+      <UniqueIdentifier>{5649821d-a953-40db-80ad-1c38e811fba3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Boss">
+      <UniqueIdentifier>{040ce4ef-69dc-4186-b192-78136cf79e0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Boss">
+      <UniqueIdentifier>{a089c7ce-3682-4c4d-acae-67c0a0ad4968}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Particle">
+      <UniqueIdentifier>{c6c401c7-cbe8-44f7-8fda-b5ff21a989b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Particle">
+      <UniqueIdentifier>{86aec6ce-c9d9-4797-9863-1cb4aaf0a7c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Input">
+      <UniqueIdentifier>{72b35652-bb5c-483e-99c2-ca7ec61a963c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Input">
+      <UniqueIdentifier>{23e26f8c-063e-4508-b9c2-165346cb0504}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Polygon">
+      <UniqueIdentifier>{10543d0c-05f3-4715-8a70-1c00892e22c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Polygon">
+      <UniqueIdentifier>{22ab169a-9188-434d-9666-ef4631fec32d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Beam">
+      <UniqueIdentifier>{be3d1069-3db4-4270-a807-ecf567cabe15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Beam">
+      <UniqueIdentifier>{18b18c53-c1e7-415c-afc5-f7f7b04dfed1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Particle_Emitter">
+      <UniqueIdentifier>{f145938d-1015-48dd-a95a-4f663ca79896}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Particle_Emitter">
+      <UniqueIdentifier>{a09860b6-2193-4930-8ce5-21bf863c4b8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System">
+      <UniqueIdentifier>{7d7baf38-feff-4edf-9622-dd9abac09a3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\System">
+      <UniqueIdentifier>{1d2cd3c9-1fab-4442-a59f-40c9bc695fe4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Beam\beam.cpp">
+      <Filter>ソース ファイル\Beam</Filter>
+    </ClCompile>
+    <ClCompile Include="Beam\beam_base.cpp">
+      <Filter>ソース ファイル\Beam</Filter>
+    </ClCompile>
+    <ClCompile Include="Beam\bom_beam.cpp">
+      <Filter>ソース ファイル\Beam</Filter>
+    </ClCompile>
+    <ClCompile Include="Beam\player_beam.cpp">
+      <Filter>ソース ファイル\Beam</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss\boss.cpp">
+      <Filter>ソース ファイル\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss\boss_left.cpp">
+      <Filter>ソース ファイル\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss\boss_right.cpp">
+      <Filter>ソース ファイル\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet\bom.cpp">
+      <Filter>ソース ファイル\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet\bullet.cpp">
+      <Filter>ソース ファイル\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet\enemy_diffusion_bullet.cpp">
+      <Filter>ソース ファイル\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet\enemy_normal_bullet.cpp">
+      <Filter>ソース ファイル\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet\enemy_traking_bullet.cpp">
+      <Filter>ソース ファイル\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet\normal_bullet.cpp">
+      <Filter>ソース ファイル\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\circle_bullet_enemy.cpp">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\enemy.cpp">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\normal_enemy.cpp">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\ship.cpp">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\ship_battery.cpp">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\input.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\inputjoystick.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\inputkeyboard.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Mode\game.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="Mode\mode.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="Mode\result.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="Mode\title.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="Mode\tutrial.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle\particle.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle\particle_beam.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle\particle_circle.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle\particle_explosion.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle_Emitter\particle_emitter.cpp">
+      <Filter>ソース ファイル\Particle_Emitter</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\player.cpp">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\player_wepon.cpp">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Polygon\bg.cpp">
+      <Filter>ソース ファイル\Polygon</Filter>
+    </ClCompile>
+    <ClCompile Include="Polygon\black_polygon.cpp">
+      <Filter>ソース ファイル\Polygon</Filter>
+    </ClCompile>
+    <ClCompile Include="Polygon\continue_polygon.cpp">
+      <Filter>ソース ファイル\Polygon</Filter>
+    </ClCompile>
+    <ClCompile Include="Polygon\fade.cpp">
+      <Filter>ソース ファイル\Polygon</Filter>
+    </ClCompile>
+    <ClCompile Include="Polygon\item.cpp">
+      <Filter>ソース ファイル\Polygon</Filter>
+    </ClCompile>
+    <ClCompile Include="Polygon\polygon.cpp">
+      <Filter>ソース ファイル\Polygon</Filter>
+    </ClCompile>
+    <ClCompile Include="Polygon\press_enter_polygon.cpp">
+      <Filter>ソース ファイル\Polygon</Filter>
+    </ClCompile>
+    <ClCompile Include="Polygon\ranking_polygon.cpp">
+      <Filter>ソース ファイル\Polygon</Filter>
+    </ClCompile>
+    <ClCompile Include="Polygon\title_polygon.cpp">
+      <Filter>ソース ファイル\Polygon</Filter>
+    </ClCompile>
+    <ClCompile Include="Polygon\tutrial_polygon.cpp">
+      <Filter>ソース ファイル\Polygon</Filter>
+    </ClCompile>
+    <ClCompile Include="System\main.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\manager.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\number.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\ranking.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\renderer.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\scene.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\scene2d.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\sound.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\bomui.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\continue.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\life.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\score.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\warning.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Beam\beam.h">
+      <Filter>ヘッダー ファイル\Beam</Filter>
+    </ClInclude>
+    <ClInclude Include="Beam\beam_base.h">
+      <Filter>ヘッダー ファイル\Beam</Filter>
+    </ClInclude>
+    <ClInclude Include="Beam\bom_beam.h">
+      <Filter>ヘッダー ファイル\Beam</Filter>
+    </ClInclude>
+    <ClInclude Include="Beam\player_beam.h">
+      <Filter>ヘッダー ファイル\Beam</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss\boss.h">
+      <Filter>ヘッダー ファイル\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss\boss_left.h">
+      <Filter>ヘッダー ファイル\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss\boss_right.h">
+      <Filter>ヘッダー ファイル\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet\bom.h">
+      <Filter>ヘッダー ファイル\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet\bullet.h">
+      <Filter>ヘッダー ファイル\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet\enemy_diffusion_bullet.h">
+      <Filter>ヘッダー ファイル\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet\enemy_normal_bullet.h">
+      <Filter>ヘッダー ファイル\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet\enemy_traking_bullet.h">
+      <Filter>ヘッダー ファイル\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet\normal_bullet.h">
+      <Filter>ヘッダー ファイル\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\circle_bullet_enemy.h">
+      <Filter>ヘッダー ファイル\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\enemy.h">
+      <Filter>ヘッダー ファイル\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\normal_enemy.h">
+      <Filter>ヘッダー ファイル\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\ship.h">
+      <Filter>ヘッダー ファイル\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\ship_battery.h">
+      <Filter>ヘッダー ファイル\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\input.h">
+      <Filter>ヘッダー ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\inputjoystick.h">
+      <Filter>ヘッダー ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\inputkeyboard.h">
+      <Filter>ヘッダー ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Mode\game.h">
+      <Filter>ヘッダー ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="Mode\mode.h">
+      <Filter>ヘッダー ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="Mode\result.h">
+      <Filter>ヘッダー ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="Mode\title.h">
+      <Filter>ヘッダー ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="Mode\tutrial.h">
+      <Filter>ヘッダー ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle\particle.h">
+      <Filter>ヘッダー ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle\particle_beam.h">
+      <Filter>ヘッダー ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle\particle_circle.h">
+      <Filter>ヘッダー ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle\particle_explosion.h">
+      <Filter>ヘッダー ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle_Emitter\particle_emitter.h">
+      <Filter>ヘッダー ファイル\Particle_Emitter</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\player.h">
+      <Filter>ヘッダー ファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\player_wepon.h">
+      <Filter>ヘッダー ファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Polygon\bg.h">
+      <Filter>ヘッダー ファイル\Polygon</Filter>
+    </ClInclude>
+    <ClInclude Include="Polygon\black_polygon.h">
+      <Filter>ヘッダー ファイル\Polygon</Filter>
+    </ClInclude>
+    <ClInclude Include="Polygon\continue_polygon.h">
+      <Filter>ヘッダー ファイル\Polygon</Filter>
+    </ClInclude>
+    <ClInclude Include="Polygon\fade.h">
+      <Filter>ヘッダー ファイル\Polygon</Filter>
+    </ClInclude>
+    <ClInclude Include="Polygon\item.h">
+      <Filter>ヘッダー ファイル\Polygon</Filter>
+    </ClInclude>
+    <ClInclude Include="Polygon\polygon.h">
+      <Filter>ヘッダー ファイル\Polygon</Filter>
+    </ClInclude>
+    <ClInclude Include="Polygon\press_enter_polygon.h">
+      <Filter>ヘッダー ファイル\Polygon</Filter>
+    </ClInclude>
+    <ClInclude Include="Polygon\ranking_polygon.h">
+      <Filter>ヘッダー ファイル\Polygon</Filter>
+    </ClInclude>
+    <ClInclude Include="Polygon\title_polygon.h">
+      <Filter>ヘッダー ファイル\Polygon</Filter>
+    </ClInclude>
+    <ClInclude Include="Polygon\tutrial_polygon.h">
+      <Filter>ヘッダー ファイル\Polygon</Filter>
+    </ClInclude>
+    <ClInclude Include="System\main.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\manager.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\number.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\ranking.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\renderer.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\scene.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\scene2d.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\sound.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\bomui.h">
+      <Filter>ヘッダー ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\continue.h">
+      <Filter>ヘッダー ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\life.h">
+      <Filter>ヘッダー ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\score.h">
+      <Filter>ヘッダー ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\warning.h">
+      <Filter>ヘッダー ファイル\UI</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

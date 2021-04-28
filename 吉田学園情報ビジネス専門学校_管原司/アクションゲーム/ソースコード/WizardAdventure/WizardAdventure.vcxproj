@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1A0AB5DD-76E5-4938-A6FD-D5E7E4193559}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>WizardAdventure</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\gsp015\Desktop\個人製作3DGame\-3DGame\3Dアクションゲーム\WizardAdventure\WizardAdventure\2D;C:\Users\gsp015\Desktop\個人製作3DGame\-3DGame\3Dアクションゲーム\WizardAdventure\WizardAdventure\Input;C:\Users\gsp015\Desktop\個人製作3DGame\-3DGame\3Dアクションゲーム\WizardAdventure\WizardAdventure\Mode;C:\Users\gsp015\Desktop\個人製作3DGame\-3DGame\3Dアクションゲーム\WizardAdventure\WizardAdventure\3D;C:\Users\gsp015\Desktop\個人製作3DGame\-3DGame\3Dアクションゲーム\WizardAdventure\WizardAdventure\System;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\gsp015\Desktop\個人製作3DGame\-3DGame\3Dアクションゲーム\WizardAdventure\WizardAdventure\System;C:\Users\gsp015\Desktop\個人製作3DGame\-3DGame\3Dアクションゲーム\WizardAdventure\WizardAdventure\Mode;C:\Users\gsp015\Desktop\個人製作3DGame\-3DGame\3Dアクションゲーム\WizardAdventure\WizardAdventure\Input;C:\Users\gsp015\Desktop\個人製作3DGame\-3DGame\3Dアクションゲーム\WizardAdventure\WizardAdventure\3D;C:\Users\gsp015\Desktop\個人製作3DGame\-3DGame\3Dアクションゲーム\WizardAdventure\WizardAdventure\2D;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="2D\2D_Particle\2d_particle.cpp" />
+    <ClCompile Include="2D\2D_Particle\2d_particle_effect.cpp" />
+    <ClCompile Include="2D\2D_Particle\2d_particle_emitter.cpp" />
+    <ClCompile Include="2D\2d_polygon.cpp" />
+    <ClCompile Include="2D\fade.cpp" />
+    <ClCompile Include="2D\Gage\gage.cpp" />
+    <ClCompile Include="2D\Gage\gage_back.cpp" />
+    <ClCompile Include="2D\Gage\life_gage.cpp" />
+    <ClCompile Include="2D\magic_ui.cpp" />
+    <ClCompile Include="2D\pause.cpp" />
+    <ClCompile Include="2D\scene2d.cpp" />
+    <ClCompile Include="2D\tutorial_pause.cpp" />
+    <ClCompile Include="3D\3DPolygon\3d_polygon.cpp" />
+    <ClCompile Include="3D\3DPolygon\BG\bg.cpp" />
+    <ClCompile Include="3D\3DPolygon\BG\bg_cloud.cpp" />
+    <ClCompile Include="3D\3DPolygon\BG\bg_sky.cpp" />
+    <ClCompile Include="3D\3DPolygon\Billboard\billboard.cpp" />
+    <ClCompile Include="3D\3DPolygon\Billboard\billboard_ui.cpp" />
+    <ClCompile Include="3D\3DPolygon\floor.cpp" />
+    <ClCompile Include="3D\3DPolygon\frame.cpp" />
+    <ClCompile Include="3D\3DPolygon\Gage\3d_gage.cpp" />
+    <ClCompile Include="3D\3DPolygon\Gage\3d_gage_back.cpp" />
+    <ClCompile Include="3D\3DPolygon\Gage\enemy_life_gage.cpp" />
+    <ClCompile Include="3D\3DPolygon\Particle\magic.cpp" />
+    <ClCompile Include="3D\3DPolygon\Particle\particle.cpp" />
+    <ClCompile Include="3D\3DPolygon\Particle\Particle_Effect\particle_effect.cpp" />
+    <ClCompile Include="3D\3DPolygon\Particle\Particle_Emitter\particle_emitter.cpp" />
+    <ClCompile Include="3D\3DPolygon\scene3d.cpp" />
+    <ClCompile Include="3D\camera.cpp" />
+    <ClCompile Include="3D\light.cpp" />
+    <ClCompile Include="3D\map.cpp" />
+    <ClCompile Include="3D\Model\Block\block.cpp" />
+    <ClCompile Include="3D\Model\Block\floor_block.cpp" />
+    <ClCompile Include="3D\Model\Block\needle_block.cpp" />
+    <ClCompile Include="3D\Model\Block\stone_block.cpp" />
+    <ClCompile Include="3D\Model\Block\wood_block.cpp" />
+    <ClCompile Include="3D\Model\Enemy\enemy.cpp" />
+    <ClCompile Include="3D\Model\Enemy\enemy_map.cpp" />
+    <ClCompile Include="3D\Model\Enemy\ghost.cpp" />
+    <ClCompile Include="3D\Model\model.cpp" />
+    <ClCompile Include="3D\Model\model_hierarchy.cpp" />
+    <ClCompile Include="3D\Model\motion.cpp" />
+    <ClCompile Include="3D\Model\Object\3d_obj.cpp" />
+    <ClCompile Include="3D\Model\Object\button.cpp" />
+    <ClCompile Include="3D\Model\Object\gate.cpp" />
+    <ClCompile Include="3D\Model\Object\gate_roof.cpp" />
+    <ClCompile Include="3D\Model\Object\stone.cpp" />
+    <ClCompile Include="3D\Model\Object\tree.cpp" />
+    <ClCompile Include="3D\Model\Object\wood.cpp" />
+    <ClCompile Include="3D\Model\player.cpp" />
+    <ClCompile Include="Input\input.cpp" />
+    <ClCompile Include="Input\joystick.cpp" />
+    <ClCompile Include="Input\keyboard.cpp" />
+    <ClCompile Include="Mode\game.cpp" />
+    <ClCompile Include="Mode\mode.cpp" />
+    <ClCompile Include="Mode\result.cpp" />
+    <ClCompile Include="Mode\title.cpp" />
+    <ClCompile Include="Mode\tutorial.cpp" />
+    <ClCompile Include="System\collision.cpp" />
+    <ClCompile Include="System\debug_proc.cpp" />
+    <ClCompile Include="System\main.cpp" />
+    <ClCompile Include="System\manager.cpp" />
+    <ClCompile Include="System\particle_texture.cpp" />
+    <ClCompile Include="System\renderer.cpp" />
+    <ClCompile Include="System\scene.cpp" />
+    <ClCompile Include="System\sound.cpp" />
+    <ClCompile Include="System\ui_texture.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="2D\2D_Particle\2d_particle.h" />
+    <ClInclude Include="2D\2D_Particle\2d_particle_effect.h" />
+    <ClInclude Include="2D\2D_Particle\2d_particle_emitter.h" />
+    <ClInclude Include="2D\2d_polygon.h" />
+    <ClInclude Include="2D\fade.h" />
+    <ClInclude Include="2D\Gage\gage.h" />
+    <ClInclude Include="2D\Gage\gage_back.h" />
+    <ClInclude Include="2D\Gage\life_gage.h" />
+    <ClInclude Include="2D\magic_ui.h" />
+    <ClInclude Include="2D\pause.h" />
+    <ClInclude Include="2D\scene2d.h" />
+    <ClInclude Include="2D\tutorial_pause.h" />
+    <ClInclude Include="3D\3DPolygon\3d_polygon.h" />
+    <ClInclude Include="3D\3DPolygon\BG\bg.h" />
+    <ClInclude Include="3D\3DPolygon\BG\bg_cloud.h" />
+    <ClInclude Include="3D\3DPolygon\BG\bg_sky.h" />
+    <ClInclude Include="3D\3DPolygon\Billboard\billboard.h" />
+    <ClInclude Include="3D\3DPolygon\Billboard\billboard_ui.h" />
+    <ClInclude Include="3D\3DPolygon\floor.h" />
+    <ClInclude Include="3D\3DPolygon\frame.h" />
+    <ClInclude Include="3D\3DPolygon\Gage\3d_gage.h" />
+    <ClInclude Include="3D\3DPolygon\Gage\3d_gage_back.h" />
+    <ClInclude Include="3D\3DPolygon\Gage\enemy_life_gage.h" />
+    <ClInclude Include="3D\3DPolygon\Particle\magic.h" />
+    <ClInclude Include="3D\3DPolygon\Particle\particle.h" />
+    <ClInclude Include="3D\3DPolygon\Particle\Particle_Effect\particle_effect.h" />
+    <ClInclude Include="3D\3DPolygon\Particle\Particle_Emitter\particle_emitter.h" />
+    <ClInclude Include="3D\3DPolygon\scene3d.h" />
+    <ClInclude Include="3D\camera.h" />
+    <ClInclude Include="3D\light.h" />
+    <ClInclude Include="3D\map.h" />
+    <ClInclude Include="3D\Model\Block\block.h" />
+    <ClInclude Include="3D\Model\Block\floor_block.h" />
+    <ClInclude Include="3D\Model\Block\needle_block.h" />
+    <ClInclude Include="3D\Model\Block\stone_block.h" />
+    <ClInclude Include="3D\Model\Block\wood_block.h" />
+    <ClInclude Include="3D\Model\Enemy\enemy.h" />
+    <ClInclude Include="3D\Model\Enemy\enemy_map.h" />
+    <ClInclude Include="3D\Model\Enemy\ghost.h" />
+    <ClInclude Include="3D\Model\model.h" />
+    <ClInclude Include="3D\Model\model_hierarchy.h" />
+    <ClInclude Include="3D\Model\motion.h" />
+    <ClInclude Include="3D\Model\Object\3d_obj.h" />
+    <ClInclude Include="3D\Model\Object\button.h" />
+    <ClInclude Include="3D\Model\Object\gate.h" />
+    <ClInclude Include="3D\Model\Object\gate_roof.h" />
+    <ClInclude Include="3D\Model\Object\stone.h" />
+    <ClInclude Include="3D\Model\Object\tree.h" />
+    <ClInclude Include="3D\Model\Object\wood.h" />
+    <ClInclude Include="3D\Model\player.h" />
+    <ClInclude Include="Input\input.h" />
+    <ClInclude Include="Input\joystick.h" />
+    <ClInclude Include="Input\keyboard.h" />
+    <ClInclude Include="Mode\game.h" />
+    <ClInclude Include="Mode\mode.h" />
+    <ClInclude Include="Mode\result.h" />
+    <ClInclude Include="Mode\title.h" />
+    <ClInclude Include="Mode\tutorial.h" />
+    <ClInclude Include="System\collision.h" />
+    <ClInclude Include="System\debug_proc.h" />
+    <ClInclude Include="System\main.h" />
+    <ClInclude Include="System\manager.h" />
+    <ClInclude Include="System\particle_texture.h" />
+    <ClInclude Include="System\renderer.h" />
+    <ClInclude Include="System\scene.h" />
+    <ClInclude Include="System\sound.h" />
+    <ClInclude Include="System\ui_texture.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

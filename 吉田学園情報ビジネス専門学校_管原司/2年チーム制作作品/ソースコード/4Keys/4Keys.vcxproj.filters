@@ -1,0 +1,375 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="keyboard.cpp">
+      <Filter>ソースファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="joystick.cpp">
+      <Filter>ソースファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="mouse.cpp">
+      <Filter>ソースファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="input.cpp">
+      <Filter>ソースファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>ソースファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="mode.cpp">
+      <Filter>ソースファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="result.cpp">
+      <Filter>ソースファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="tutorial.cpp">
+      <Filter>ソースファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="gameover.cpp">
+      <Filter>ソースファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="title.cpp">
+      <Filter>ソースファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>ソースファイル\Scene\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet_ui.cpp">
+      <Filter>ソースファイル\Scene\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="button_ui.cpp">
+      <Filter>ソースファイル\Scene\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="fade.cpp">
+      <Filter>ソースファイル\Scene\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="key.cpp">
+      <Filter>ソースファイル\Scene\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="key_ui.cpp">
+      <Filter>ソースファイル\Scene\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="life.cpp">
+      <Filter>ソースファイル\Scene\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="number.cpp">
+      <Filter>ソースファイル\Scene\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="billboard.cpp">
+      <Filter>ソースファイル\Scene\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="blood.cpp">
+      <Filter>ソースファイル\Scene\3D\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="box.cpp">
+      <Filter>ソースファイル\Scene\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="boxeffect.cpp">
+      <Filter>ソースファイル\Scene\3D\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet.cpp">
+      <Filter>ソースファイル\Scene\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>ソースファイル\Scene\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="circleparticle.cpp">
+      <Filter>ソースファイル\Scene\3D\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy.cpp">
+      <Filter>ソースファイル\Scene\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="explosion.cpp">
+      <Filter>ソースファイル\Scene\3D\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="gate.cpp">
+      <Filter>ソースファイル\Scene\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="heal.cpp">
+      <Filter>ソースファイル\Scene\3D\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="item.cpp">
+      <Filter>ソースファイル\Scene\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="kira.cpp">
+      <Filter>ソースファイル\Scene\3D\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="light.cpp">
+      <Filter>ソースファイル\Scene\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="map.cpp">
+      <Filter>ソースファイル\Scene\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="mazleflash.cpp">
+      <Filter>ソースファイル\Scene\3D\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="model.cpp">
+      <Filter>ソースファイル\Scene\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="model_hierarchy.cpp">
+      <Filter>ソースファイル\Scene\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="motion.cpp">
+      <Filter>ソースファイル\Scene\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>ソースファイル\Scene\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="polygon.cpp">
+      <Filter>ソースファイル\Scene\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="particle.cpp">
+      <Filter>ソースファイル\Scene\3D\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="reticle.cpp">
+      <Filter>ソースファイル\Scene\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="scene3d.cpp">
+      <Filter>ソースファイル\Scene\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="scene2d.cpp">
+      <Filter>ソースファイル\Scene\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="skybox.cpp">
+      <Filter>ソースファイル\Scene\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="smoke.cpp">
+      <Filter>ソースファイル\Scene\3D\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="spark.cpp">
+      <Filter>ソースファイル\Scene\3D\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="collision.cpp">
+      <Filter>ソースファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="debug.cpp">
+      <Filter>ソースファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>ソースファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="manager.cpp">
+      <Filter>ソースファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer.cpp">
+      <Filter>ソースファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="scene.cpp">
+      <Filter>ソースファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="sound.cpp">
+      <Filter>ソースファイル\System</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="billboard.h">
+      <Filter>ヘッダーファイル\Scene\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="box.h">
+      <Filter>ヘッダーファイル\Scene\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>ヘッダーファイル\Scene\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="bullet_ui.h">
+      <Filter>ヘッダーファイル\Scene\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="button_ui.h">
+      <Filter>ヘッダーファイル\Scene\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>ヘッダーファイル\Scene\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="collision.h">
+      <Filter>ヘッダーファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="debug.h">
+      <Filter>ヘッダーファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy.h">
+      <Filter>ヘッダーファイル\Scene\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="fade.h">
+      <Filter>ヘッダーファイル\Scene\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>ヘッダーファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="gameover.h">
+      <Filter>ヘッダーファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="gate.h">
+      <Filter>ヘッダーファイル\Scene\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>ヘッダーファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>ヘッダーファイル\Scene\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="joystick.h">
+      <Filter>ヘッダーファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="key.h">
+      <Filter>ヘッダーファイル\Scene\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="key_ui.h">
+      <Filter>ヘッダーファイル\Scene\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="keyboard.h">
+      <Filter>ヘッダーファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="life.h">
+      <Filter>ヘッダーファイル\Scene\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="light.h">
+      <Filter>ヘッダーファイル\Scene\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>ヘッダーファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="manager.h">
+      <Filter>ヘッダーファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="map.h">
+      <Filter>ヘッダーファイル\Scene\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="mode.h">
+      <Filter>ヘッダーファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>ヘッダーファイル\Scene\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="model_hierarchy.h">
+      <Filter>ヘッダーファイル\Scene\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="motion.h">
+      <Filter>ヘッダーファイル\Scene\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="mouse.h">
+      <Filter>ヘッダーファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="number.h">
+      <Filter>ヘッダーファイル\Scene\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>ヘッダーファイル\Scene\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="polygon.h">
+      <Filter>ヘッダーファイル\Scene\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer.h">
+      <Filter>ヘッダーファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="result.h">
+      <Filter>ヘッダーファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="reticle.h">
+      <Filter>ヘッダーファイル\Scene\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="scene.h">
+      <Filter>ヘッダーファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="scene2d.h">
+      <Filter>ヘッダーファイル\Scene\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="scene3d.h">
+      <Filter>ヘッダーファイル\Scene\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="skybox.h">
+      <Filter>ヘッダーファイル\Scene\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="sound.h">
+      <Filter>ヘッダーファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="title.h">
+      <Filter>ヘッダーファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="tutorial.h">
+      <Filter>ヘッダーファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="ui.h">
+      <Filter>ヘッダーファイル\Scene\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="blood.h">
+      <Filter>ヘッダーファイル\Scene\3D\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="boxeffect.h">
+      <Filter>ヘッダーファイル\Scene\3D\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="circleparticle.h">
+      <Filter>ヘッダーファイル\Scene\3D\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="explosion.h">
+      <Filter>ヘッダーファイル\Scene\3D\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="heal.h">
+      <Filter>ヘッダーファイル\Scene\3D\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="kira.h">
+      <Filter>ヘッダーファイル\Scene\3D\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="mazleflash.h">
+      <Filter>ヘッダーファイル\Scene\3D\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="particle.h">
+      <Filter>ヘッダーファイル\Scene\3D\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="smoke.h">
+      <Filter>ヘッダーファイル\Scene\3D\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="spark.h">
+      <Filter>ヘッダーファイル\Scene\3D\Particle</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ソースファイル">
+      <UniqueIdentifier>{4fb5b0fd-51a3-4c4f-906d-ba8461f0d890}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル">
+      <UniqueIdentifier>{f48f16b5-577b-4008-8798-0132d87f107c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\Input">
+      <UniqueIdentifier>{784223f9-cb26-48bf-a671-c18e2bfddf52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\Mode">
+      <UniqueIdentifier>{6c5373ad-2771-485b-bd00-9e0fba477521}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\Scene">
+      <UniqueIdentifier>{2e6a6f06-3046-4c8f-b5ba-f317a315c167}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\Scene\2D">
+      <UniqueIdentifier>{0ba9faa1-1219-4680-8357-de007b072089}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\Scene\3D">
+      <UniqueIdentifier>{0b0ba841-0bb5-4611-9270-e6b4806f5b97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\Scene\3D\Particle">
+      <UniqueIdentifier>{3d7b7cf9-00ef-465a-a1a2-472cd0b743bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\System">
+      <UniqueIdentifier>{b86bd969-1586-4cee-879f-587206efe13c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\Scene">
+      <UniqueIdentifier>{f8499a89-777f-43c5-a324-5dae31e0cb4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\Input">
+      <UniqueIdentifier>{4d364fc7-ef72-4fe5-8adf-4b238095dc50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\Mode">
+      <UniqueIdentifier>{fc6fc509-d569-4572-a14e-87f9de646942}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\System">
+      <UniqueIdentifier>{a8abcdc9-0987-458f-8ae8-f643caaed2f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\Scene\2D">
+      <UniqueIdentifier>{e7d86e02-8908-4099-81c9-b79d0858b2e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\Scene\3D">
+      <UniqueIdentifier>{9c2441ab-b71a-4355-a64a-1a56dae79f7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\Scene\3D\Particle">
+      <UniqueIdentifier>{edd1a998-3f0e-4512-be8a-9dbe5b4e85e2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

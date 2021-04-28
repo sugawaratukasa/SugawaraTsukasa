@@ -1,0 +1,20 @@
+#**********************************************************************************
+# テクスチャ読み込み用テキスト [texture.txt]
+# Author : 管原司
+#**********************************************************************************
+SCRIPT
+#**********************************************************************************
+# テクスチャファイル数
+#**********************************************************************************
+TEXTURE_NUM = 7
+#**********************************************************************************
+# テクスチャファイル名
+#**********************************************************************************
+TEXTURE_FILENAME = data/TEXTURE/particle001.png		# [1]
+TEXTURE_FILENAME = data/TEXTURE/particle002.png		# [2]
+TEXTURE_FILENAME = data/TEXTURE/particle003.png		# [3]
+TEXTURE_FILENAME = data/TEXTURE/particle004.png		# [4]
+TEXTURE_FILENAME = data/TEXTURE/particle005.png		# [5]
+TEXTURE_FILENAME = data/TEXTURE/particle006.png		# [6]
+TEXTURE_FILENAME = data/TEXTURE/effect_texture001.png		# [7]
+END_SCRIPT
