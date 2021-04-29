@@ -1,0 +1,51 @@
+
+SettingNoad_1 1つ目のパーティクルの項目
+SettingNoad_2 2つ目のパーティクルの項目
+
+※ノードによって項目の変化などはないです
+
+ ◇設定項目◇
+Emitter 生成間隔を決めて生成する
+Effect  同時に生成する数を決めて生成する
+
+TextureRandom テクスチャをランダムに
+MinTexture 範囲の最小値
+MaxTexture 範囲の最大値
+
+TextureNum テクスチャのナンバー
+
+AlphaNum 描画する透明度の設定
+
+Alphablend 加算合成の使用を設定できます。
+
+Life ライフの値を設定0になると破棄
+
+RandomPos 位置をランダムに XYZ指定できます
+
+RotRandom 向きをランダムに
+
+rot 向きを指定できます
+
+SameSize XYのサイズを同じに
+
+Size XYサイズを指定できます。
+
+SizeRandom サイズをランダムにできます。 最小の値と最大の値をしていできます。
+
+move 移動量XYZ指定できます
+
+Angle 移動する角度設定をランダムでしていできます。
+
+AddAngle 移動する角度XYZ指定して加算できます。
+
+ColorRandom 色をランダムにできます。
+
+Color 色をエディターを使用しながら指定できます。
+
+ColorSubtract 色の減算値をしていできます。
+
+Save テキストデータを名前をしていして保存することができます。
+
+Load テキストの名前を入力をして読み込みをすることができます。
+
+ESC 終了

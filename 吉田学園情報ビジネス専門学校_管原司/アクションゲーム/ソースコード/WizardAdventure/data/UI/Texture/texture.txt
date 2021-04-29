@@ -1,0 +1,24 @@
+#**********************************************************************************
+# テクスチャ読み込み用テキスト [texture.txt]
+# Author : 管原司
+#**********************************************************************************
+SCRIPT
+#**********************************************************************************
+# テクスチャファイル数
+#**********************************************************************************
+TEXTURE_NUM = 11
+#**********************************************************************************
+# テクスチャファイル名
+#**********************************************************************************
+TEXTURE_FILENAME = data/UI/Texture/gage.png			        # [0]
+TEXTURE_FILENAME = data/UI/Texture/resume.png		        # [1]
+TEXTURE_FILENAME = data/UI/Texture/controls.png		        # [2]
+TEXTURE_FILENAME = data/UI/Texture/exit.png			        # [3]
+TEXTURE_FILENAME = data/UI/Texture/game_start.png	        # [4]
+TEXTURE_FILENAME = data/UI/Texture/title.png		        # [5]
+TEXTURE_FILENAME = data/UI/Texture/title_bg.jpg		        # [6]
+TEXTURE_FILENAME = data/UI/Texture/press_start.png	        # [7]
+TEXTURE_FILENAME = data/UI/Texture/gameclear.png	        # [8]
+TEXTURE_FILENAME = data/UI/Texture/magic_ui.png		        # [9]
+TEXTURE_FILENAME = data/UI/Texture/controls_bg.png		    # [10]
+END_SCRIPT

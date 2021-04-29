@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\Particle">
+      <UniqueIdentifier>{84ffe357-f674-4b26-8e72-7509e4aa56c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode">
+      <UniqueIdentifier>{b3d69994-9a9f-4849-9bf9-77eb6c38da0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System">
+      <UniqueIdentifier>{5333caee-9653-4c72-8aba-3b7fe8b9b568}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Mode">
+      <UniqueIdentifier>{4ae46c5e-7f03-4f26-92bb-c0f5ae993794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\System">
+      <UniqueIdentifier>{d71c2dd4-617d-4e32-a517-cbb4c22d1171}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\UI">
+      <UniqueIdentifier>{98ea5b6b-6f13-4da2-b584-62f32bc40a28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI">
+      <UniqueIdentifier>{17bf982b-2ecf-47e6-b492-8a9167b5c8a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Texture">
+      <UniqueIdentifier>{5e74a5fd-b3f4-4a54-a344-3643e1dde5eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Polygon">
+      <UniqueIdentifier>{a6cae9da-b2f7-4376-ac7d-a43ff63e228a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Texture">
+      <UniqueIdentifier>{5409f6c8-11bf-4323-9afa-e829af071a6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Polygon">
+      <UniqueIdentifier>{94e59d17-e295-46b6-94ab-561eb585c77c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\ImGui">
+      <UniqueIdentifier>{ca177047-a9f2-41e8-92fc-283bfb6c774e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ImGui">
+      <UniqueIdentifier>{47c601f3-e5bd-4ebd-9a37-7615dbb03921}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Particle">
+      <UniqueIdentifier>{8082afc9-8fa2-4ec3-a9e6-98912f4ebe7f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Polygon\billboard.h">
+      <Filter>ヘッダー ファイル\Polygon</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ui.h">
+      <Filter>ヘッダー ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\texture.h">
+      <Filter>ヘッダー ファイル\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="System\camera.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\main.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\manager.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\renderer.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\scene.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle\particle.h">
+      <Filter>ヘッダー ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle\particle_2.h">
+      <Filter>ヘッダー ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Mode\mode.h">
+      <Filter>ヘッダー ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="Mode\tool.h">
+      <Filter>ヘッダー ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\imgui.h">
+      <Filter>ヘッダー ファイル\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\imgui_impl_dx9.h">
+      <Filter>ヘッダー ファイル\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\imgui_impl_win32.h">
+      <Filter>ヘッダー ファイル\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\imgui_internal.h">
+      <Filter>ヘッダー ファイル\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\imgui_stdlib.h">
+      <Filter>ヘッダー ファイル\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\imstb_rectpack.h">
+      <Filter>ヘッダー ファイル\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\imstb_textedit.h">
+      <Filter>ヘッダー ファイル\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\imstb_truetype.h">
+      <Filter>ヘッダー ファイル\ImGui</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="UI\ui.cpp">
+      <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\texture.cpp">
+      <Filter>ソース ファイル\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="System\camera.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\main.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\manager.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\renderer.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\scene.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Polygon\billboard.cpp">
+      <Filter>ソース ファイル\Polygon</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle\particle.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle\particle_2.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Mode\mode.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="Mode\tool.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\imgui.cpp">
+      <Filter>ソース ファイル\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\imgui_draw.cpp">
+      <Filter>ソース ファイル\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\imgui_impl_dx9.cpp">
+      <Filter>ソース ファイル\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\imgui_impl_win32.cpp">
+      <Filter>ソース ファイル\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\imgui_stdlib.cpp">
+      <Filter>ソース ファイル\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\imgui_widgets.cpp">
+      <Filter>ソース ファイル\ImGui</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
