@@ -1,30 +1,10 @@
 #==============================================================================
 #
-# 『モーションビューワ』スクリプトファイル [motion_runningman.txt]
-# Author : AKIRA TANAKA
+# ヒエラルキー設定ファイル
+# Author : 管原司
 #
 #==============================================================================
 SCRIPT			# この行は絶対消さないこと！
-
-#------------------------------------------------------------------------------
-# モデルファイル名
-#------------------------------------------------------------------------------
-MODEL_FILENAME = data/MODEL/Amadeus/00_under_body.x		# [0]腹
-MODEL_FILENAME = data/MODEL/Amadeus/01_body.x			# [1]胸
-MODEL_FILENAME = data/MODEL/Amadeus/02_head.x			# [2]頭
-MODEL_FILENAME = data/MODEL/Amadeus/03_shoulder_R.x		# [3]右上腕
-MODEL_FILENAME = data/MODEL/Amadeus/04_up_arm_R.x		# [4]右前腕
-MODEL_FILENAME = data/MODEL/Amadeus/05_down_arm_R.x		# [5]右手
-MODEL_FILENAME = data/MODEL/Amadeus/06_shoulder_L.x		# [6]左上腕
-MODEL_FILENAME = data/MODEL/Amadeus/07_up_arm_L.x		# [7]左前腕
-MODEL_FILENAME = data/MODEL/Amadeus/08_down_arm_L.x		# [8]左手
-MODEL_FILENAME = data/MODEL/Amadeus/09_Thigts_R.x		# [9]右腿
-MODEL_FILENAME = data/MODEL/Amadeus/10_knee_R.x			# [10]右脛
-MODEL_FILENAME = data/MODEL/Amadeus/11_foot_R.x			# [11]右足
-MODEL_FILENAME = data/MODEL/Amadeus/12_Thigts_L.x		# [12]左腿
-MODEL_FILENAME = data/MODEL/Amadeus/13_knee_L.x			# [13]左脛
-MODEL_FILENAME = data/MODEL/Amadeus/14_foot_L.x			# [14]左足
-
 #------------------------------------------------------------------------------
 # キャラクター情報
 #------------------------------------------------------------------------------

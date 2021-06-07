@@ -46,6 +46,5 @@
        ポートフォリオ.pptx
        ポートフォリオ.ppsx
        
-       
        ◇自己紹介動画のYoutubeリンク◇
        https://youtu.be/J2Rnp0b6oG4
