@@ -91,7 +91,6 @@ CGhost * CGhost::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, TYPE type)
 //******************************************************************************
 HRESULT CGhost::Init(void)
 {
-
 	// èâä˙âª
 	CEnemy::Init();
 

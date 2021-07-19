@@ -1862,7 +1862,8 @@ void CPlayer::Collision(void)
 					m_move.y = MIN_MOVE_VALUE;
 
 					// 位置
-					m_pos.y = (m_size.y / DEVIDE_VALUE) - (BlockPos.y + BlockSize.y / DEVIDE_VALUE);
+					m_pos.y = (-BlockSize.y / DEVIDE_VALUE + BlockPos.y) - (m_size.y / DEVIDE_VALUE);
+
 				}
 				// 上
 				else if (CCollision::RectangleCollisionMove(m_pos, m_posOld, m_size, BlockPos, BlockSize) == CCollision::SURFACE_UP)
@@ -1871,7 +1872,7 @@ void CPlayer::Collision(void)
 					m_move.y = MIN_MOVE_VALUE;
 
 					// 位置
-					m_pos.y = (-m_size.y / DEVIDE_VALUE) + (BlockPos.y + BlockSize.y / DEVIDE_VALUE);
+					m_pos.y = (BlockSize.y / DEVIDE_VALUE + BlockPos.y) - (m_size.y / DEVIDE_VALUE);
 
 					// trueの場合
 					if (m_bJump == true)
@@ -1890,7 +1891,7 @@ void CPlayer::Collision(void)
 					m_move.x = MIN_MOVE_VALUE;
 
 					// 位置
-					m_pos.x = (-m_size.x / DEVIDE_VALUE) + (BlockPos.x - BlockSize.x / DEVIDE_VALUE);
+					m_pos.x = (-BlockSize.x / DEVIDE_VALUE + BlockPos.x) - (m_size.x / DEVIDE_VALUE);
 
 					// falseの場合
 					if (m_bCollision == false)
@@ -1906,7 +1907,7 @@ void CPlayer::Collision(void)
 					m_move.x = MIN_MOVE_VALUE;
 
 					// 位置
-					m_pos.x = (m_size.x / DEVIDE_VALUE) + (BlockPos.x + BlockSize.x / DEVIDE_VALUE);
+					m_pos.x = (BlockSize.x / DEVIDE_VALUE + BlockPos.x) + (m_size.x / DEVIDE_VALUE);
 
 					// falseの場合
 					if (m_bCollision == false)

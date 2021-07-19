@@ -120,19 +120,15 @@ void CCamera::Update(void)
 
 	//ビューマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxView);
-
 	//ビューマトリックスの作成
 	D3DXMatrixLookAtLH(&m_mtxView, &m_posV, &m_posR, &m_vecU);
-
 	//ビューマトリックスの設定
 	pDevice->SetTransform(D3DTS_VIEW, &m_mtxView);
-
 	//プロジェクションマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxProjection);
-
 	//プロジェクションマトリックスの作成
 	D3DXMatrixPerspectiveFovLH(&m_mtxProjection, FOV_VALUE, (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, MIN_DRAW_DISTANCE, MAX_DRAW_DISTANCE);
-
+	//D3DXMatrixOrthoLH(&m_mtxProjection, (float)SCREEN_WIDTH / DEVIDE_VALUE, (float)SCREEN_HEIGHT / DEVIDE_VALUE, MIN_DRAW_DISTANCE, MAX_DRAW_DISTANCE);
 	//プロジェクションマトリックスの設定
 	pDevice->SetTransform(D3DTS_PROJECTION, &m_mtxProjection);
 }
